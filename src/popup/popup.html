@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Warnlisten Plugin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-container">
+    <!-- Header -->
+    <header class="popup-header">
+      <div class="logo-area">
+        <div class="logo-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <div class="logo-text">
+          <h1>Warnlisten</h1>
+          <span class="subtitle">URL Security Analyzer</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Status Card -->
+    <div class="status-card" id="statusCard">
+      <div class="status-indicator" id="statusIndicator">
+        <div class="status-icon" id="statusIcon">
+          <div class="pulse-ring"></div>
+          <svg class="icon-loading" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10" stroke-dasharray="31.4 31.4"/>
+          </svg>
+        </div>
+        <div class="status-text">
+          <span class="status-label" id="statusLabel">Checking…</span>
+          <span class="status-detail" id="statusDetail">Analyzing current page</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- URL Display -->
+    <div class="url-section">
+      <label class="section-label">Current URL</label>
+      <div class="url-display" id="urlDisplay">
+        <span class="url-text" id="urlText">Loading…</span>
+      </div>
+    </div>
+
+    <!-- Threats Section -->
+    <div class="threats-section" id="threatsSection" style="display:none;">
+      <label class="section-label">Detected Issues</label>
+      <div class="threats-list" id="threatsList"></div>
+    </div>
+
+    <!-- Details Section -->
+    <div class="details-section" id="detailsSection" style="display:none;">
+      <label class="section-label">Analysis Details</label>
+      <div class="details-content" id="detailsContent"></div>
+    </div>
+
+    <!-- Actions -->
+    <div class="actions-bar">
+      <button class="btn btn-primary" id="btnRescan">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+          <polyline points="23 4 23 10 17 10"/>
+          <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+        </svg>
+        Re-scan
+      </button>
+      <button class="btn btn-secondary" id="btnSettings">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+        </svg>
+        Settings
+      </button>
+    </div>
+
+    <!-- Footer -->
+    <footer class="popup-footer">
+      <span class="check-time" id="checkTime"></span>
+      <span class="version">v1.0.0</span>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

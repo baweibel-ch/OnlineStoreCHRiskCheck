@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Warnlisten Plugin — Settings</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="options-container">
+    <header class="options-header">
+      <div class="header-content">
+        <div class="logo-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <div>
+          <h1>Warnlisten Settings</h1>
+          <p class="subtitle">Configure URL analysis and API connection</p>
+        </div>
+      </div>
+    </header>
+
+    <main class="options-main">
+      <!-- Services Configuration -->
+      <section class="settings-section">
+        <h2 class="section-title">🛡️ Analysis Services</h2>
+        <div class="setting-group toggle-group">
+          <div class="toggle-info">
+            <label class="setting-label" for="enableSafeBrowsing">Enable Google Safe Browsing</label>
+            <p class="setting-hint">Checks URLs against Google's threat database (v4)</p>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="enableSafeBrowsing" checked>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+        <div class="setting-group toggle-group">
+          <div class="toggle-info">
+            <label class="setting-label" for="enableReklamation">Enable reklamation.ch</label>
+            <p class="setting-hint">Checks for consumer complaints on reklamation.ch</p>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="enableReklamation" checked>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+        <div class="setting-group toggle-group">
+          <div class="toggle-info">
+            <label class="setting-label" for="enableKtipp">Enable Ktipp-Warnliste</label>
+            <p class="setting-hint">Checks for entries on the Ktipp warning list</p>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="enableKtipp" checked>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </section>
+
+      <!-- API Configuration -->
+      <section class="settings-section">
+        <h2 class="section-title">🔌 API Configuration</h2>
+        <div class="setting-group">
+          <label for="apiUrl" class="setting-label">REST API Endpoint</label>
+          <input type="url" id="apiUrl" class="setting-input" placeholder="https://safebrowsing.googleapis.com/v4/threatMatches:find">
+          <p class="setting-hint">Enter the URL of your warning list REST API. Default is Google Safe Browsing v4.</p>
+        </div>
+        <div class="setting-group">
+          <label for="apiKey" class="setting-label">API Key</label>
+          <div class="input-with-toggle">
+            <input type="password" id="apiKey" class="setting-input" placeholder="Enter your API key">
+            <button class="toggle-visibility" id="toggleKeyVisibility" title="Show/Hide">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+            </button>
+          </div>
+          <p class="setting-hint">Your API key is stored locally and never shared. Leave empty for heuristic-only mode.</p>
+        </div>
+      </section>
+
+      <!-- Behavior -->
+      <section class="settings-section">
+        <h2 class="section-title">🛡️ Whitelist</h2>
+        <div class="setting-group">
+          <label for="whitelist" class="setting-label">Whitelisted Domains</label>
+          <textarea id="whitelist" class="setting-input" rows="4" placeholder="example.com&#10;internal.org"></textarea>
+          <p class="setting-hint">Enter domains to skip from analysis (one per line). All subdomains will also be skipped.</p>
+        </div>
+      </section>
+
+      <!-- Behavior -->
+      <section class="settings-section">
+        <h2 class="section-title">⚙️ Behavior</h2>
+        <div class="setting-group toggle-group">
+          <div class="toggle-info">
+            <label class="setting-label" for="checkAutomatically">Auto-scan URLs</label>
+            <p class="setting-hint">Automatically analyze URLs when navigating to new pages</p>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="checkAutomatically" checked>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+        <div class="setting-group toggle-group">
+          <div class="toggle-info">
+            <label class="setting-label" for="notificationsEnabled">Show in-page warnings</label>
+            <p class="setting-hint">Display a badge on the page when threats are detected</p>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="notificationsEnabled" checked>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </section>
+
+      <!-- Save Button -->
+      <div class="save-area">
+        <button class="btn-save" id="btnSave">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+            <polyline points="17 21 17 13 7 13 7 21"/>
+            <polyline points="7 3 7 8 15 8"/>
+          </svg>
+          Save Settings
+        </button>
+        <span class="save-status" id="saveStatus"></span>
+      </div>
+    </main>
+
+    <footer class="options-footer">
+      <p>Warnlisten Plugin v1.0.0 — Built for Chrome, Chromium & Brave</p>
+    </footer>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>

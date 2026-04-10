@@ -1,0 +1,81 @@
+/* ===================================
+   Warnlisten Plugin — Content Script Styles
+   In-page warning badge
+   =================================== */
+
+#warnlisten-badge {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 2147483647;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  transform: translateX(calc(100% + 20px));
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: auto;
+}
+
+#warnlisten-badge.warnlisten-visible {
+  transform: translateX(0);
+}
+
+.warnlisten-badge-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+}
+
+.warnlisten-danger .warnlisten-badge-content {
+  background: rgba(239, 68, 68, 0.92);
+  color: white;
+}
+
+.warnlisten-warning .warnlisten-badge-content {
+  background: rgba(245, 158, 11, 0.92);
+  color: white;
+}
+
+.warnlisten-error .warnlisten-badge-content {
+  background: rgba(245, 158, 11, 0.92);
+  color: white;
+}
+
+.warnlisten-badge-icon {
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.warnlisten-badge-text {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: -0.1px;
+  white-space: nowrap;
+}
+
+.warnlisten-badge-close {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  font-size: 16px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-left: 4px;
+  transition: background 0.2s;
+  flex-shrink: 0;
+  line-height: 1;
+  padding: 0;
+}
+
+.warnlisten-badge-close:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
