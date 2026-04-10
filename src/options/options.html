@@ -21,8 +21,8 @@
           </svg>
         </div>
         <div>
-          <h1>Warnlisten Settings</h1>
-          <p class="subtitle">Configure URL analysis and API connection</p>
+          <h1 data-i18n="optionsTitle">Warnlisten Settings</h1>
+          <p class="subtitle" data-i18n="optionsSubtitle">Configure URL analysis and API connection</p>
         </div>
       </div>
     </header>
@@ -30,22 +30,22 @@
     <main class="options-main">
       <!-- Scanning Mode -->
       <section class="settings-section">
-        <h2 class="section-title">🔍 Scanning Mode</h2>
+        <h2 class="section-title" data-i18n="scanningModeLabel">🔍 Scanning Mode</h2>
         <div class="setting-group">
-          <p class="setting-hint" style="margin-bottom: 12px; font-size: 13px;">Choose how URLs should be analyzed:</p>
+          <p class="setting-hint" style="margin-bottom: 12px; font-size: 13px;" data-i18n="scanningModeHint">Choose how URLs should be analyzed:</p>
           <div class="radio-group">
             <label class="radio-label">
               <input type="radio" name="scanMode" value="auto" id="scanModeAuto" checked>
               <div class="radio-content">
-                <span class="radio-title">Automatic Scan</span>
-                <span class="radio-hint">Analyze URLs automatically when navigating to new pages</span>
+                <span class="radio-title" data-i18n="scanModeAutoTitle">Automatic Scan</span>
+                <span class="radio-hint" data-i18n="scanModeAutoHint">Analyze URLs automatically when navigating to new pages</span>
               </div>
             </label>
             <label class="radio-label">
               <input type="radio" name="scanMode" value="manual" id="scanModeManual">
               <div class="radio-content">
-                <span class="radio-title">Manual Scan</span>
-                <span class="radio-hint">Only scan when you click "Re-scan" in the popup</span>
+                <span class="radio-title" data-i18n="scanModeManualTitle">Manual Scan</span>
+                <span class="radio-hint" data-i18n="scanModeManualHint">Only scan when you click "Re-scan" in the popup</span>
               </div>
             </label>
           </div>
@@ -54,11 +54,11 @@
 
       <!-- Services Configuration -->
       <section class="settings-section">
-        <h2 class="section-title">🛡️ Analysis Services</h2>
+        <h2 class="section-title" data-i18n="analysisServicesTitle">🛡️ Analysis Services</h2>
         <div class="setting-group toggle-group">
           <div class="toggle-info">
-            <label class="setting-label" for="enableSafeBrowsing">Enable Google Safe Browsing</label>
-            <p class="setting-hint">Checks URLs against Google's threat database (v4)</p>
+            <label class="setting-label" for="enableSafeBrowsing" data-i18n="enableSbLabel">Enable Google Safe Browsing</label>
+            <p class="setting-hint" data-i18n="enableSbHint">Checks URLs against Google's threat database (v4)</p>
           </div>
           <label class="toggle-switch">
             <input type="checkbox" id="enableSafeBrowsing" checked>
@@ -67,8 +67,8 @@
         </div>
         <div class="setting-group toggle-group">
           <div class="toggle-info">
-            <label class="setting-label" for="enableReklamation">Enable reklamation.ch</label>
-            <p class="setting-hint">Checks for consumer complaints on reklamation.ch</p>
+            <label class="setting-label" for="enableReklamation" data-i18n="enableRekLabel">Enable reklamation.ch</label>
+            <p class="setting-hint" data-i18n="enableRekHint">Checks for consumer complaints on reklamation.ch</p>
           </div>
           <label class="toggle-switch">
             <input type="checkbox" id="enableReklamation" checked>
@@ -77,8 +77,8 @@
         </div>
         <div class="setting-group toggle-group">
           <div class="toggle-info">
-            <label class="setting-label" for="enableKtipp">Enable Ktipp-Warnliste</label>
-            <p class="setting-hint">Checks for entries on the Ktipp warning list</p>
+            <label class="setting-label" for="enableKtipp" data-i18n="enableKtippLabel">Enable Ktipp-Warnliste</label>
+            <p class="setting-hint" data-i18n="enableKtippHint">Checks for entries on the Ktipp warning list</p>
           </div>
           <label class="toggle-switch">
             <input type="checkbox" id="enableKtipp" checked>
@@ -89,14 +89,14 @@
 
       <!-- API Configuration -->
       <section class="settings-section">
-        <h2 class="section-title">🔌 API Configuration</h2>
+        <h2 class="section-title" data-i18n="apiConfigTitle">🔌 API Configuration</h2>
         <div class="setting-group">
-          <label for="apiUrl" class="setting-label">REST API Endpoint</label>
+          <label for="apiUrl" class="setting-label" data-i18n="apiUrlLabel">REST API Endpoint</label>
           <input type="url" id="apiUrl" class="setting-input" placeholder="https://safebrowsing.googleapis.com/v4/threatMatches:find">
-          <p class="setting-hint">Enter the URL of your warning list REST API. Default is Google Safe Browsing v4.</p>
+          <p class="setting-hint" data-i18n="apiUrlHint">Enter the URL of your warning list REST API. Default is Google Safe Browsing v4.</p>
         </div>
         <div class="setting-group">
-          <label for="apiKey" class="setting-label">API Key</label>
+          <label for="apiKey" class="setting-label" data-i18n="apiKeyLabel">API Key</label>
           <div class="input-with-toggle">
             <input type="password" id="apiKey" class="setting-input" placeholder="Enter your API key">
             <button class="toggle-visibility" id="toggleKeyVisibility" title="Show/Hide">
@@ -106,27 +106,27 @@
               </svg>
             </button>
           </div>
-          <p class="setting-hint">Your API key is stored locally and never shared. Leave empty for heuristic-only mode.</p>
+          <p class="setting-hint" data-i18n="apiKeyHint">Your API key is stored locally and never shared. Leave empty for heuristic-only mode.</p>
         </div>
       </section>
 
       <!-- Behavior -->
       <section class="settings-section">
-        <h2 class="section-title">🛡️ Whitelist</h2>
+        <h2 class="section-title" data-i18n="whitelistTitle">🛡️ Whitelist</h2>
         <div class="setting-group">
-          <label for="whitelist" class="setting-label">Whitelisted Domains</label>
+          <label for="whitelist" class="setting-label" data-i18n="whitelistLabel">Whitelisted Domains</label>
           <textarea id="whitelist" class="setting-input" rows="4" placeholder="example.com&#10;internal.org"></textarea>
-          <p class="setting-hint">Enter domains to skip from analysis (one per line). All subdomains will also be skipped.</p>
+          <p class="setting-hint" data-i18n="whitelistHint">Enter domains to skip from analysis (one per line). All subdomains will also be skipped.</p>
         </div>
       </section>
 
       <!-- Behavior -->
       <section class="settings-section">
-        <h2 class="section-title">⚙️ Behavior</h2>
+        <h2 class="section-title" data-i18n="behaviorTitle">⚙️ Behavior</h2>
         <div class="setting-group toggle-group">
           <div class="toggle-info">
-            <label class="setting-label" for="notificationsEnabled">Show in-page warnings</label>
-            <p class="setting-hint">Display a badge on the page when threats are detected</p>
+            <label class="setting-label" for="notificationsEnabled" data-i18n="notificationsLabel">Show in-page warnings</label>
+            <p class="setting-hint" data-i18n="notificationsHint">Display a badge on the page when threats are detected</p>
           </div>
           <label class="toggle-switch">
             <input type="checkbox" id="notificationsEnabled" checked>
@@ -143,7 +143,7 @@
             <polyline points="17 21 17 13 7 13 7 21"/>
             <polyline points="7 3 7 8 15 8"/>
           </svg>
-          Save Settings
+          <span data-i18n="btnSaveSettings">Save Settings</span>
         </button>
         <span class="save-status" id="saveStatus"></span>
       </div>

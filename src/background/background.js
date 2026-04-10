@@ -84,8 +84,8 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
           return currentDomain === trimmed || currentDomain.endsWith('.' + trimmed);
         });
         const state= isWhitelisted?
-          {status: 'whitelisted', url: tab.url, message: `Domain "${domain}" is whitelisted.`}
-          :{status: 'idle', url: tab.url, message: 'Ready to scan.'};
+          {status: 'whitelisted', url: tab.url, message: chrome.i18n.getMessage('bgWhitelistedMsg', [domain]) || `Domain "${domain}" is whitelisted.`}
+          :{status: 'idle', url: tab.url, message: chrome.i18n.getMessage('statusReady') || 'Ready to scan.'};
           tabStates.set(tabId, state);
           updateBadge(tabId, state);
         // Broadcast to content script
@@ -155,7 +155,7 @@ async function handleAnalyzeRequest(url, tabId, force = false) {
 
 async function analyzeUrl(tabId, url, force = false, cachedStateDomain, cachedStateUrl) {
   if (!url || url.startsWith('chrome://') || url.startsWith('chrome-extension://') || url.startsWith('about:')) {
-    const state = { status: 'skipped', url, message: 'Internal browser page — skipped.' };
+    const state = { status: 'skipped', url, message: chrome.i18n.getMessage('bgInternalPage') || 'Internal browser page — skipped.' };
     tabStates.set(tabId, state);
     updateBadge(tabId, state);
     return state;
@@ -178,7 +178,7 @@ async function analyzeUrl(tabId, url, force = false, cachedStateDomain, cachedSt
     const state = { 
       status: 'whitelisted', 
       url, 
-      message: `Domain "${domain}" is whitelisted.` 
+      message: chrome.i18n.getMessage('bgWhitelistedMsg', [domain]) || `Domain "${domain}" is whitelisted.` 
     };
     tabStates.set(tabId, state);
     updateBadge(tabId, state);
@@ -197,7 +197,7 @@ async function analyzeUrl(tabId, url, force = false, cachedStateDomain, cachedSt
   }
 
   // Set loading state
-  const loadingState = { status: 'loading', url, message: 'Analyzing…' };
+  const loadingState = { status: 'loading', url, message: chrome.i18n.getMessage('statusAnalyzing') || 'Analyzing…' };
   tabStates.set(tabId, loadingState);
   updateBadge(tabId, loadingState);
   try {
@@ -214,20 +214,20 @@ async function analyzeUrl(tabId, url, force = false, cachedStateDomain, cachedSt
     const combinedThreats = [...apiResult.threats, ...reklamationResult.threats, ...ktippResult.threats];
 
     let status = 'safe';
-    let message = '✅ No threats detected.';
+    let message = '✅ ' + (chrome.i18n.getMessage('statusSafeDetail') || 'No threats detected.');
     if (hasSecurityThreats) {
       status = 'danger';
-      message = `⚠️ ${apiResult.threats.length} security threat(s) detected!`;
+      message = '⚠️ ' + (chrome.i18n.getMessage('bgThreatsReport', [apiResult.threats.length.toString()]) || `${apiResult.threats.length} security threat(s) detected!`);
     }
     if (hasReklamation || hasKtipp) {
       status = !hasSecurityThreats ? 'warning' : status;
       if (hasReklamation && hasKtipp) {
-        message = (hasSecurityThreats ? message + '\n\n' : '') + '🔍 Complaints found on reklamation.ch & Ktipp-Warnliste.';
+        message = (hasSecurityThreats ? message + '\n\n' : '') + '🔍 ' + (chrome.i18n.getMessage('bgComplaintsBoth') || 'Complaints found on reklamation.ch & Ktipp-Warnliste.');
       } else if (hasReklamation) {
         const count = reklamationResult.threats[0].count || 0;
-        message = (hasSecurityThreats ? message + '\n\n' : '') + `🔍 ${count} consumer complaint(s) found on reklamation.ch.`;
+        message = (hasSecurityThreats ? message + '\n\n' : '') + '🔍 ' + (chrome.i18n.getMessage('bgComplaintsRek', [count.toString()]) || `${count} consumer complaint(s) found on reklamation.ch.`);
       } else {
-        message = (hasSecurityThreats ? message + '\n\n' : '') + '🔍 Found on Ktipp-Warnliste.';
+        message = (hasSecurityThreats ? message + '\n\n' : '') + '🔍 ' + (chrome.i18n.getMessage('bgComplaintsKtipp') || 'Found on Ktipp-Warnliste.');
       }
     }
     const state = {
@@ -258,7 +258,7 @@ async function analyzeUrl(tabId, url, force = false, cachedStateDomain, cachedSt
     const state = {
       status: 'error',
       url: url,
-      message: `Analysis failed: ${error.message}`,
+      message: chrome.i18n.getMessage('bgErrorMsg', [error.message]) || `Analysis failed: ${error.message}`,
       checkedAt: new Date().toISOString()
     };
     tabStates.set(tabId, state);
@@ -381,7 +381,7 @@ async function checkReklamation(urlString) {
       console.log("complaintLinks: ", complaintLinks);
       let linksDetail = '';
       if (complaintLinks.length > 0) {
-        linksDetail = '\nLatest complaints:\n' + complaintLinks.map(c => `<a href="${c.link}" target="_blank" rel="noopener noreferrer"><h4>${c.title}</h4></a>`).join('\n');
+        linksDetail = '\n' + (chrome.i18n.getMessage('bgDetailRekLatest') || 'Latest complaints:') + '\n' + complaintLinks.map(c => `<a href="${c.link}" target="_blank" rel="noopener noreferrer"><h4>${c.title}</h4></a>`).join('\n');
       }
 
       return {
@@ -390,7 +390,7 @@ async function checkReklamation(urlString) {
           description: `Found ${count} complaint(s) on reklamation.ch`,
           count: count
         }],
-        details: `⚠️ [reklamation.ch] Found ${count} complaints for "${domain}".\nMore info: ${searchUrl}${linksDetail}`
+        details: `⚠️ ` + (chrome.i18n.getMessage('bgDetailRek', [count.toString(), domain]) || `[reklamation.ch] Found ${count} complaints for "${domain}".`) + `\n` + (chrome.i18n.getMessage('bgDetailMoreInfo') || 'More info:') + ` ${searchUrl}${linksDetail}`
       };
     }
     return { threats: [], details: '' };
@@ -507,7 +507,7 @@ async function checkKtipp(urlString) {
           description: `Found on Ktipp-Warnliste`,
           count: 1
         }],
-        details: `⚠️ [Ktipp-Warnliste] Found entry for "${domain}".\nMore info: ${internetshopsUrl}\n\n${articleHtml}`
+        details: `⚠️ ` + (chrome.i18n.getMessage('bgDetailKtipp', [domain]) || `[Ktipp-Warnliste] Found entry for "${domain}".`) + `\n` + (chrome.i18n.getMessage('bgDetailMoreInfo') || 'More info:') + ` ${internetshopsUrl}\n\n${articleHtml}`
       };
     }
 
@@ -530,17 +530,17 @@ function performHeuristicCheck(urlString) {
 
     // Check HTTPS
     if (url.protocol === 'http:') {
-      threats.push({ type: 'INSECURE_CONNECTION', description: 'This site uses unencrypted HTTP.' });
-      details.push('⚠️ No HTTPS — data is transmitted unencrypted.');
+      threats.push({ type: 'INSECURE_CONNECTION', description: chrome.i18n.getMessage('heurInsecureConnDesc') || 'This site uses unencrypted HTTP.' });
+      details.push('⚠️ ' + (chrome.i18n.getMessage('heurInsecureConnDet') || 'No HTTPS — data is transmitted unencrypted.'));
     }
 
     // Check for suspicious patterns
     const suspiciousPatterns = [
-      { pattern: /\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/, desc: 'IP address used instead of domain name' },
-      { pattern: /-{3,}/, desc: 'Excessive hyphens in domain' },
-      { pattern: /\.(tk|ml|ga|cf|gq)$/i, desc: 'Known free/suspicious TLD' },
-      { pattern: /(login|signin|verify|secure|account|update|confirm).*\./i, desc: 'Potential phishing keywords in subdomain' },
-      { pattern: /[а-яА-Я]/, desc: 'Cyrillic characters in URL (possible homograph attack)' }
+      { pattern: /\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/, desc: chrome.i18n.getMessage('heurSuspPatternDesc1') || 'IP address used instead of domain name' },
+      { pattern: /-{3,}/, desc: chrome.i18n.getMessage('heurSuspPatternDesc2') || 'Excessive hyphens in domain' },
+      { pattern: /\.(tk|ml|ga|cf|gq)$/i, desc: chrome.i18n.getMessage('heurSuspPatternDesc3') || 'Known free/suspicious TLD' },
+      { pattern: /(login|signin|verify|secure|account|update|confirm).*\./i, desc: chrome.i18n.getMessage('heurSuspPatternDesc4') || 'Potential phishing keywords in subdomain' },
+      { pattern: /[а-яА-Я]/, desc: chrome.i18n.getMessage('heurSuspPatternDesc5') || 'Cyrillic characters in URL (possible homograph attack)' }
     ];
 
     for (const sp of suspiciousPatterns) {
@@ -552,25 +552,25 @@ function performHeuristicCheck(urlString) {
 
     // Check for extremely long URLs
     if (urlString.length > 2000) {
-      threats.push({ type: 'SUSPICIOUS_URL_LENGTH', description: 'Unusually long URL' });
-      details.push('⚠️ Unusually long URL detected.');
+      threats.push({ type: 'SUSPICIOUS_URL_LENGTH', description: chrome.i18n.getMessage('heurURLengthDesc') || 'Unusually long URL' });
+      details.push('⚠️ ' + (chrome.i18n.getMessage('heurURLengthDet') || 'Unusually long URL detected.'));
     }
 
     // Check for encoded characters obfuscation
     const encodedCount = (urlString.match(/%[0-9A-Fa-f]{2}/g) || []).length;
     if (encodedCount > 10) {
-      threats.push({ type: 'URL_OBFUSCATION', description: 'Heavy URL encoding detected' });
-      details.push('⚠️ Excessive URL encoding — possible obfuscation.');
+      threats.push({ type: 'URL_OBFUSCATION', description: chrome.i18n.getMessage('heurURLObfDesc') || 'Heavy URL encoding detected' });
+      details.push('⚠️ ' + (chrome.i18n.getMessage('heurURLObfDet') || 'Excessive URL encoding — possible obfuscation.'));
     }
 
     if (threats.length === 0) {
-      details.push('✅ No suspicious patterns detected (heuristic mode).');
-      details.push('ℹ️ Configure an API key in settings for full threat database analysis.');
+      details.push('✅ ' + (chrome.i18n.getMessage('heurSafeDet1') || 'No suspicious patterns detected (heuristic mode).'));
+      details.push('ℹ️ ' + (chrome.i18n.getMessage('heurSafeDet2') || 'Configure an API key in settings for full threat database analysis.'));
     }
 
   } catch (e) {
-    threats.push({ type: 'INVALID_URL', description: 'Could not parse URL' });
-    details.push('❌ Invalid URL format.');
+    threats.push({ type: 'INVALID_URL', description: chrome.i18n.getMessage('heurInvalidURLError') || 'Could not parse URL' });
+    details.push('❌ ' + (chrome.i18n.getMessage('heurInvalidURLDet') || 'Invalid URL format.'));
   }
 
   return { threats, details: details.join('\n') };

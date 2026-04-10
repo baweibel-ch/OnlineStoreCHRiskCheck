@@ -22,8 +22,8 @@
           </svg>
         </div>
         <div class="logo-text">
-          <h1>Warnlisten</h1>
-          <span class="subtitle">URL Security Analyzer</span>
+          <h1 data-i18n="popupTitle">Warnlisten</h1>
+          <span class="subtitle" data-i18n="popupSubtitle">URL Security Analyzer</span>
         </div>
       </div>
       <div class="header-actions">
@@ -61,7 +61,7 @@
 
     <!-- URL Display -->
     <div class="url-section">
-      <label class="section-label">Current URL</label>
+      <label class="section-label" data-i18n="urlSectionLabel">Current URL</label>
       <div class="url-display" id="urlDisplay">
         <span class="url-text" id="urlText">Loading…</span>
       </div>
@@ -69,28 +69,28 @@
 
     <!-- Threats Section -->
     <div class="threats-section" id="threatsSection" style="display:none;">
-      <label class="section-label">Detected Issues</label>
+      <label class="section-label" data-i18n="threatsSectionLabel">Detected Issues</label>
       <div class="threats-list" id="threatsList"></div>
     </div>
 
     <!-- Details Section -->
     <div class="details-section" id="detailsSectionApi" style="display:none;">
-      <label class="section-label">Security Analysis</label>
+      <label class="section-label" data-i18n="securityAnalysisLabel">Security Analysis</label>
       <div class="details-content" id="detailsContentApi"></div>
     </div>
 
     <div class="details-section" id="detailsSectionReklamation" style="display:none;">
-      <label class="section-label">reklamation.ch Complaints</label>
+      <label class="section-label" data-i18n="reklamationLabel">reklamation.ch Complaints</label>
       <div class="details-content" id="detailsContentReklamation"></div>
     </div>
 
     <div class="details-section" id="detailsSectionKtipp" style="display:none;">
-      <label class="section-label">Ktipp-Warnliste</label>
+      <label class="section-label" data-i18n="ktippLabel">Ktipp-Warnliste</label>
       <div class="details-content" id="detailsContentKtipp"></div>
     </div>
 
     <div class="details-section" id="detailsSection" style="display:none;">
-      <label class="section-label">Analysis Details</label>
+      <label class="section-label" data-i18n="analysisDetailsLabel">Analysis Details</label>
       <div class="details-content" id="detailsContent"></div>
     </div>
 
@@ -101,14 +101,14 @@
           <polyline points="23 4 23 10 17 10"/>
           <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
         </svg>
-        Scan
+        <span data-i18n="btnRescan">Scan</span>
       </button>
       <button class="btn btn-secondary" id="btnSettings">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
           <circle cx="12" cy="12" r="3"/>
           <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
         </svg>
-        Settings
+        <span data-i18n="btnSettings">Settings</span>
       </button>
     </div>
 

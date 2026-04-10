@@ -5,6 +5,10 @@
 document.addEventListener('DOMContentLoaded', loadSettings);
 
 async function loadSettings() {
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    el.innerText = chrome.i18n.getMessage(el.getAttribute('data-i18n')) || el.innerText;
+  });
+
   const config = await getConfig();
 
   document.getElementById('apiUrl').value = config.apiUrl || '';
@@ -49,7 +53,7 @@ async function saveSettings() {
     { action: 'saveConfig', config },
     (response) => {
       const status = document.getElementById('saveStatus');
-      status.textContent = '✓ Saved!';
+      status.textContent = chrome.i18n.getMessage('saveStatusSuccess') || '✓ Saved!';
       status.classList.add('visible');
       setTimeout(() => status.classList.remove('visible'), 2500);
     }

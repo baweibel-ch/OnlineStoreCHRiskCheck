@@ -6,6 +6,10 @@
 document.addEventListener('DOMContentLoaded', init);
 
 async function init() {
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    el.innerText = chrome.i18n.getMessage(el.getAttribute('data-i18n')) || el.innerText;
+  });
+
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
   if (!tab) return;
 
@@ -35,7 +39,7 @@ async function init() {
         triggerScan(tab);
       } else {
         // Just show idle state if manual scan is selected
-        renderState({ status: 'idle', message: 'Manual scan mode enabled.', url: tab.url, isWhitelisted });
+        renderState({ status: 'idle', url: tab.url, isWhitelisted });
       }
     });
   });
@@ -93,7 +97,7 @@ async function init() {
 }
 
 function triggerScan(tab) {
-  renderState({ status: 'loading', message: 'Analyzing…', url: tab.url });
+  renderState({ status: 'loading', url: tab.url });
 
   chrome.runtime.sendMessage(
     { action: 'analyzeUrl', url: tab.url, tabId: tab.id, force: true },
@@ -129,15 +133,15 @@ function renderState(state) {
     case 'safe':
       card.classList.add('safe');
       icon.innerHTML = getSafeIcon();
-      label.textContent = 'Safe';
-      detail.textContent = state.message || 'No threats detected.';
+      label.textContent = chrome.i18n.getMessage('statusSafe') || 'Safe';
+      detail.textContent = state.message || chrome.i18n.getMessage('statusSafeDetail') || 'No threats detected.';
       break;
 
     case 'danger':
       card.classList.add('danger');
       icon.innerHTML = getDangerIcon();
-      label.textContent = 'Warning!';
-      detail.textContent = state.message || 'Threats detected!';
+      label.textContent = chrome.i18n.getMessage('statusDanger') || 'Danger!';
+      detail.textContent = state.message || chrome.i18n.getMessage('statusDangerDetail') || 'Threats detected!';
       break;
 
     case 'warning':
@@ -147,54 +151,54 @@ function renderState(state) {
       const isReklamation = state.threats?.some(t => t.type === 'REKLAMATION_CH');
       
       if (isKtipp && isReklamation) {
-        label.textContent = 'Warning';
+        label.textContent = chrome.i18n.getMessage('statusWarning') || 'Warning!';
       } else if (isKtipp) {
-        label.textContent = 'Ktipp-Warnliste';
+        label.textContent = chrome.i18n.getMessage('ktippLabel') || 'Ktipp-Warnliste';
       } else {
-        label.textContent = 'Reklamation';
+        label.textContent = chrome.i18n.getMessage('reklamationLabel') || 'Reklamation';
       }
-      detail.textContent = state.message || 'Complaints found!';
+      detail.textContent = state.message || chrome.i18n.getMessage('statusComplaintsDetail') || 'Complaints found!';
       break;
 
     case 'loading':
       card.classList.add('loading');
       icon.innerHTML = getLoadingIcon();
-      label.textContent = 'Analyzing…';
-      detail.textContent = 'Checking URL against threat databases';
+      label.textContent = chrome.i18n.getMessage('statusAnalyzing') || 'Analyzing…';
+      detail.textContent = chrome.i18n.getMessage('statusAnalyzingDetail') || 'Checking URL against threat databases';
       break;
 
     case 'error':
       card.classList.add('error');
       icon.innerHTML = getErrorIcon();
-      label.textContent = 'Error';
-      detail.textContent = state.message || 'Analysis failed.';
+      label.textContent = chrome.i18n.getMessage('statusError') || 'Error';
+      detail.textContent = state.message || chrome.i18n.getMessage('statusErrorDetail') || 'Analysis failed.';
       break;
 
     case 'whitelisted':
       card.classList.add('safe');
       icon.innerHTML = getSafeIcon();
-      label.textContent = 'Whitelisted';
-      detail.textContent = state.message || 'Domain is whitelisted.';
+      label.textContent = chrome.i18n.getMessage('statusWhitelisted') || 'Whitelisted';
+      detail.textContent = state.message || chrome.i18n.getMessage('statusWhitelistedDetail') || 'Domain is whitelisted.';
       break;
 
     case 'skipped':
       icon.innerHTML = getSkippedIcon();
-      label.textContent = 'Skipped';
-      detail.textContent = state.message || 'Internal page — not analyzed.';
+      label.textContent = chrome.i18n.getMessage('statusSkipped') || 'Skipped';
+      detail.textContent = state.message || chrome.i18n.getMessage('statusSkippedDetail') || 'Internal page — not analyzed.';
       break;
     
     case 'idle':
       icon.innerHTML = getIdleIcon();
-      label.textContent = 'Ready';
+      label.textContent = chrome.i18n.getMessage('statusReady') || 'Ready';
       detail.textContent = state.isWhitelisted 
-        ? 'Click "Scan" to analyze (Whitelisted).' 
-        : 'Click "Scan" to analyze this page.';
+        ? (chrome.i18n.getMessage('statusReadyDetailWhitelist') || 'Click "Scan" to analyze (Whitelisted).')
+        : (chrome.i18n.getMessage('statusReadyDetail') || 'Click "Scan" to analyze this page.');
       break;
 
     default:
       icon.innerHTML = getLoadingIcon();
-      label.textContent = 'Unknown';
-      detail.textContent = 'Status unavailable.';
+      label.textContent = chrome.i18n.getMessage('statusUnknown') || 'Unknown';
+      detail.textContent = chrome.i18n.getMessage('statusUnknownDetail') || 'Status unavailable.';
   }
 
   // Render threats
