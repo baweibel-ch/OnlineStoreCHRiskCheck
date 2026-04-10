@@ -45,6 +45,21 @@
   color: white;
 }
 
+.warnlisten-whitelisted .warnlisten-badge-content {
+  background: rgba(255, 255, 255, 0.92);
+  color: #1F2937;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.05);
+}
+
+.warnlisten-whitelisted .warnlisten-badge-close {
+  background: rgba(0, 0, 0, 0.08);
+  color: #1F2937;
+}
+
+.warnlisten-whitelisted .warnlisten-badge-close:hover {
+  background: rgba(0, 0, 0, 0.15);
+}
+
 .warnlisten-badge-icon {
   font-size: 18px;
   flex-shrink: 0;

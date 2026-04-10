@@ -117,9 +117,24 @@ async function analyzeUrl(tabId, url) {
     });
 
     if (isWhitelisted) {
-      const state = { status: 'skipped', url, message: `Domain "${domain}" is whitelisted.` };
+      const state = { 
+        status: 'whitelisted', 
+        url, 
+        message: `Domain "${domain}" is whitelisted.` 
+      };
       tabStates.set(tabId, state);
       updateBadge(tabId, state);
+
+      // Notify content script
+      try {
+        chrome.tabs.sendMessage(tabId, {
+          action: 'updateStatus',
+          state: state
+        });
+      } catch (e) {
+        // Content script not loaded yet, ignore
+      }
+
       return state;
     }
 
@@ -501,6 +516,7 @@ function updateBadge(tabId, state) {
     warning: { text: '!', color: '#F59E0B' },
     loading: { text: '…', color: '#6366F1' },
     error: { text: '✕', color: '#F59E0B' },
+    whitelisted: { text: '✓', color: '#FFFFFF' },
     skipped: { text: '', color: '#6B7280' },
     unknown: { text: '?', color: '#6B7280' }
   };

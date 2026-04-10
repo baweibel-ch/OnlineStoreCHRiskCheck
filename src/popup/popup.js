@@ -155,6 +155,13 @@ function renderState(state) {
       detail.textContent = state.message || 'Analysis failed.';
       break;
 
+    case 'whitelisted':
+      card.classList.add('safe');
+      icon.innerHTML = getSafeIcon();
+      label.textContent = 'Whitelisted';
+      detail.textContent = state.message || 'Domain is whitelisted.';
+      break;
+
     case 'skipped':
       icon.innerHTML = getSkippedIcon();
       label.textContent = 'Skipped';
