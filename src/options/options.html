@@ -26,6 +26,30 @@
     </header>
 
     <main class="options-main">
+      <!-- Scanning Mode -->
+      <section class="settings-section">
+        <h2 class="section-title">🔍 Scanning Mode</h2>
+        <div class="setting-group">
+          <p class="setting-hint" style="margin-bottom: 12px; font-size: 13px;">Choose how URLs should be analyzed:</p>
+          <div class="radio-group">
+            <label class="radio-label">
+              <input type="radio" name="scanMode" value="auto" id="scanModeAuto" checked>
+              <div class="radio-content">
+                <span class="radio-title">Automatic Scan</span>
+                <span class="radio-hint">Analyze URLs automatically when navigating to new pages</span>
+              </div>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="scanMode" value="manual" id="scanModeManual">
+              <div class="radio-content">
+                <span class="radio-title">Manual Scan</span>
+                <span class="radio-hint">Only scan when you click "Re-scan" in the popup</span>
+              </div>
+            </label>
+          </div>
+        </div>
+      </section>
+
       <!-- Services Configuration -->
       <section class="settings-section">
         <h2 class="section-title">🛡️ Analysis Services</h2>
@@ -97,16 +121,6 @@
       <!-- Behavior -->
       <section class="settings-section">
         <h2 class="section-title">⚙️ Behavior</h2>
-        <div class="setting-group toggle-group">
-          <div class="toggle-info">
-            <label class="setting-label" for="checkAutomatically">Auto-scan URLs</label>
-            <p class="setting-hint">Automatically analyze URLs when navigating to new pages</p>
-          </div>
-          <label class="toggle-switch">
-            <input type="checkbox" id="checkAutomatically" checked>
-            <span class="toggle-slider"></span>
-          </label>
-        </div>
         <div class="setting-group toggle-group">
           <div class="toggle-info">
             <label class="setting-label" for="notificationsEnabled">Show in-page warnings</label>

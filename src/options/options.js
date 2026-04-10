@@ -9,7 +9,11 @@ async function loadSettings() {
 
   document.getElementById('apiUrl').value = config.apiUrl || '';
   document.getElementById('apiKey').value = config.apiKey || '';
-  document.getElementById('checkAutomatically').checked = config.checkAutomatically !== false;
+  
+  const isAuto = config.checkAutomatically !== false;
+  document.getElementById('scanModeAuto').checked = isAuto;
+  document.getElementById('scanModeManual').checked = !isAuto;
+
   document.getElementById('notificationsEnabled').checked = config.notificationsEnabled !== false;
   document.getElementById('enableSafeBrowsing').checked = config.enableSafeBrowsing !== false;
   document.getElementById('enableReklamation').checked = config.enableReklamation !== false;
@@ -31,7 +35,7 @@ async function saveSettings() {
     apiUrl: document.getElementById('apiUrl').value.trim() ||
       'https://safebrowsing.googleapis.com/v4/threatMatches:find',
     apiKey: document.getElementById('apiKey').value.trim(),
-    checkAutomatically: document.getElementById('checkAutomatically').checked,
+    checkAutomatically: document.getElementById('scanModeAuto').checked,
     notificationsEnabled: document.getElementById('notificationsEnabled').checked,
     enableSafeBrowsing: document.getElementById('enableSafeBrowsing').checked,
     enableReklamation: document.getElementById('enableReklamation').checked,

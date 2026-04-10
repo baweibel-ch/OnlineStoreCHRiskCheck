@@ -17,13 +17,18 @@ async function init() {
   highlightUrl(tab.url);
 
   // Get current status from background
-  chrome.runtime.sendMessage({ action: 'getStatus', tabId: tab.id }, (state) => {
-    if (state && state.status !== 'unknown') {
-      renderState(state);
-    } else {
-      // Trigger fresh analysis
-      triggerScan(tab);
-    }
+  chrome.runtime.sendMessage({ action: 'getConfig' }, (config) => {
+    chrome.runtime.sendMessage({ action: 'getStatus', tabId: tab.id }, (state) => {
+      if (state && state.status !== 'unknown') {
+        renderState(state);
+      } else if (config.checkAutomatically !== false) {
+        // Trigger fresh analysis if automatic scanning is enabled
+        triggerScan(tab);
+      } else {
+        // Just show idle state if manual scan is selected
+        renderState({ status: 'idle', message: 'Manual scan mode enabled.', url: tab.url });
+      }
+    });
   });
 
   // Button handlers
@@ -154,6 +159,12 @@ function renderState(state) {
       icon.innerHTML = getSkippedIcon();
       label.textContent = 'Skipped';
       detail.textContent = state.message || 'Internal page — not analyzed.';
+      break;
+    
+    case 'idle':
+      icon.innerHTML = getIdleIcon();
+      label.textContent = 'Ready';
+      detail.textContent = 'Click "Scan" to analyze this page.';
       break;
 
     default:
@@ -323,6 +334,15 @@ function getSkippedIcon() {
     <svg viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:28px;height:28px;position:relative;z-index:2">
       <circle cx="12" cy="12" r="10"/>
       <line x1="8" y1="12" x2="16" y2="12"/>
+    </svg>
+  `;
+}
+
+function getIdleIcon() {
+  return `
+    <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent-primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:28px;height:28px;position:relative;z-index:2">
+      <circle cx="12" cy="12" r="10"/>
+      <polyline points="12 6 12 12 16 14"/>
     </svg>
   `;
 }
