@@ -32,6 +32,17 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
     const config = await getConfig();
     if (config.checkAutomatically) {
       await analyzeUrl(tabId, tab.url);
+    } else {
+      // Manual mode - set to idle state if not already set or if URL changed
+      const currentState = tabStates.get(tabId);
+      if (!currentState || currentState.url !== tab.url) {
+        const idleState = { status: 'idle', url: tab.url, message: 'Ready to scan.' };
+        tabStates.set(tabId, idleState);
+        updateBadge(tabId, idleState);
+        
+        // Broadcast to content script
+        chrome.tabs.sendMessage(tabId, { action: 'updateStatus', state: idleState }).catch(() => {});
+      }
     }
   }
 });
@@ -511,19 +522,23 @@ function performHeuristicCheck(urlString) {
 // --- Badge Updates ---
 function updateBadge(tabId, state) {
   const badges = {
-    safe: { text: '✓', color: '#10B981' },
-    danger: { text: '!', color: '#EF4444' },
-    warning: { text: '!', color: '#F59E0B' },
-    loading: { text: '…', color: '#6366F1' },
-    error: { text: '✕', color: '#F59E0B' },
-    whitelisted: { text: '✓', color: '#FFFFFF' },
-    skipped: { text: '', color: '#6B7280' },
-    unknown: { text: '?', color: '#6B7280' }
+    safe: { text: '✓', color: '#10B981', textColor: '#FFFFFF' },
+    danger: { text: '!', color: '#EF4444', textColor: '#FFFFFF' },
+    warning: { text: '!', color: '#F59E0B', textColor: '#FFFFFF' },
+    loading: { text: '…', color: '#6366F1', textColor: '#FFFFFF' },
+    error: { text: '✕', color: '#F59E0B', textColor: '#FFFFFF' },
+    whitelisted: { text: '✓', color: '#FFFFFF', textColor: '#1F2937' },
+    idle: { text: '?', color: '#FFFFFF', textColor: '#1F2937' },
+    skipped: { text: '', color: '#6B7280', textColor: '#FFFFFF' },
+    unknown: { text: '?', color: '#6B7280', textColor: '#FFFFFF' }
   };
 
   const badge = badges[state.status] || badges.unknown;
   chrome.action.setBadgeText({ text: badge.text, tabId });
   chrome.action.setBadgeBackgroundColor({ color: badge.color, tabId });
+  if (chrome.action.setBadgeTextColor) {
+    chrome.action.setBadgeTextColor({ color: badge.textColor, tabId });
+  }
 }
 
 // --- Helpers ---

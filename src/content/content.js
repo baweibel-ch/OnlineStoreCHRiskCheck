@@ -24,7 +24,7 @@ function showStatusBadge(state) {
     return;
   }
 
-  // Create badge for danger/warning/whitelisted states
+  // Create badge for danger/warning/whitelisted/idle states
   statusBadge = document.createElement('div');
   statusBadge.id = 'warnlisten-badge';
   statusBadge.className = `warnlisten-badge warnlisten-${state.status}`;
@@ -42,6 +42,14 @@ function showStatusBadge(state) {
   const checkIcon = `
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;">
       <polyline points="20 6 9 17 4 12"></polyline>
+    </svg>
+  `;
+
+  const questionIcon = `
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;">
+      <circle cx="12" cy="12" r="10"></circle>
+      <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+      <line x1="12" y1="17" x2="12.01" y2="17"></line>
     </svg>
   `;
   
@@ -66,6 +74,9 @@ function showStatusBadge(state) {
   } else if (state.status === 'whitelisted') {
     label = 'Domain is whitelisted';
     icon = checkIcon;
+  } else if (state.status === 'idle') {
+    label = 'Click to scan domain';
+    icon = questionIcon;
   } else {
     label = 'Analysis error';
   }
