@@ -26,7 +26,7 @@ chrome.runtime.onInstalled.addListener(async () => {
   }
 });
 
-// --- Tab Navigation Listener ---
+// --- Tab Navigation & Removal Listeners ---
 chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
   if (changeInfo.status === 'complete' && tab.url) {
     const config = await getConfig();
@@ -81,6 +81,10 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
       }
     }
   }
+});
+
+chrome.tabs.onRemoved.addListener((tabId) => {
+  tabStates.delete(tabId);
 });
 
 // --- Message Handler ---
