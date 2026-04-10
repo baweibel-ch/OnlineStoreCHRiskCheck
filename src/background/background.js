@@ -34,34 +34,47 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
     const domain = urlObj.hostname.toLowerCase();
 
     // Check if we already have a result for this domain in ANY tab
-    let cachedState = null;
+    let cachedStateDomain = null;
     for (const [id, state] of tabStates.entries()) {
       if (state.url) {
         try {
           const cachedUrlObj = new URL(state.url);
           if (cachedUrlObj.hostname.toLowerCase() === domain && state.status !== 'loading' && state.status !== 'idle') {
-            cachedState = { ...state, url: tab.url }; // Use current URL but cached results
+            cachedStateDomain = { ...state, url: tab.url }; // Use current URL but cached results
             break;
           }
         } catch (e) { /* ignore invalid URLs */ }
       }
     }
+    let cachedStateUrl = null;
+    for (const [id, state] of tabStates.entries()) {
+      if (state.url === tab.url && state.status !== 'loading' && state.status !== 'idle') {
+        cachedStateUrl = { ...state, url: tab.url }; // Use current URL but cached results
+        break;
+      }
+    }
 
     if (config.checkAutomatically) {
-      if (cachedState) {
-        tabStates.set(tabId, cachedState);
-        updateBadge(tabId, cachedState);
-        chrome.tabs.sendMessage(tabId, { action: 'updateStatus', state: cachedState }).catch(() => {});
+      if (cachedStateDomain && cachedStateUrl) {
+        tabStates.set(tabId, cachedStateDomain);
+        updateBadge(tabId, cachedStateDomain);
+        chrome.tabs.sendMessage(tabId, { action: 'updateStatus', state: cachedStateDomain }).catch(() => {});
       } else {
-        await analyzeUrl(tabId, tab.url);
+        await analyzeUrl(tabId, tab.url, cachedStateDomain && cachedStateDomain.status !== 'whitelisted', cachedStateDomain, cachedStateUrl);
       }
     } else {
       // Manual mode - set to idle state if no cached result for this domain
       const currentState = tabStates.get(tabId);
-      if (cachedState) {
-        tabStates.set(tabId, cachedState);
-        updateBadge(tabId, cachedState);
-        chrome.tabs.sendMessage(tabId, { action: 'updateStatus', state: cachedState }).catch(() => {});
+      if (cachedStateDomain) {
+        // wenn wir aber manuell für domain checked haben, dann checken wir forced damit für url geprüft wird
+        if (!(cachedStateDomain.status === 'whitelisted' || cachedStateDomain.status === 'idle')) {
+          await analyzeUrl(tabId, tab.url, true, cachedStateDomain, cachedStateUrl);
+        } else {
+          tabStates.set(tabId, cachedStateDomain);
+          updateBadge(tabId, cachedStateDomain);
+          chrome.tabs.sendMessage(tabId, {action: 'updateStatus', state: cachedStateDomain}).catch(() => {
+          });
+        }
       } else if (!currentState || currentState.url !== tab.url) {
         const isWhitelisted = config.whitelist && config.whitelist.some(w => {
           const trimmed = w.trim().toLowerCase().replace(/^www\./i, '');
@@ -136,11 +149,11 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
 // --- Core Analysis ---
 async function handleAnalyzeRequest(url, tabId, force = false) {
-  const result = await analyzeUrl(tabId, url, force);
+  const result = await analyzeUrl(tabId, url, force, null, null);
   return result;
 }
 
-async function analyzeUrl(tabId, url, force = false) {
+async function analyzeUrl(tabId, url, force = false, cachedStateDomain, cachedStateUrl) {
   if (!url || url.startsWith('chrome://') || url.startsWith('chrome-extension://') || url.startsWith('about:')) {
     const state = { status: 'skipped', url, message: 'Internal browser page — skipped.' };
     tabStates.set(tabId, state);
@@ -187,12 +200,13 @@ async function analyzeUrl(tabId, url, force = false) {
   const loadingState = { status: 'loading', url, message: 'Analyzing…' };
   tabStates.set(tabId, loadingState);
   updateBadge(tabId, loadingState);
-
+  const hadReklamation = cachedStateDomain && cachedStateDomain.threats && cachedStateDomain.threats.filter(s => s.type === 'REKLAMATION_CH').length > 0;
+  const hadKtipp = cachedStateDomain && cachedStateDomain.threats && cachedStateDomain.threats.filter(s => s.type === 'KTIPP_WARNLISTE').length > 0;
   try {
     const [apiResult, reklamationResult, ktippResult] = await Promise.all([
-      config.enableSafeBrowsing ? callWarningApi(url, config) : Promise.resolve({ threats: [], details: '' }),
-      config.enableReklamation ? checkReklamation(url) : Promise.resolve({ threats: [], details: '' }),
-      config.enableKtipp ? checkKtipp(url) : Promise.resolve({ threats: [], details: '' })
+      config.enableSafeBrowsing && !cachedStateUrl ? callWarningApi(url, config) : Promise.resolve({ threats: [], details: '' }),
+      config.enableReklamation && !cachedStateDomain ? checkReklamation(url) : Promise.resolve({ threats: cachedStateDomain.threats?cachedStateDomain.threats.filter(s => s.type === 'REKLAMATION_CH'):[], details: hadReklamation?cachedStateDomain.details:'' }),
+      config.enableKtipp && !cachedStateDomain ? checkKtipp(url) : Promise.resolve({ threats: cachedStateDomain.threats?cachedStateDomain.threats.filter(s => s.type === 'KTIPP_WARNLISTE'):[], details: (!hadReklamation && !hadKtipp)?cachedStateDomain.details:'' })
     ]);
 
     const hasSecurityThreats = apiResult.threats.length > 0;
@@ -204,22 +218,21 @@ async function analyzeUrl(tabId, url, force = false) {
 
     let status = 'safe';
     let message = '✅ No threats detected.';
-
     if (hasSecurityThreats) {
       status = 'danger';
       message = `⚠️ ${apiResult.threats.length} security threat(s) detected!`;
-    } else if (hasReklamation || hasKtipp) {
-      status = 'warning';
+    }
+    if (hasReklamation || hasKtipp) {
+      status = !hasSecurityThreats?'warning':status;
       if (hasReklamation && hasKtipp) {
-        message = '🔍 Complaints found on reklamation.ch & Ktipp-Warnliste.';
+        message = (hasSecurityThreats?message+'\n\n':'') + '🔍 Complaints found on reklamation.ch & Ktipp-Warnliste.';
       } else if (hasReklamation) {
         const count = reklamationResult.threats[0].count || 0;
-        message = `🔍 ${count} consumer complaint(s) found on reklamation.ch.`;
+        message = (hasSecurityThreats?message+'\n\n':'') + `🔍 ${count} consumer complaint(s) found on reklamation.ch.`;
       } else {
-        message = '🔍 Found on Ktipp-Warnliste.';
+        message = (hasSecurityThreats?message+'\n\n':'') + '🔍 Found on Ktipp-Warnliste.';
       }
     }
-
     const state = {
       status: status,
       url: url,
@@ -260,12 +273,11 @@ async function analyzeUrl(tabId, url, force = false) {
  * Supports Google Safe Browsing v4 format and generic REST API formats.
  */
 async function callWarningApi(url, config) {
-  console.log("callWarningApi, url: " + url);
+  console.log("callWarningApi - url: ", url);
   if (!config.apiKey) {
     // Demo mode: perform basic heuristic checks
     return performHeuristicCheck(url);
   }
-
   const apiEndpoint = config.apiUrl.includes('safebrowsing.googleapis.com')
     ? `${config.apiUrl}?key=${config.apiKey}`
     : config.apiUrl;
@@ -336,7 +348,7 @@ function parseApiResponse(data, config) {
  * Check for complaints on reklamation.ch
  */
 async function checkReklamation(urlString) {
-  console.log("checkReklamation, urlString: " + urlString);
+  console.log("checkReklamation - urlString: ", urlString);
   try {
     const url = new URL(urlString);
     const domain = url.hostname.replace(/^www\./i, '');
@@ -377,7 +389,6 @@ async function checkReklamation(urlString) {
         details: `⚠️ [reklamation.ch] Found ${count} complaints for "${domain}".\nMore info: ${searchUrl}${linksDetail}`
       };
     }
-
     return { threats: [], details: '' };
   } catch (e) {
     return { threats: [], details: '' };
@@ -388,7 +399,7 @@ async function checkReklamation(urlString) {
  * Check for warnings on ktipp.ch
  */
 async function checkKtipp(urlString) {
-  console.log("checkKtipp, urlString: " + urlString);
+  console.log("checkKtipp - urlString: ", urlString);
   try {
     const url = new URL(urlString);
     const domain = url.hostname.replace(/^www\./i, '');
