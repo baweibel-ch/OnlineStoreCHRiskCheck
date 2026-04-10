@@ -48,24 +48,26 @@ function showStatusBadge(state) {
   let label = '';
   let icon = cartIcon;
 
-  // Look for reklamation or ktipp count in threats
-  const reklamationThreat = state.threats?.find(t => t.type === 'REKLAMATION_CH');
-  const ktippThreat = state.threats?.find(t => t.type === 'KTIPP_WARNLISTE');
-  
-  if (reklamationThreat && ktippThreat) {
-    label = 'Found on Ktipp & Reklamation';
-  } else if (ktippThreat) {
-    label = 'Ktipp-Warnliste: Entry found';
-  } else if (reklamationThreat) {
-    const count = reklamationThreat.count || 0;
-    label = `Reklamation: ${count} complaint${count !== 1 ? 's' : ''} found`;
-  } else if (state.status === 'danger') {
-    label = `${threatCount} security issue${threatCount !== 1 ? 's' : ''} detected`;
-  } else if (state.status === 'loading') {
-    label = 'Analyzing…';
-    icon = loadingIcon;
-  } else {
-    label = 'Analysis error';
+  let reklamationThreats = state.threats?.filter(t => t.type === 'REKLAMATION_CH');
+  let ktippThreats = state.threats?.filter(t => t.type === 'KTIPP_WARNLISTE');
+  let trustedstoreThreats = state.threats?.filter(t => t.type === 'TRUSTED_SHOPS_MISSING');
+  let apiThreats = state.threats?.filter(t => t.type !== 'REKLAMATION_CH' && t.type !== 'KTIPP_WARNLISTE' && t.type !== 'TRUSTED_SHOPS_MISSING');
+
+  if (reklamationThreats && reklamationThreats.length > 0) {
+    label = (label && label.length > 0?label+'<br/>':'') + chrome.i18n.getMessage('bgComplaintsRek', [reklamationThreats.length.toString()]) || `${reklamationThreats.length} consumer complaint(s) found on reklamation.ch.`;
+  }
+  if (ktippThreats && ktippThreats.length > 0) {
+    label = (label && label.length > 0?label+'<br/>':'') + chrome.i18n.getMessage('bgComplaintsKtipp', [ktippThreats.length.toString()]) || `${ktippThreats.length} Found on Ktipp-Warnliste.`;
+  }
+  if (trustedstoreThreats && trustedstoreThreats.length > 0) {
+    label = (label && label.length > 0?label+'<br/>':'') + chrome.i18n.getMessage('bgComplaintsNotFoundTrustedShops', [trustedstoreThreats.length.toString()]) || `${trustedstoreThreats.length} Not found on Trustedshops.ch.`;
+  }
+  if (apiThreats && apiThreats.length > 0) {
+    label = (label && label.length > 0?label+'<br/>':'') + chrome.i18n.getMessage('bgThreatsReport', [apiThreats.length.toString()]) || `${apiThreats.length} security threat(s) detected!.`;
+  }
+
+  if (!label) {
+    return;
   }
 
   statusBadge.innerHTML = `

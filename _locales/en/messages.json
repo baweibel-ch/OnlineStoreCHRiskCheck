@@ -59,9 +59,9 @@
   "btnSaveSettings": {"message": "Save Settings"},
   "saveStatusSuccess": {"message": "✓ Saved!"},
   "bgThreatsReport": {"message": "$1 security threat(s) detected!"},
-  "bgComplaintsBoth": {"message": "Complaints found on reklamation.ch & Ktipp-Warnliste."},
   "bgComplaintsRek": {"message": "$1 consumer complaint(s) found on reklamation.ch."},
-  "bgComplaintsKtipp": {"message": "Found on Ktipp-Warnliste."},
+  "bgComplaintsKtipp": {"message": "$1 waning(s) found on Ktipp-Warnliste."},
+  "bgComplaintsNotFoundTrustedShops": {"message": "$1 Not found on trustedshops.ch."},
   "bgInternalPage": {"message": "Internal browser page — skipped."},
   "bgWhitelistedMsg": {"message": "Domain \"$1\" is whitelisted."},
   "bgErrorMsg": {"message": "Analysis failed: $1"},
@@ -83,5 +83,11 @@
   "heurSafeDet1": {"message": "No suspicious patterns detected (heuristic mode)."},
   "heurSafeDet2": {"message": "Configure an API key in settings for full threat database analysis."},
   "heurInvalidURLError": {"message": "Could not parse URL"},
-  "heurInvalidURLDet": {"message": "Invalid URL format."}
+  "heurInvalidURLDet": {"message": "Invalid URL format."},
+  "enableTSLabel": {"message": "Enable Trusted Shops"},
+  "enableTSHint": {"message": "Checks for genuine Trusted Shops certifications"},
+  "tsLabel": {"message": "Trusted Shops"},
+  "bgDetailTS": {"message": "[TrustedShops] Certified shop \"$1\"."},
+  "tsMissingDesc": {"message": "Not a Trusted Shops certified shop."},
+  "bgDetailTSMissing": {"message": "Domain \"$1\" is not a certified Trusted Shop."}
 }

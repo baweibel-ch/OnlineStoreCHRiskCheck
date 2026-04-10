@@ -12,6 +12,7 @@ const DEFAULT_CONFIG = {
   enableSafeBrowsing: true,
   enableReklamation: true,
   enableKtipp: true,
+  enableTrustedshops: true,
   whitelist: ['newtab', 'reklamation.ch', 'sunrise.ch', 'ktipp.ch', 'startpage.com']
 };
 
@@ -201,35 +202,49 @@ async function analyzeUrl(tabId, url, force = false, cachedStateDomain, cachedSt
   tabStates.set(tabId, loadingState);
   updateBadge(tabId, loadingState);
   try {
-    const [apiResult, reklamationResult, ktippResult] = await Promise.all([
-      config.enableSafeBrowsing && !cachedStateUrl ? callWarningApi(url, config) : Promise.resolve({ threats: cachedStateUrl.threats ? cachedStateUrl.threats.filter(s => s.type !== 'REKLAMATION_CH' && s.type !== 'KTIPP_WARNLISTE') : [], details: cachedStateUrl.detailsContentApi ? cachedStateUrl.detailsContentApi : '' }),
+    const [apiResult, reklamationResult, ktippResult, trustedshopsResult] = await Promise.all([
+      config.enableSafeBrowsing && !cachedStateUrl ? callWarningApi(url, config) : Promise.resolve({ threats: cachedStateUrl.threats ? cachedStateUrl.threats.filter(s => s.type !== 'REKLAMATION_CH' && s.type !== 'KTIPP_WARNLISTE' && s.type !== 'TRUSTED_SHOPS_MISSING') : [], details: cachedStateUrl.detailsContentApi ? cachedStateUrl.detailsContentApi : '' }),
       config.enableReklamation && !cachedStateDomain ? checkReklamation(url) : Promise.resolve({ threats: cachedStateDomain.threats ? cachedStateDomain.threats.filter(s => s.type === 'REKLAMATION_CH') : [], details: cachedStateDomain.detailsReklamation ? cachedStateDomain.detailsReklamation: '' }),
-      config.enableKtipp && !cachedStateDomain ? checkKtipp(url) : Promise.resolve({ threats: cachedStateDomain.threats ? cachedStateDomain.threats.filter(s => s.type === 'KTIPP_WARNLISTE') : [], details: cachedStateDomain.detailsKtipp ? cachedStateDomain.detailsKtipp : '' })
+      config.enableKtipp && !cachedStateDomain ? checkKtipp(url) : Promise.resolve({ threats: cachedStateDomain.threats ? cachedStateDomain.threats.filter(s => s.type === 'KTIPP_WARNLISTE') : [], details: cachedStateDomain.detailsKtipp ? cachedStateDomain.detailsKtipp : '' }),
+      config.enableTrustedshops && !cachedStateDomain ? checkTrustedshops(url) : Promise.resolve({ threats: cachedStateDomain.threats ? cachedStateDomain.threats.filter(s => s.type === 'TRUSTED_SHOPS_MISSING') : [], details: cachedStateDomain.detailsTrustedshops ? cachedStateDomain.detailsTrustedshops : '' })
     ]);
 
-    const hasSecurityThreats = apiResult.threats.length > 0;
-    const hasReklamation = reklamationResult.threats.length > 0;
-    const hasKtipp = ktippResult.threats.length > 0;
+    const hasSecurityThreats = apiResult && apiResult.threats && apiResult.threats.length > 0;
+    const hasReklamation = reklamationResult && reklamationResult.threats && reklamationResult.threats.length > 0;
+    const hasKtipp = ktippResult && ktippResult.threats && ktippResult.threats.length > 0;
+    const hasTrustedShops = trustedshopsResult && trustedshopsResult.threats && trustedshopsResult.threats.length > 0;
 
-    const combinedThreats = [...apiResult.threats, ...reklamationResult.threats, ...ktippResult.threats];
+    const combinedThreats = [...apiResult.threats, ...reklamationResult.threats, ...ktippResult.threats, ...trustedshopsResult.threats];
 
+    //let status = 'safe';
+    //let message = '✅ ' + (chrome.i18n.getMessage('statusSafeDetail') || 'No threats detected.');
     let status = 'safe';
-    let message = '✅ ' + (chrome.i18n.getMessage('statusSafeDetail') || 'No threats detected.');
+    let message = null;
+    let statusNotSafe = false;
     if (hasSecurityThreats) {
       status = 'danger';
+      statusNotSafe = true;
       message = '⚠️ ' + (chrome.i18n.getMessage('bgThreatsReport', [apiResult.threats.length.toString()]) || `${apiResult.threats.length} security threat(s) detected!`);
     }
-    if (hasReklamation || hasKtipp) {
-      status = !hasSecurityThreats ? 'warning' : status;
-      if (hasReklamation && hasKtipp) {
-        message = (hasSecurityThreats ? message + '\n\n' : '') + '🔍 ' + (chrome.i18n.getMessage('bgComplaintsBoth') || 'Complaints found on reklamation.ch & Ktipp-Warnliste.');
-      } else if (hasReklamation) {
-        const count = reklamationResult.threats[0].count || 0;
-        message = (hasSecurityThreats ? message + '\n\n' : '') + '🔍 ' + (chrome.i18n.getMessage('bgComplaintsRek', [count.toString()]) || `${count} consumer complaint(s) found on reklamation.ch.`);
-      } else {
-        message = (hasSecurityThreats ? message + '\n\n' : '') + '🔍 ' + (chrome.i18n.getMessage('bgComplaintsKtipp') || 'Found on Ktipp-Warnliste.');
-      }
+    if (hasReklamation) {
+      status = statusNotSafe?status:'warning';
+      statusNotSafe = true;
+      const count = reklamationResult.threats.length || 0;
+      message = (message ? message + '\n\n' : '') + '🔍 ' + (chrome.i18n.getMessage('bgComplaintsRek', [count.toString()]) || `${count} consumer complaint(s) found on reklamation.ch.`);
     }
+    if (hasKtipp) {
+      status = statusNotSafe?status:'warning';
+      statusNotSafe = true;
+      const count = ktippResult.threats.length || 0;
+      message = (message ? message + '\n\n' : '') + '🔍 ' + (chrome.i18n.getMessage('bgComplaintsKtipp', [count.toString()]) || `${count} Found on Ktipp-Warnliste.`);
+    }
+    if (hasTrustedShops) {
+      status = statusNotSafe?status:'warning';
+      statusNotSafe = true;
+      const count = trustedshopsResult.threats.length || 0;
+      message = (message ? message + '\n\n' : '') + '🔍 ' + (chrome.i18n.getMessage('bgComplaintsNotFoundTrustedShops', [count.toString()]) || `Not found on Trustedshops.ch.`);
+    }
+
     const state = {
       status: status,
       url: url,
@@ -237,6 +252,7 @@ async function analyzeUrl(tabId, url, force = false, cachedStateDomain, cachedSt
       detailsApi: apiResult.details,
       detailsReklamation: reklamationResult.details,
       detailsKtipp: ktippResult.details,
+      detailsTrustedshops: trustedshopsResult.details,
       checkedAt: new Date().toISOString(),
       message: message
     };
@@ -514,6 +530,42 @@ async function checkKtipp(urlString) {
     return { threats: [], details: '' };
   } catch (e) {
     return { threats: [], details: '' };
+  }
+}
+
+/**
+ * Check if the domain is a Trusted Shops certified shop
+ */
+async function checkTrustedshops(urlString) {
+  try {
+    console.log("checkTrustedshops - urlString: " + urlString);
+    const url = new URL(urlString);
+    const domain = url.hostname.replace(/^www\./i, '');
+    const searchUrl = `https://www.trustedshops.ch/shops?q=${encodeURIComponent(domain)}`;
+
+    const response = await fetch(searchUrl);
+    const text = await response.text();
+    
+    // Check if the response text contains a link to the shop's review page
+    const isFound = text.includes(`trustedshops.ch/bewertung`);
+
+    if (isFound) {
+        const shopUrl = `https://www.trustedshops.ch/shops?q=${domain}`;
+        return {
+          threats: [],
+          details: `✅ ` + (chrome.i18n.getMessage('bgDetailTS', [domain]) || `[TrustedShops] Certified shop "${domain}".`) + `\n` + (chrome.i18n.getMessage('bgDetailMoreInfo') || 'More info:') + shopUrl
+        };
+    }
+    return {
+      threats: [{ type: 'TRUSTED_SHOPS_MISSING', description: chrome.i18n.getMessage('tsMissingDesc') || 'Not a Trusted Shops certified shop.' }], 
+      details: `⚠️ ` + (chrome.i18n.getMessage('bgDetailTSMissing', [domain]) || `[TrustedShops] Domain "${domain}" is not certified.`)
+    };
+  } catch (e) {
+    return {
+      // If there's a fetch error, we might not want to treat it as a hard threat, but to be consistent:
+      threats: [{ type: 'TRUSTED_SHOPS_MISSING', description: chrome.i18n.getMessage('tsMissingDesc') || 'Not a Trusted Shops certified shop.' }], 
+      details: `⚠️ ` + (chrome.i18n.getMessage('bgDetailTSMissing', ['Error']) || `[TrustedShops] Domain is not certified (Error).`)
+    };
   }
 }
 

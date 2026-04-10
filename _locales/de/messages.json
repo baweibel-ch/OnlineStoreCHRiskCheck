@@ -59,9 +59,9 @@
   "btnSaveSettings": {"message": "Einstellungen speichern"},
   "saveStatusSuccess": {"message": "✓ Gespeichert!"},
   "bgThreatsReport": {"message": "$1 Sicherheitsbedrohung(en) gefunden!"},
-  "bgComplaintsBoth": {"message": "Beschwerden auf reklamation.ch & Ktipp-Warnliste gefunden."},
   "bgComplaintsRek": {"message": "$1 Beschwerde(n) auf reklamation.ch gefunden."},
-  "bgComplaintsKtipp": {"message": "Auf der Ktipp-Warnliste gefunden."},
+  "bgComplaintsKtipp": {"message": "$1 Warnunge(n) auf der Ktipp-Warnliste gefunden."},
+  "bgComplaintsNotFoundTrustedShops": {"message": "$1 Nicht gefunden auf trustedshops.ch."},
   "bgInternalPage": {"message": "Interne Browser-Seite — übersprungen."},
   "bgWhitelistedMsg": {"message": "Domain \"$1\" ist auf der Whitelist."},
   "bgErrorMsg": {"message": "Analyse fehlgeschlagen: $1"},
@@ -83,5 +83,11 @@
   "heurSafeDet1": {"message": "Keine verdächtigen Muster gefunden (heuristischer Modus)."},
   "heurSafeDet2": {"message": "Konfigurieren Sie einen API-Schlüssel für die volle Analyse."},
   "heurInvalidURLError": {"message": "URL konnte nicht verarbeitet werden"},
-  "heurInvalidURLDet": {"message": "Ungültiges URL-Format."}
+  "heurInvalidURLDet": {"message": "Ungültiges URL-Format."},
+  "enableTSLabel": {"message": "Trusted Shops aktivieren"},
+  "enableTSHint": {"message": "Sucht nach echten Trusted Shops Zertifizierungen"},
+  "tsLabel": {"message": "Trusted Shops"},
+  "bgDetailTS": {"message": "[TrustedShops] Zertifizierter Shop \"$1\"."},
+  "tsMissingDesc": {"message": "Kein zertifizierter Trusted Shop."},
+  "bgDetailTSMissing": {"message": "Domain \"$1\" ist kein zertifizierter Trusted Shop."}
 }

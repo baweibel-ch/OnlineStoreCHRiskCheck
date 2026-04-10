@@ -22,6 +22,7 @@ async function loadSettings() {
   document.getElementById('enableSafeBrowsing').checked = config.enableSafeBrowsing !== false;
   document.getElementById('enableReklamation').checked = config.enableReklamation !== false;
   document.getElementById('enableKtipp').checked = config.enableKtipp !== false;
+  document.getElementById('enableTrustedshops').checked = config.enableTrustedshops !== false;
   document.getElementById('whitelist').value = (config.whitelist || []).join('\n');
 
   // Save handler
@@ -44,6 +45,7 @@ async function saveSettings() {
     enableSafeBrowsing: document.getElementById('enableSafeBrowsing').checked,
     enableReklamation: document.getElementById('enableReklamation').checked,
     enableKtipp: document.getElementById('enableKtipp').checked,
+    enableTrustedshops: document.getElementById('enableTrustedshops').checked,
     whitelist: document.getElementById('whitelist').value.split('\n')
       .map(line => line.trim())
       .filter(line => line.length > 0)

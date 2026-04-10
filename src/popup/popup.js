@@ -122,6 +122,8 @@ function renderState(state) {
   const detailsContentReklamation = document.getElementById('detailsContentReklamation');
   const detailsSectionKtipp = document.getElementById('detailsSectionKtipp');
   const detailsContentKtipp = document.getElementById('detailsContentKtipp');
+  const detailsSectionTrustedshops = document.getElementById('detailsSectionTrustedshops');
+  const detailsContentTrustedshops = document.getElementById('detailsContentTrustedshops');
   const detailsSection = document.getElementById('detailsSection');
   const detailsContent = document.getElementById('detailsContent');
   const checkTime = document.getElementById('checkTime');
@@ -243,6 +245,13 @@ function renderState(state) {
     detailsContentKtipp.innerHTML = linkify(state.detailsKtipp);
   } else {
     detailsSectionKtipp.style.display = 'none';
+  }
+
+  if (state.detailsTrustedshops) {
+    detailsSectionTrustedshops.style.display = 'block';
+    detailsContentTrustedshops.innerHTML = linkify(state.detailsTrustedshops);
+  } else {
+    detailsSectionTrustedshops.style.display = 'none';
   }
 
   if (state.details) {

@@ -59,9 +59,9 @@
   "btnSaveSettings": {"message": "Enregistrer les paramètres"},
   "saveStatusSuccess": {"message": "✓ Enregistré !"},
   "bgThreatsReport": {"message": "$1 menace(s) de sécurité détectée(s) !"},
-  "bgComplaintsBoth": {"message": "Plaintes trouvées sur reklamation.ch & la liste K-Tipp."},
   "bgComplaintsRek": {"message": "$1 plainte(s) trouvée(s) sur reklamation.ch."},
-  "bgComplaintsKtipp": {"message": "Trouvé sur la liste K-Tipp."},
+  "bgComplaintsKtipp": {"message": "$1 entrée(s) trouvé sur la liste K-Tipp."},
+  "bgComplaintsNotFoundTrustedShops": {"message": "$1 ne pas trouvé sur trustedshops.ch."},
   "bgInternalPage": {"message": "Page interne — ignorée."},
   "bgWhitelistedMsg": {"message": "Le domaine « $1 » est sur liste blanche."},
   "bgErrorMsg": {"message": "L'analyse a échoué : $1"},
@@ -83,5 +83,11 @@
   "heurSafeDet1": {"message": "Aucun modèle suspect détecté (mode heuristique)."},
   "heurSafeDet2": {"message": "Configurez une clé API pour une analyse complète."},
   "heurInvalidURLError": {"message": "Impossible de lire l'URL"},
-  "heurInvalidURLDet": {"message": "Format d'URL invalide."}
+  "heurInvalidURLDet": {"message": "Format d'URL invalide."},
+  "enableTSLabel": {"message": "Activer Trusted Shops"},
+  "enableTSHint": {"message": "Recherche des certifications Trusted Shops authentiques"},
+  "tsLabel": {"message": "Trusted Shops"},
+  "bgDetailTS": {"message": "[TrustedShops] Boutique certifiée \"$1\"."},
+  "tsMissingDesc": {"message": "Boutique non certifiée Trusted Shops."},
+  "bgDetailTSMissing": {"message": "Le domaine \"$1\" n'est pas une boutique certifiée Trusted Shops."}
 }
