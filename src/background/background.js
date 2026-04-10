@@ -9,7 +9,7 @@ const DEFAULT_CONFIG = {
   apiKey: '',
   checkAutomatically: true,
   notificationsEnabled: true,
-  enableSafeBrowsing: true,
+  enableSafeBrowsing: false,
   enableReklamation: true,
   enableKtipp: true,
   enableTrustedshops: true,
