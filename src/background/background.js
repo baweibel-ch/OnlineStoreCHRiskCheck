@@ -200,13 +200,11 @@ async function analyzeUrl(tabId, url, force = false, cachedStateDomain, cachedSt
   const loadingState = { status: 'loading', url, message: 'Analyzing…' };
   tabStates.set(tabId, loadingState);
   updateBadge(tabId, loadingState);
-  const hadReklamation = cachedStateDomain && cachedStateDomain.threats && cachedStateDomain.threats.filter(s => s.type === 'REKLAMATION_CH').length > 0;
-  const hadKtipp = cachedStateDomain && cachedStateDomain.threats && cachedStateDomain.threats.filter(s => s.type === 'KTIPP_WARNLISTE').length > 0;
   try {
     const [apiResult, reklamationResult, ktippResult] = await Promise.all([
-      config.enableSafeBrowsing && !cachedStateUrl ? callWarningApi(url, config) : Promise.resolve({ threats: [], details: '' }),
-      config.enableReklamation && !cachedStateDomain ? checkReklamation(url) : Promise.resolve({ threats: cachedStateDomain.threats?cachedStateDomain.threats.filter(s => s.type === 'REKLAMATION_CH'):[], details: hadReklamation?cachedStateDomain.details:'' }),
-      config.enableKtipp && !cachedStateDomain ? checkKtipp(url) : Promise.resolve({ threats: cachedStateDomain.threats?cachedStateDomain.threats.filter(s => s.type === 'KTIPP_WARNLISTE'):[], details: (!hadReklamation && !hadKtipp)?cachedStateDomain.details:'' })
+      config.enableSafeBrowsing && !cachedStateUrl ? callWarningApi(url, config) : Promise.resolve({ threats: cachedStateUrl.threats ? cachedStateUrl.threats.filter(s => s.type !== 'REKLAMATION_CH' && s.type !== 'KTIPP_WARNLISTE') : [], details: cachedStateUrl.detailsContentApi ? cachedStateUrl.detailsContentApi : '' }),
+      config.enableReklamation && !cachedStateDomain ? checkReklamation(url) : Promise.resolve({ threats: cachedStateDomain.threats ? cachedStateDomain.threats.filter(s => s.type === 'REKLAMATION_CH') : [], details: cachedStateDomain.detailsReklamation ? cachedStateDomain.detailsReklamation: '' }),
+      config.enableKtipp && !cachedStateDomain ? checkKtipp(url) : Promise.resolve({ threats: cachedStateDomain.threats ? cachedStateDomain.threats.filter(s => s.type === 'KTIPP_WARNLISTE') : [], details: cachedStateDomain.detailsKtipp ? cachedStateDomain.detailsKtipp : '' })
     ]);
 
     const hasSecurityThreats = apiResult.threats.length > 0;
@@ -214,7 +212,6 @@ async function analyzeUrl(tabId, url, force = false, cachedStateDomain, cachedSt
     const hasKtipp = ktippResult.threats.length > 0;
 
     const combinedThreats = [...apiResult.threats, ...reklamationResult.threats, ...ktippResult.threats];
-    const combinedDetails = [apiResult.details, reklamationResult.details, ktippResult.details].filter(Boolean).join('\n\n');
 
     let status = 'safe';
     let message = '✅ No threats detected.';
@@ -223,21 +220,23 @@ async function analyzeUrl(tabId, url, force = false, cachedStateDomain, cachedSt
       message = `⚠️ ${apiResult.threats.length} security threat(s) detected!`;
     }
     if (hasReklamation || hasKtipp) {
-      status = !hasSecurityThreats?'warning':status;
+      status = !hasSecurityThreats ? 'warning' : status;
       if (hasReklamation && hasKtipp) {
-        message = (hasSecurityThreats?message+'\n\n':'') + '🔍 Complaints found on reklamation.ch & Ktipp-Warnliste.';
+        message = (hasSecurityThreats ? message + '\n\n' : '') + '🔍 Complaints found on reklamation.ch & Ktipp-Warnliste.';
       } else if (hasReklamation) {
         const count = reklamationResult.threats[0].count || 0;
-        message = (hasSecurityThreats?message+'\n\n':'') + `🔍 ${count} consumer complaint(s) found on reklamation.ch.`;
+        message = (hasSecurityThreats ? message + '\n\n' : '') + `🔍 ${count} consumer complaint(s) found on reklamation.ch.`;
       } else {
-        message = (hasSecurityThreats?message+'\n\n':'') + '🔍 Found on Ktipp-Warnliste.';
+        message = (hasSecurityThreats ? message + '\n\n' : '') + '🔍 Found on Ktipp-Warnliste.';
       }
     }
     const state = {
       status: status,
       url: url,
       threats: combinedThreats,
-      details: combinedDetails,
+      detailsApi: apiResult.details,
+      detailsReklamation: reklamationResult.details,
+      detailsKtipp: ktippResult.details,
       checkedAt: new Date().toISOString(),
       message: message
     };
@@ -356,7 +355,7 @@ async function checkReklamation(urlString) {
 
     const response = await fetch(searchUrl);
     if (!response.ok) {
-      return { threats: [], details: '' };
+      return {threats: [], details: ''};
     }
 
     const text = await response.text();

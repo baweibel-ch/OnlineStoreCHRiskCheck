@@ -112,6 +112,12 @@ function renderState(state) {
   const detail = document.getElementById('statusDetail');
   const threatsSection = document.getElementById('threatsSection');
   const threatsList = document.getElementById('threatsList');
+  const detailsSectionApi = document.getElementById('detailsSectionApi');
+  const detailsContentApi = document.getElementById('detailsContentApi');
+  const detailsSectionReklamation = document.getElementById('detailsSectionReklamation');
+  const detailsContentReklamation = document.getElementById('detailsContentReklamation');
+  const detailsSectionKtipp = document.getElementById('detailsSectionKtipp');
+  const detailsContentKtipp = document.getElementById('detailsContentKtipp');
   const detailsSection = document.getElementById('detailsSection');
   const detailsContent = document.getElementById('detailsContent');
   const checkTime = document.getElementById('checkTime');
@@ -214,6 +220,27 @@ function renderState(state) {
   }
 
   // Render details
+  if (state.detailsApi) {
+    detailsSectionApi.style.display = 'block';
+    detailsContentApi.innerHTML = linkify(state.detailsApi);
+  } else {
+    detailsSectionApi.style.display = 'none';
+  }
+
+  if (state.detailsReklamation) {
+    detailsSectionReklamation.style.display = 'block';
+    detailsContentReklamation.innerHTML = linkify(state.detailsReklamation);
+  } else {
+    detailsSectionReklamation.style.display = 'none';
+  }
+
+  if (state.detailsKtipp) {
+    detailsSectionKtipp.style.display = 'block';
+    detailsContentKtipp.innerHTML = linkify(state.detailsKtipp);
+  } else {
+    detailsSectionKtipp.style.display = 'none';
+  }
+
   if (state.details) {
     detailsSection.style.display = 'block';
     detailsContent.innerHTML = linkify(state.details);
