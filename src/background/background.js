@@ -30,12 +30,39 @@ chrome.runtime.onInstalled.addListener(async () => {
 chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
   if (changeInfo.status === 'complete' && tab.url) {
     const config = await getConfig();
+    const urlObj = new URL(tab.url);
+    const domain = urlObj.hostname.toLowerCase();
+
+    // Check if we already have a result for this domain in ANY tab
+    let cachedState = null;
+    for (const [id, state] of tabStates.entries()) {
+      if (state.url) {
+        try {
+          const cachedUrlObj = new URL(state.url);
+          if (cachedUrlObj.hostname.toLowerCase() === domain && state.status !== 'loading' && state.status !== 'idle') {
+            cachedState = { ...state, url: tab.url }; // Use current URL but cached results
+            break;
+          }
+        } catch (e) { /* ignore invalid URLs */ }
+      }
+    }
+
     if (config.checkAutomatically) {
-      await analyzeUrl(tabId, tab.url);
+      if (cachedState) {
+        tabStates.set(tabId, cachedState);
+        updateBadge(tabId, cachedState);
+        chrome.tabs.sendMessage(tabId, { action: 'updateStatus', state: cachedState }).catch(() => {});
+      } else {
+        await analyzeUrl(tabId, tab.url);
+      }
     } else {
-      // Manual mode - set to idle state if not already set or if URL changed
+      // Manual mode - set to idle state if no cached result for this domain
       const currentState = tabStates.get(tabId);
-      if (!currentState || currentState.url !== tab.url) {
+      if (cachedState) {
+        tabStates.set(tabId, cachedState);
+        updateBadge(tabId, cachedState);
+        chrome.tabs.sendMessage(tabId, { action: 'updateStatus', state: cachedState }).catch(() => {});
+      } else if (!currentState || currentState.url !== tab.url) {
         const idleState = { status: 'idle', url: tab.url, message: 'Ready to scan.' };
         tabStates.set(tabId, idleState);
         updateBadge(tabId, idleState);

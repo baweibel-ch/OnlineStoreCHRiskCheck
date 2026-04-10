@@ -56,21 +56,19 @@ function showStatusBadge(state) {
   let label = '';
   let icon = cartIcon;
 
-  if (state.status === 'danger') {
+  // Look for reklamation or ktipp count in threats
+  const reklamationThreat = state.threats?.find(t => t.type === 'REKLAMATION_CH');
+  const ktippThreat = state.threats?.find(t => t.type === 'KTIPP_WARNLISTE');
+  
+  if (reklamationThreat && ktippThreat) {
+    label = 'Found on Ktipp & Reklamation';
+  } else if (ktippThreat) {
+    label = 'Ktipp-Warnliste: Entry found';
+  } else if (reklamationThreat) {
+    const count = reklamationThreat.count || 0;
+    label = `Reklamation: ${count} complaint${count !== 1 ? 's' : ''} found`;
+  } else if (state.status === 'danger') {
     label = `${threatCount} security issue${threatCount !== 1 ? 's' : ''} detected`;
-  } else if (state.status === 'warning') {
-    // Look for reklamation or ktipp count in threats
-    const reklamationThreat = state.threats?.find(t => t.type === 'REKLAMATION_CH');
-    const ktippThreat = state.threats?.find(t => t.type === 'KTIPP_WARNLISTE');
-    
-    if (reklamationThreat && ktippThreat) {
-      label = 'Found on Ktipp & Reklamation';
-    } else if (ktippThreat) {
-      label = 'Ktipp-Warnliste: Entry found';
-    } else {
-      const count = reklamationThreat?.count || threatCount;
-      label = `Reklamation: ${count} complaint${count !== 1 ? 's' : ''} found`;
-    }
   } else if (state.status === 'whitelisted') {
     label = 'Domain is whitelisted';
     icon = checkIcon;
