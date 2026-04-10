@@ -363,20 +363,25 @@ async function checkReklamation(urlString) {
     const count = resultMatch ? parseInt(resultMatch[1], 10) : 0;
 
     if (count > 0) {
-      // Extract individual complaint links
+      // Extract individual complaint links with titles
       const complaintLinks = [];
-      const linkRegex = /complaint\.php\?id=(\d+)/g;
+      const entryRegex = /<a href="(complaint\.php\?id=\d+)">[\s\S]*?<h4>([\s\S]*?)<\/h4>/gi;
       let match;
-      while ((match = linkRegex.exec(text)) !== null && complaintLinks.length < 5) {
-        const fullLink = `https://www.reklamation.ch/complaint.php?id=${match[1]}`;
-        if (!complaintLinks.includes(fullLink)) {
-          complaintLinks.push(fullLink);
+      
+      while ((match = entryRegex.exec(text)) !== null && complaintLinks.length < 5) {
+        const relativeLink = match[1];
+        const title = match[2].trim().replace(/<[^>]*>?/gm, ''); // Remove any nested tags
+        const fullLink = `https://www.reklamation.ch/${relativeLink}`;
+        
+        if (!complaintLinks.some(c => c.link === fullLink)) {
+          complaintLinks.push({ link: fullLink, title: title });
         }
       }
 
+      console.log("complaintLinks: ", complaintLinks);
       let linksDetail = '';
       if (complaintLinks.length > 0) {
-        linksDetail = '\nLatest complaints:\n' + complaintLinks.map(l => `- ${l}`).join('\n');
+        linksDetail = '\nLatest complaints:\n' + complaintLinks.map(c => `<a href="${c.link}" target="_blank" rel="noopener noreferrer"><h4>${c.title}</h4></a>`).join('\n');
       }
 
       return {

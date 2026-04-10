@@ -258,21 +258,23 @@ function renderState(state) {
 function linkify(text) {
   if (!text) return '';
   
-  // Identify blocks that should remain as HTML (specifically <article> blocks for Ktipp)
-  const articleRegex = /<article[\s\S]*?<\/article>/gi;
+  // Identify blocks that should remain as HTML 
+  // - <article> blocks for Ktipp
+  // - <a>...<h4>...</h4></a> blocks for Reklamation
+  const htmlBlockRegex = /(<article[\s\S]*?<\/article>|<a[^>]+href="https:\/\/www\.reklamation\.ch\/complaint\.php\?id=\d+"[^>]*><h4>[\s\S]*?<\/h4><\/a>)/gi;
   const parts = [];
   let lastIndex = 0;
   let match;
 
-  while ((match = articleRegex.exec(text)) !== null) {
+  while ((match = htmlBlockRegex.exec(text)) !== null) {
     // Process text before the match
     const beforeMatch = text.substring(lastIndex, match.index);
     if (beforeMatch) {
       parts.push(processRegularText(beforeMatch));
     }
-    // Push the article match as-is
+    // Push the HTML match as-is
     parts.push(match[0]);
-    lastIndex = articleRegex.lastIndex;
+    lastIndex = htmlBlockRegex.lastIndex;
   }
 
   // Process remaining text

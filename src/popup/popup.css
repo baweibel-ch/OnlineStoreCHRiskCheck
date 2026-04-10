@@ -413,6 +413,17 @@ body {
   transition: color 0.2s ease;
 }
 
+.details-content a h4 {
+  margin: 8px 0 2px 0;
+  color: var(--text-primary);
+  font-size: 13px;
+  text-decoration: underline;
+}
+
+.details-content a:hover h4 {
+  color: var(--accent-primary);
+}
+
 .details-content a:hover {
   color: var(--accent-secondary);
 }
