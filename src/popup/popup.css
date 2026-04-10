@@ -392,6 +392,19 @@ body {
   word-break: break-all;
 }
 
+.details-content article {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border-subtle);
+  white-space: normal;
+}
+
+.details-content article h3 {
+  color: var(--text-primary);
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
 .details-content a {
   color: var(--accent-primary);
   text-decoration: underline;

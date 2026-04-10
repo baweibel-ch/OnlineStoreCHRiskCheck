@@ -201,6 +201,34 @@ function renderState(state) {
 
 function linkify(text) {
   if (!text) return '';
+  
+  // Identify blocks that should remain as HTML (specifically <article> blocks for Ktipp)
+  const articleRegex = /<article[\s\S]*?<\/article>/gi;
+  const parts = [];
+  let lastIndex = 0;
+  let match;
+
+  while ((match = articleRegex.exec(text)) !== null) {
+    // Process text before the match
+    const beforeMatch = text.substring(lastIndex, match.index);
+    if (beforeMatch) {
+      parts.push(processRegularText(beforeMatch));
+    }
+    // Push the article match as-is
+    parts.push(match[0]);
+    lastIndex = articleRegex.lastIndex;
+  }
+
+  // Process remaining text
+  const remaining = text.substring(lastIndex);
+  if (remaining) {
+    parts.push(processRegularText(remaining));
+  }
+
+  return parts.join('');
+}
+
+function processRegularText(text) {
   const urlRegex = /(https?:\/\/[^\s\n]+)/g;
   return text.split(urlRegex).map(part => {
     if (part.match(urlRegex)) {

@@ -409,10 +409,11 @@ async function checkKtipp(urlString) {
     // Check if the response contains the domain (case-insensitive)
     // Check if response text contains div with id="warnlisteContent"  and <article><h3> with domain
     const hasWarnlisteContent = text.includes('id="warnlisteContent"');
-    const articleH3Regex = new RegExp(`<article[^>]*>\\s*<h3[^>]*>\\s*[^<]*${domain.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}[^<]*<\\/h3>`, 'i');
-    const hasArticleH3 = articleH3Regex.test(text);
+    const articleH3Regex = new RegExp(`<article[^>]*>\\s*<h3[^>]*>\\s*[^<]*${domain.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}[^<]*<\\/h3>[\\s\\S]*?<\\/article>`, 'i');
+    const articleMatch = text.match(articleH3Regex);
 
-    if (hasWarnlisteContent && hasArticleH3) {
+    if (hasWarnlisteContent && articleMatch) {
+      const articleHtml = articleMatch[0];
       const searchLink = formAction.includes('?') 
         ? `${formAction}&${formData.toString()}` 
         : `${formAction}?${formData.toString()}`;
@@ -423,7 +424,7 @@ async function checkKtipp(urlString) {
           description: `Found on Ktipp-Warnliste`,
           count: 1
         }],
-        details: `⚠️ [Ktipp-Warnliste] Found entry for "${domain}".\nMore info: ${internetshopsUrl}`
+        details: `⚠️ [Ktipp-Warnliste] Found entry for "${domain}".\nMore info: ${internetshopsUrl}\n\n${articleHtml}`
       };
     }
 
