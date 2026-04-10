@@ -19,14 +19,23 @@ async function init() {
   // Get current status from background
   chrome.runtime.sendMessage({ action: 'getConfig' }, (config) => {
     chrome.runtime.sendMessage({ action: 'getStatus', tabId: tab.id }, (state) => {
+      const domain = new URL(tab.url).hostname.replace(/^www\./i, '');
+      const isWhitelisted = config.whitelist && config.whitelist.some(w => {
+        const trimmed = w.trim().toLowerCase().replace(/^www\./i, '');
+        return domain === trimmed || domain.endsWith('.' + trimmed);
+      });
+
       if (state && state.status !== 'unknown') {
+        if (state.status === 'idle' && isWhitelisted) {
+          state.isWhitelisted = true;
+        }
         renderState(state);
       } else if (config.checkAutomatically !== false) {
         // Trigger fresh analysis if automatic scanning is enabled
         triggerScan(tab);
       } else {
         // Just show idle state if manual scan is selected
-        renderState({ status: 'idle', message: 'Manual scan mode enabled.', url: tab.url });
+        renderState({ status: 'idle', message: 'Manual scan mode enabled.', url: tab.url, isWhitelisted });
       }
     });
   });
@@ -87,7 +96,7 @@ function triggerScan(tab) {
   renderState({ status: 'loading', message: 'Analyzing…', url: tab.url });
 
   chrome.runtime.sendMessage(
-    { action: 'analyzeUrl', url: tab.url, tabId: tab.id },
+    { action: 'analyzeUrl', url: tab.url, tabId: tab.id, force: true },
     (result) => {
       if (result) {
         renderState(result);
@@ -171,7 +180,9 @@ function renderState(state) {
     case 'idle':
       icon.innerHTML = getIdleIcon();
       label.textContent = 'Ready';
-      detail.textContent = 'Click "Scan" to analyze this page.';
+      detail.textContent = state.isWhitelisted 
+        ? 'Click "Scan" to analyze (Whitelisted).' 
+        : 'Click "Scan" to analyze this page.';
       break;
 
     default:

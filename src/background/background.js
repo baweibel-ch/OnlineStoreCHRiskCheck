@@ -12,7 +12,7 @@ const DEFAULT_CONFIG = {
   enableSafeBrowsing: true,
   enableReklamation: true,
   enableKtipp: true,
-  whitelist: ['reklamation.ch', 'sunrise.ch', 'ktipp.ch']
+  whitelist: ['newtab', 'reklamation.ch', 'sunrise.ch', 'ktipp.ch', 'startpage.com']
 };
 
 // --- State ---
@@ -63,12 +63,21 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
         updateBadge(tabId, cachedState);
         chrome.tabs.sendMessage(tabId, { action: 'updateStatus', state: cachedState }).catch(() => {});
       } else if (!currentState || currentState.url !== tab.url) {
-        const idleState = { status: 'idle', url: tab.url, message: 'Ready to scan.' };
-        tabStates.set(tabId, idleState);
-        updateBadge(tabId, idleState);
-        
+        const isWhitelisted = config.whitelist && config.whitelist.some(w => {
+          const trimmed = w.trim().toLowerCase().replace(/^www\./i, '');
+          if (!trimmed) return false;
+
+          const currentDomain = domain.replace(/^www\./i, '');
+          return currentDomain === trimmed || currentDomain.endsWith('.' + trimmed);
+        });
+        const state= isWhitelisted?
+          {status: 'whitelisted', url: tab.url, message: `Domain "${domain}" is whitelisted.`}
+          :{status: 'idle', url: tab.url, message: 'Ready to scan.'};
+          tabStates.set(tabId, state);
+          updateBadge(tabId, state);
         // Broadcast to content script
-        chrome.tabs.sendMessage(tabId, { action: 'updateStatus', state: idleState }).catch(() => {});
+        chrome.tabs.sendMessage(tabId, {action: 'updateStatus', state: state}).catch(() => {
+        });
       }
     }
   }
@@ -77,7 +86,7 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
 // --- Message Handler ---
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === 'analyzeUrl') {
-    handleAnalyzeRequest(message.url, message.tabId)
+    handleAnalyzeRequest(message.url, message.tabId, message.force)
       .then(result => sendResponse(result))
       .catch(err => sendResponse({ status: 'error', message: err.message }));
     return true; // async response
@@ -122,16 +131,51 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 });
 
 // --- Core Analysis ---
-async function handleAnalyzeRequest(url, tabId) {
-  const result = await analyzeUrl(tabId, url);
+async function handleAnalyzeRequest(url, tabId, force = false) {
+  const result = await analyzeUrl(tabId, url, force);
   return result;
 }
 
-async function analyzeUrl(tabId, url) {
+async function analyzeUrl(tabId, url, force = false) {
   if (!url || url.startsWith('chrome://') || url.startsWith('chrome-extension://') || url.startsWith('about:')) {
     const state = { status: 'skipped', url, message: 'Internal browser page — skipped.' };
     tabStates.set(tabId, state);
     updateBadge(tabId, state);
+    return state;
+  }
+
+  const config = await getConfig();
+  const urlObj = new URL(url);
+  const domain = urlObj.hostname.toLowerCase();
+
+  // Check whitelist (skipped if force is true)
+  const isWhitelisted = !force && config.whitelist && config.whitelist.some(w => {
+    const trimmed = w.trim().toLowerCase().replace(/^www\./i, '');
+    if (!trimmed) return false;
+    
+    const currentDomain = domain.replace(/^www\./i, '');
+    return currentDomain === trimmed || currentDomain.endsWith('.' + trimmed);
+  });
+
+  if (isWhitelisted) {
+    const state = { 
+      status: 'whitelisted', 
+      url, 
+      message: `Domain "${domain}" is whitelisted.` 
+    };
+    tabStates.set(tabId, state);
+    updateBadge(tabId, state);
+
+    // Notify content script
+    try {
+      chrome.tabs.sendMessage(tabId, {
+        action: 'updateStatus',
+        state: state
+      });
+    } catch (e) {
+      // Content script not loaded yet, ignore
+    }
+
     return state;
   }
 
@@ -141,41 +185,6 @@ async function analyzeUrl(tabId, url) {
   updateBadge(tabId, loadingState);
 
   try {
-    const config = await getConfig();
-    const urlObj = new URL(url);
-    const domain = urlObj.hostname.toLowerCase();
-
-    // Check whitelist
-    const isWhitelisted = config.whitelist && config.whitelist.some(w => {
-      const trimmed = w.trim().toLowerCase().replace(/^www\./i, '');
-      if (!trimmed) return false;
-      
-      const currentDomain = domain.replace(/^www\./i, '');
-      return currentDomain === trimmed || currentDomain.endsWith('.' + trimmed);
-    });
-
-    if (isWhitelisted) {
-      const state = { 
-        status: 'whitelisted', 
-        url, 
-        message: `Domain "${domain}" is whitelisted.` 
-      };
-      tabStates.set(tabId, state);
-      updateBadge(tabId, state);
-
-      // Notify content script
-      try {
-        chrome.tabs.sendMessage(tabId, {
-          action: 'updateStatus',
-          state: state
-        });
-      } catch (e) {
-        // Content script not loaded yet, ignore
-      }
-
-      return state;
-    }
-
     const [apiResult, reklamationResult, ktippResult] = await Promise.all([
       config.enableSafeBrowsing ? callWarningApi(url, config) : Promise.resolve({ threats: [], details: '' }),
       config.enableReklamation ? checkReklamation(url) : Promise.resolve({ threats: [], details: '' }),
@@ -215,7 +224,6 @@ async function analyzeUrl(tabId, url) {
       checkedAt: new Date().toISOString(),
       message: message
     };
-
     tabStates.set(tabId, state);
     updateBadge(tabId, state);
 
@@ -248,6 +256,7 @@ async function analyzeUrl(tabId, url) {
  * Supports Google Safe Browsing v4 format and generic REST API formats.
  */
 async function callWarningApi(url, config) {
+  console.log("callWarningApi, url: " + url);
   if (!config.apiKey) {
     // Demo mode: perform basic heuristic checks
     return performHeuristicCheck(url);
@@ -323,6 +332,7 @@ function parseApiResponse(data, config) {
  * Check for complaints on reklamation.ch
  */
 async function checkReklamation(urlString) {
+  console.log("checkReklamation, urlString: " + urlString);
   try {
     const url = new URL(urlString);
     const domain = url.hostname.replace(/^www\./i, '');
@@ -374,6 +384,7 @@ async function checkReklamation(urlString) {
  * Check for warnings on ktipp.ch
  */
 async function checkKtipp(urlString) {
+  console.log("checkKtipp, urlString: " + urlString);
   try {
     const url = new URL(urlString);
     const domain = url.hostname.replace(/^www\./i, '');
