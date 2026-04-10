@@ -61,6 +61,26 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       .then(() => sendResponse({ success: true }));
     return true;
   }
+
+  if (message.action === 'addToWhitelist') {
+    getConfig().then(config => {
+      if (!config.whitelist.includes(message.domain)) {
+        config.whitelist.push(message.domain);
+        chrome.storage.sync.set({ config }).then(() => sendResponse({ success: true }));
+      } else {
+        sendResponse({ success: true });
+      }
+    });
+    return true;
+  }
+
+  if (message.action === 'removeFromWhitelist') {
+    getConfig().then(config => {
+      config.whitelist = config.whitelist.filter(d => d !== message.domain);
+      chrome.storage.sync.set({ config }).then(() => sendResponse({ success: true }));
+    });
+    return true;
+  }
 });
 
 // --- Core Analysis ---

@@ -31,6 +31,51 @@ async function init() {
   document.getElementById('btnSettings').addEventListener('click', () => {
     chrome.runtime.openOptionsPage();
   });
+
+  // Whitelist buttons
+  const btnAddWhitelist = document.getElementById('btnAddWhitelist');
+  const btnRemoveWhitelist = document.getElementById('btnRemoveWhitelist');
+
+  const updateWhitelistButtons = async () => {
+    const config = await new Promise(resolve => {
+      chrome.runtime.sendMessage({ action: 'getConfig' }, resolve);
+    });
+    
+    const domain = new URL(tab.url).hostname.replace(/^www\./i, '');
+    const isWhitelisted = config.whitelist && config.whitelist.some(w => {
+      const trimmed = w.trim().toLowerCase().replace(/^www\./i, '');
+      return domain === trimmed || domain.endsWith('.' + trimmed);
+    });
+
+    if (isWhitelisted) {
+      btnAddWhitelist.style.display = 'none';
+      btnRemoveWhitelist.style.display = 'flex';
+    } else {
+      btnAddWhitelist.style.display = 'flex';
+      btnRemoveWhitelist.style.display = 'none';
+    }
+  };
+
+  btnAddWhitelist.addEventListener('click', () => {
+    const domain = new URL(tab.url).hostname.replace(/^www\./i, '');
+    chrome.runtime.sendMessage({ action: 'addToWhitelist', domain }, () => {
+      updateWhitelistButtons();
+      triggerScan(tab);
+    });
+  });
+
+  btnRemoveWhitelist.addEventListener('click', () => {
+    const domain = new URL(tab.url).hostname.replace(/^www\./i, '');
+    chrome.runtime.sendMessage({ action: 'removeFromWhitelist', domain }, () => {
+      updateWhitelistButtons();
+      triggerScan(tab);
+    });
+  });
+
+  // Initial check for whitelist status
+  if (tab.url && !tab.url.startsWith('chrome')) {
+    updateWhitelistButtons();
+  }
 }
 
 function triggerScan(tab) {

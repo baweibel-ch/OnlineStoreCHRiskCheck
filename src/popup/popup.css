@@ -115,6 +115,64 @@ body {
   font-weight: 400;
 }
 
+/* --- Header Actions --- */
+.header-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-whitelist {
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-glass);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-whitelist:hover {
+  background: var(--bg-glass-hover);
+  color: var(--text-primary);
+  border-color: var(--border-accent);
+  transform: translateY(-1px);
+}
+
+.btn-whitelist:active {
+  transform: translateY(0);
+}
+
+#btnAddWhitelist {
+  color: var(--color-warning);
+  background: var(--color-warning-bg);
+  border-color: rgba(245, 158, 11, 0.3);
+}
+
+#btnAddWhitelist:hover {
+  border-color: var(--color-warning);
+  box-shadow: 0 0 12px rgba(245, 158, 11, 0.2);
+}
+
+#btnRemoveWhitelist.active {
+  color: var(--color-safe);
+  background: var(--color-safe-bg);
+  border-color: rgba(16, 185, 129, 0.3);
+}
+
+#btnRemoveWhitelist.active:hover {
+  border-color: var(--color-safe);
+  box-shadow: 0 0 12px var(--color-safe-glow);
+}
+
+.btn-whitelist svg {
+  width: 22px;
+  height: 22px;
+}
+
 /* --- Status Card --- */
 .status-card {
   background: var(--bg-glass);
