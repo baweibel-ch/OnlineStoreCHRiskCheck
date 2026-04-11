@@ -7,13 +7,13 @@
 const DEFAULT_CONFIG = {
   apiUrl: 'https://safebrowsing.googleapis.com/v4/threatMatches:find',
   apiKey: '',
-  checkAutomatically: true,
+  checkAutomatically: false,
   notificationsEnabled: true,
   enableSafeBrowsing: false,
   enableReklamation: true,
   enableKtipp: true,
   enableTrustedshops: true,
-  whitelist: ['newtab', 'reklamation.ch', 'sunrise.ch', 'ktipp.ch', 'startpage.com']
+  whitelist: ['newtab', 'google.com', 'google.ch', 'reklamation.ch', 'sunrise.ch', 'ktipp.ch', 'startpage.com']
 };
 
 // --- State ---
