@@ -33,6 +33,10 @@ async function loadSettings() {
     const input = document.getElementById('apiKey');
     input.type = input.type === 'password' ? 'text' : 'password';
   });
+
+  // Set API Key Help Link URL
+  const lang = chrome.i18n.getUILanguage().split('-')[0] || 'en';
+  document.getElementById('apiKeyHelpLink').href = `https://developers.google.com/safe-browsing/v4/get-started?hl=${lang}`;
 }
 
 async function saveSettings() {

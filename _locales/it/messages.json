@@ -89,5 +89,9 @@
   "tsLabel": {"message": "Trusted Shops"},
   "bgDetailTS": {"message": "[TrustedShops] Negozio certificato \"$1\"."},
   "tsMissingDesc": {"message": "Non è un negozio certificato Trusted Shops."},
-  "bgDetailTSMissing": {"message": "Il dominio \"$1\" non è un negozio certificato Trusted Shops."}
+  "bgDetailTSMissing": {"message": "Il dominio \"$1\" non è un negozio certificato Trusted Shops."},
+  "apiKeyHelpLabel": {"message": "Come ottenere una chiave API?"},
+  "clipboardCopied": {"message": "Copiato negli appunti!"},
+  "pageTitle": {"message": "Warnlisten Plugin — Impostazioni"},
+  "footerText": {"message": "Warnlisten Plugin v1.0.0 — Sviluppato per Chrome, Chromium e Brave"}
 }
