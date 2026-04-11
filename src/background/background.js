@@ -201,7 +201,6 @@ async function analyzeUrl(tabId, url, force = false, cachedStateDomain, cachedSt
   const loadingState = { status: 'loading', url, message: chrome.i18n.getMessage('statusAnalyzing') || 'Analyzing…' };
   tabStates.set(tabId, loadingState);
   updateBadge(tabId, loadingState);
-  console.log("gurk0")
   try {
     const [apiResult, reklamationResult, ktippResult, trustedshopsResult] = await Promise.all([
       config.enableSafeBrowsing && !cachedStateUrl ? callWarningApi(url, config) : Promise.resolve({ threats: cachedStateUrl && cachedStateUrl.threats ? cachedStateUrl.threats.filter(s => s.type !== 'REKLAMATION_CH' && s.type !== 'KTIPP_WARNLISTE' && s.type !== 'TRUSTED_SHOPS_MISSING') : [], details: cachedStateUrl && cachedStateUrl.detailsContentApi ? cachedStateUrl.detailsContentApi : '' }),
@@ -209,7 +208,6 @@ async function analyzeUrl(tabId, url, force = false, cachedStateDomain, cachedSt
       config.enableKtipp && !cachedStateDomain ? checkKtipp(url) : Promise.resolve({ threats: cachedStateDomain && cachedStateDomain.threats ? cachedStateDomain.threats.filter(s => s.type === 'KTIPP_WARNLISTE') : [], details: cachedStateDomain && cachedStateDomain.detailsKtipp ? cachedStateDomain.detailsKtipp : '' }),
       config.enableTrustedshops && !cachedStateDomain ? checkTrustedshops(url) : Promise.resolve({ threats: cachedStateDomain && cachedStateDomain.threats ? cachedStateDomain.threats.filter(s => s.type === 'TRUSTED_SHOPS_MISSING') : [], details: cachedStateDomain && cachedStateDomain.detailsTrustedshops ? cachedStateDomain.detailsTrustedshops : '' })
     ]);
-    console.log("gurk1")
     const hasSecurityThreats = apiResult && apiResult.threats && apiResult.threats.length > 0;
     const hasReklamation = reklamationResult && reklamationResult.threats && reklamationResult.threats.length > 0;
     const hasKtipp = ktippResult && ktippResult.threats && ktippResult.threats.length > 0;
@@ -217,7 +215,6 @@ async function analyzeUrl(tabId, url, force = false, cachedStateDomain, cachedSt
 
     const combinedThreats = [...apiResult.threats, ...reklamationResult.threats, ...ktippResult.threats, ...trustedshopsResult.threats];
 
-    console.log("gurk2")
     let status = 'safe';
     let message = null;
     let statusNotSafe = false;
@@ -271,7 +268,6 @@ async function analyzeUrl(tabId, url, force = false, cachedStateDomain, cachedSt
 
     return state;
   } catch (error) {
-    console.log("Error, ", error)
     const state = {
       status: 'error',
       url: url,
@@ -533,7 +529,6 @@ async function checkKtipp(urlString) {
     };*/
     return { threats: [], details: '' };
   } catch (e) {
-    console.log("ktipp error")
     return { threats: [], details: '' };
   }
 }
