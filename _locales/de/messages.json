@@ -96,5 +96,5 @@
   "apiKeyHelpLabel": {"message": "Wie erhalte ich einen API-Schlüssel?"},
   "clipboardCopied": {"message": "In die Zwischenablage kopiert!"},
   "pageTitle": {"message": "Warnlisten Plugin — Einstellungen"},
-  "footerText": {"message": "Warnlisten Plugin v1.0.0 — Erstellt für Chrome, Chromium & Brave"}
+  "footerText": {"message": "Warnlisten Plugin v1.0.1 — Erstellt für Chrome, Chromium & Brave"}
 }
