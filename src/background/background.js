@@ -405,9 +405,15 @@ async function checkReklamation(urlString) {
         details: `⚠️ ` + (chrome.i18n.getMessage('bgDetailRek', [count.toString(), domain]) || `[reklamation.ch] Found ${count} complaints for "${domain}".`) + `\n` + (chrome.i18n.getMessage('bgDetailMoreInfo') || 'More info:') + ` ${searchUrl}${linksDetail}`
       };
     }
-    return { threats: [], details: '' };
+    return {
+      threats: [],
+      details: `✅ ` + (chrome.i18n.getMessage('bgDetailRekOkNotFound', [domain]) || `[reklamation.ch] No complaints found for "${domain}".`)
+    };
   } catch (e) {
-    return { threats: [], details: '' };
+    return {
+      threats: [],
+      details: `✅ ` + (chrome.i18n.getMessage('bgDetailRekOkNotFound', [domain]) || `[reklamation.ch] No complaints found for "${domain}".`)
+    };
   }
 }
 
@@ -498,7 +504,10 @@ async function checkKtipp(urlString) {
     const text = await response.text();
 
     if (text.includes('Keine Einträge gefunden')) {
-      return { threats: [], details: '' };
+      return {
+        threats: [],
+        details: `✅ ` + (chrome.i18n.getMessage('bgDetailKtippOkNotFound', [domain]) || `[Ktipp-Warnliste] No warnings found for "${domain}".`)
+      };
     }
 
     // Check if the response contains the domain (case-insensitive)
@@ -522,12 +531,10 @@ async function checkKtipp(urlString) {
         details: `⚠️ ` + (chrome.i18n.getMessage('bgDetailKtipp', [domain]) || `[Ktipp-Warnliste] Found entry for "${domain}".`) + `\n` + (chrome.i18n.getMessage('bgDetailMoreInfo') || 'More info:') + ` ${internetshopsUrl}\n\n${articleHtml}`
       };
     }
-
-    /*return {
+    return {
       threats: [],
       details: `✅ ` + (chrome.i18n.getMessage('bgDetailKtipp', [domain]) || `[Ktipp-Warnliste] No warnings found for "${domain}".`)
-    };*/
-    return { threats: [], details: '' };
+    };
   } catch (e) {
     return { threats: [], details: '' };
   }
