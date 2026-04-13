@@ -27,14 +27,14 @@
         </div>
       </div>
       <div class="header-actions">
-        <button class="btn-whitelist" id="btnAddWhitelist" title="Add to Whitelist" style="display:none;">
+        <button class="btn-whitelist" id="btnAddWhitelist" data-i18n="btnAddWhitelist" title="Add to Whitelist" style="display:none;">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
             <line x1="12" y1="8" x2="12" y2="16"/>
             <line x1="8" y1="12" x2="16" y2="12"/>
           </svg>
         </button>
-        <button class="btn-whitelist active" id="btnRemoveWhitelist" title="Remove from Whitelist" style="display:none;">
+        <button class="btn-whitelist active" id="btnRemoveWhitelist" data-i18n="btnRemoveWhitelist" title="Remove from Whitelist" style="display:none;">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
             <line x1="8" y1="12" x2="16" y2="12"/>
@@ -53,8 +53,8 @@
           </svg>
         </div>
         <div class="status-text">
-          <span class="status-label" id="statusLabel">Checking…</span>
-          <span class="status-detail" id="statusDetail">Analyzing current page</span>
+          <span class="status-label" id="statusLabel" data-i18n="statusChecking">Checking…</span>
+          <span class="status-detail" id="statusDetail" data-i18n="statusAnalyzingPage">Analyzing current page</span>
         </div>
       </div>
     </div>
@@ -63,7 +63,7 @@
     <div class="url-section">
       <label class="section-label" data-i18n="urlSectionLabel">Current URL</label>
       <div class="url-display" id="urlDisplay">
-        <span class="url-text" id="urlText">Loading…</span>
+        <span class="url-text" id="urlText" data-i18n="urlLoading">Loading…</span>
       </div>
     </div>
 

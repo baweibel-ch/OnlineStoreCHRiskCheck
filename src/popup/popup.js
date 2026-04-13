@@ -7,7 +7,24 @@ document.addEventListener('DOMContentLoaded', init);
 
 async function init() {
   document.querySelectorAll('[data-i18n]').forEach(el => {
-    el.innerText = chrome.i18n.getMessage(el.getAttribute('data-i18n')) || el.innerText;
+    const key = el.getAttribute('data-i18n');
+    const msg = chrome.i18n.getMessage(key);
+    if (msg) {
+      if (el.id === 'btnAddWhitelist' || el.id === 'btnRemoveWhitelist') {
+        el.title = msg;
+      } else {
+        const span = el.querySelector('span[data-i18n]');
+        if (span && span.getAttribute('data-i18n') === key) {
+           span.innerText = msg;
+        } else if (el.children.length === 0) {
+           el.innerText = msg;
+        } else {
+           const innerSpan = el.querySelector('span');
+           if (innerSpan) innerSpan.innerText = msg;
+           else el.innerText = msg;
+        }
+      }
+    }
   });
 
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
