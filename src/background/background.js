@@ -6,14 +6,14 @@
 // --- Configuration Defaults ---
 const DEFAULT_CONFIG = {
   apiUrl: 'https://safebrowsing.googleapis.com/v4/threatMatches:find',
-  apiKey: 'AIzaSyCxrMkYVgudy987697ffp3CgYPWifxpbak',
+  apiKey: '',
   checkAutomatically: false,
   notificationsEnabled: true,
   enableSafeBrowsing: false,
   enableReklamation: true,
   enableKtipp: true,
   enableTrustedshops: true,
-  whitelist: ['newtab', 'google.com', 'google.ch', 'gemini.google.com', 'reklamation.ch', 'sunrise.ch', 'ktipp.ch', 'startpage.com', 'green-shop.ch', 'galaxus.ch', 'digitec.ch']
+  whitelist: ['newtab', 'google.com', 'google.ch', 'gemini.google.com', 'reklamation.ch', 'ktipp.ch', 'startpage.com']
 };
 
 // --- State ---

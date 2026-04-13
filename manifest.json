@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "__MSG_extName__",
+  "name": "OnlineStore CH risk-check. BETA",
   "version": "1.0.1",
-  "description": "__MSG_extDesc__",
+  "description": "Check online store if listed as risk in ch warning-lists. DIESE ERWEITERUNG IST FÜR DEN BETATEST VORGESEHEN",
   "default_locale": "en",
   "permissions": [
     "activeTab",
