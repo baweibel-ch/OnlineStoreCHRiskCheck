@@ -9,6 +9,10 @@ async function loadSettings() {
     el.innerText = chrome.i18n.getMessage(el.getAttribute('data-i18n')) || el.innerText;
   });
 
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    el.placeholder = chrome.i18n.getMessage(el.getAttribute('data-i18n-placeholder')) || el.placeholder;
+  });
+
   const config = await getConfig();
 
   document.getElementById('apiUrl').value = config.apiUrl || '';
