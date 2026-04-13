@@ -1,7 +1,7 @@
 {
-  "extName": {"message": "Warnlisten Plugin"},
-  "extDesc": {"message": "Browser-Erweiterung, die URLs gegen Warnlisten über eine REST-API analysiert"},
-  "popupTitle": {"message": "Warnlisten"},
+  "extName": {"message": "OnlineStore CH risk-check"},
+  "extDesc": {"message": "Prüfen Sie Online-Shops auf Risiken in Schweizer Warnlisten."},
+  "popupTitle": {"message": "OnlineStore CH risk-check"},
   "popupSubtitle": {"message": "URL-Sicherheitsanalysator"},
   "urlSectionLabel": {"message": "Aktuelle URL"},
   "threatsSectionLabel": {"message": "Gefundene Probleme"},
@@ -35,7 +35,7 @@
   "statusChecking": {"message": "Wird geprüft…"},
   "statusAnalyzingPage": {"message": "Aktuelle Seite wird analysiert"},
   "urlLoading": {"message": "Wird geladen…"},
-  "optionsTitle": {"message": "Warnlisten Einstellungen"},
+  "optionsTitle": {"message": "OnlineStore CH risk-check Einstellungen"},
   "optionsSubtitle": {"message": "Konfigurieren Sie die URL-Analyse und API-Verbindung"},
   "scanningModeLabel": {"message": "🔍 Scan-Modus"},
   "scanningModeHint": {"message": "Wählen Sie, wie URLs analysiert werden sollen:"},
@@ -100,6 +100,6 @@
   "bgDetailTSMissing": {"message": "Domain \"$1\" ist kein zertifizierter Trusted Shop."},
   "apiKeyHelpLabel": {"message": "Wie erhalte ich einen API-Schlüssel?"},
   "clipboardCopied": {"message": "In die Zwischenablage kopiert!"},
-  "pageTitle": {"message": "Warnlisten Plugin — Einstellungen"},
-  "footerText": {"message": "Warnlisten Plugin v1.0.1 — Erstellt für Chrome, Chromium & Brave"}
+  "pageTitle": {"message": "OnlineStore CH risk-check — Einstellungen"},
+  "footerText": {"message": "OnlineStore CH risk-check v1.0.1 — Erstellt für Chrome, Chromium & Brave"}
 }

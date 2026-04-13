@@ -1,7 +1,7 @@
 {
-  "extName": {"message": "Plugin Warnlisten"},
-  "extDesc": {"message": "Extension de navigateur qui analyse les URL par rapport aux listes d'avertissement via l'API REST"},
-  "popupTitle": {"message": "Warnlisten"},
+  "extName": {"message": "OnlineStore CH risk-check"},
+  "extDesc": {"message": "Vérifiez si les boutiques en ligne présentent des risques dans les listes d'avertissement suisses."},
+  "popupTitle": {"message": "OnlineStore CH risk-check"},
   "popupSubtitle": {"message": "Analyseur de sécurité d'URL"},
   "urlSectionLabel": {"message": "URL actuelle"},
   "threatsSectionLabel": {"message": "Problèmes détectés"},
@@ -35,7 +35,7 @@
   "statusChecking": {"message": "Vérification…"},
   "statusAnalyzingPage": {"message": "Analyse de la page actuelle"},
   "urlLoading": {"message": "Chargement…"},
-  "optionsTitle": {"message": "Paramètres Warnlisten"},
+  "optionsTitle": {"message": "Paramètres OnlineStore CH risk-check"},
   "optionsSubtitle": {"message": "Configurer l'analyse d'URL et la connexion API"},
   "scanningModeLabel": {"message": "🔍 Mode d'analyse"},
   "scanningModeHint": {"message": "Choisissez comment les URL doivent être analysées :"},
@@ -100,6 +100,6 @@
   "bgDetailTSMissing": {"message": "Le domaine \"$1\" n'est pas une boutique certifiée Trusted Shops."},
   "apiKeyHelpLabel": {"message": "Comment obtenir une clé API ?"},
   "clipboardCopied": {"message": "Copié dans le presse-papiers !"},
-  "pageTitle": {"message": "Plugin Warnlisten — Paramètres"},
-  "footerText": {"message": "Plugin Warnlisten v1.0.1 — Créé pour Chrome, Chromium et Brave"}
+  "pageTitle": {"message": "OnlineStore CH risk-check — Paramètres"},
+  "footerText": {"message": "OnlineStore CH risk-check v1.0.1 — Créé pour Chrome, Chromium et Brave"}
 }

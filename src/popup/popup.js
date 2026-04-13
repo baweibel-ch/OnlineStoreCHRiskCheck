@@ -1,5 +1,5 @@
 /**
- * Warnlisten Plugin — Popup Controller
+ * OnlineStore CH risk-check — Popup Controller
  * Manages the popup UI and communicates with the background service worker
  */
 

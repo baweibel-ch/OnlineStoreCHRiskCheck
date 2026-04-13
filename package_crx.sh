@@ -4,7 +4,7 @@
 
 PROJECT_DIR=$(pwd)
 EXTENSION_DIR="$PROJECT_DIR"
-CRX_FILE="$PROJECT_DIR/warnlistenPlugin.crx"
+CRX_FILE="$PROJECT_DIR/OnlineStoreCHRiskCheck.crx"
 PEM_FILE=$1
 
 # Clean up existing .crx

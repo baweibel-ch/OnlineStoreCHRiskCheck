@@ -1,6 +1,6 @@
 /**
- * Warnlisten Plugin - Background Service Worker
- * Handles URL analysis via REST API calls
+ * OnlineStore CH risk-check - Background Service Worker
+ * Handles URL analysis via REST API calls, and "normal" httpClient calls for those who don't have rest-apis
  */
 
 // --- Configuration Defaults ---

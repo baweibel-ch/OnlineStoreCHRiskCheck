@@ -1,5 +1,5 @@
 /**
- * Warnlisten Plugin — Options Controller
+ * OnlineStore CH risk-check — Options Controller
  */
 
 document.addEventListener('DOMContentLoaded', loadSettings);

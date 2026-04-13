@@ -1,4 +1,4 @@
-# Warnlisten Plugin
+# OnlineStore CH risk-check
 
 A Chrome/Chromium/Brave browser extension that analyzes the current URL against warning lists, search databases, and heuristic criteria via REST API to ensure your browsing experience is secure.
 

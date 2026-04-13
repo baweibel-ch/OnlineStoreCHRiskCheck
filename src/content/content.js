@@ -1,5 +1,5 @@
 /**
- * Warnlisten Plugin — Content Script
+ * OnlineStore CH risk-check — Content Script
  * Displays an unobtrusive security badge on analyzed pages
  */
 
