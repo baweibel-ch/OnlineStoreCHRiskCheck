@@ -13,7 +13,7 @@ const DEFAULT_CONFIG = {
   enableReklamation: true,
   enableKtipp: true,
   enableTrustedshops: true,
-  whitelist: ['newtab', 'google.com', 'google.ch', 'gemini.google.com', 'reklamation.ch', 'ktipp.ch', 'startpage.com']
+  whitelist: ['newtab', 'extensions', 'google.com', 'google.ch', 'gemini.google.com', 'reklamation.ch', 'ktipp.ch', 'startpage.com']
 };
 
 // --- State ---
