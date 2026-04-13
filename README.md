@@ -37,6 +37,20 @@ Without an API key, the plugin performs local heuristic analysis along with publ
 4. Select the `warnlistenPlugin` project folder
 5. The extension icon appears in your toolbar. **Pin it** to the toolbar to access quick scanning and metrics.
 
+### Packaging to .crx
+
+You can package the extension into an installable `.crx` file using Brave Browser via the provided IntelliJ Run Configuration:
+1. Open the project in IntelliJ IDEA.
+2. Select the **Package .crx** run configuration from the toolbar.
+3. Click **Run**.
+4. The `warnlistenPlugin.crx` file will be created in the project root.
+
+Alternatively, run the script from the terminal:
+```bash
+./package_crx.sh [path_to_private_key.pem]
+```
+If no key is provided, it looks for `../warnlistenPlugin.pem` or generates a new one if it's the first time. Uses **Brave Browser** for the packaging process.
+
 ### Configure Settings
 
 1. Click the extension icon → **Settings**
