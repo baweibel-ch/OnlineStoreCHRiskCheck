@@ -23,6 +23,8 @@
 
 "Da ich kein offizieller Entwickler von Ktipp-/Saldo-Warnliste und Reklamation.ch bin, und kein API gefunden werde, wird die Prüfung dort via Web-Aufruf gemacht. Falls sich die Websiten ändern, kann die Funktionalität eingeschränkt sein danach."
 
+"Nach der Installation: 'An Symbolleiste anpinnen' - ansonsten macht es wenig Sinn. Dies kann jedoch nicht automatisiert werden."
+
 **Hauptfunktionen:**
 - 🛒 **K-Tipp/Saldo Warnliste:** Überprüft automatisch, ob eine Domain auf der offiziellen K-Tipp/Saldo Warnliste steht.
 - - Falls ein Eintrag gefunden wird, wird dieser angezeigt. Der Link öffnet die Warnlisten-Seite, die Domain muss danach jedoch selbst eingetragen werden.
@@ -46,6 +48,8 @@ Wählen Sie zwischen automatischem Scannen beim Surfen oder manuellem Scannen au
 “The check can be set to run automatically or manually.”
 
 “Since I am not an official developer of Ktipp/Saldo-Warnliste or Reklamation.ch, and I haven't been able to find an API, the check is performed via a web request. If the websites change, the functionality may be limited as a result.”
+
+“After installation: ‘Pin to the toolbar’—otherwise, it doesn't make much sense. However, this cannot be automated.”
 
 **Key Features:**
 - 🛒 **K-Tipp/Saldo Warning List:** Automatically checks if a domain is listed on the official K-Tipp/Saldo warning list.
@@ -71,6 +75,8 @@ Choose between automatic background scanning or manual on-demand scanning. Add t
 
 « Étant donné que je ne suis pas un développeur officiel de Ktipp-/Saldo-Warnliste et de Reklamation.ch, et que je n'ai pas trouvé d'API, la vérification s'effectue via une requête Web. Si les sites Web changent, la fonctionnalité pourrait s'en trouver limitée par la suite. »
 
+« Après l'installation : « Épingler à la barre d'outils » – sinon, cela n'a pas beaucoup d'intérêt. Cela ne peut toutefois pas être automatisé. »
+
 **Fonctionnalités principales :**
 - 🛒 **Liste d'avertissement K-Tipp / Saldo :** Vérifie automatiquement si un domaine figure sur la liste officielle de K-Tipp/Saldo.
 - - Si une entrée est trouvée, celle-ci s'affiche. Le lien ouvre la page de la liste d'alerte, mais vous devrez ensuite saisir vous-même le nom de domaine.
@@ -91,6 +97,8 @@ Choose between automatic background scanning or manual on-demand scanning. Add t
 “Il controllo può essere impostato in modo automatico o manuale.”
 
 “Poiché non sono uno sviluppatore ufficiale di Ktipp-/Saldo-Warnliste e Reklamation.ch e non ho trovato alcuna API, la verifica viene effettuata tramite una richiesta web. Qualora i siti web subissero modifiche, la funzionalità potrebbe risultare limitata in seguito.”
+
+“Dopo l'installazione: ‘Aggiungi alla barra degli strumenti’ – altrimenti non ha molto senso. Tuttavia, questa operazione non può essere automatizzata.”
 
 **Caratteristiche principali:**
 - 🛒 **Lista di avvertimento K-Tipp/Saldo:** Controlla automaticamente se un dominio è presente nella lista ufficiale di K-Tipp/Saldo.
