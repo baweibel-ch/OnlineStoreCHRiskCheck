@@ -100,7 +100,7 @@ export async function checkKtipp(urlString) {
       return {
         threats: [{
           type: 'KTIPP_WARNLISTE',
-          description: `Found on Ktipp/Saldo-Warnliste`,
+          description: chrome.i18n.getMessage('threatDescKtipp') || `Found on Ktipp/Saldo-Warnliste`,
           count: 1
         }],
         details: `⚠️ ` + (chrome.i18n.getMessage('bgDetailKtipp', [domain]) || `[Ktipp/Saldo-Warnliste] Found entry for "${domain}".`) + `\n` + (chrome.i18n.getMessage('bgDetailMoreInfo') || 'More info:') + ` ${internetshopsUrl}\n\n${articleHtml}`

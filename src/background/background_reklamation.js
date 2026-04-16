@@ -41,7 +41,7 @@ export async function checkReklamation(urlString) {
       return {
         threats: [{
           type: 'REKLAMATION_CH',
-          description: `Found ${count} complaint(s) on reklamation.ch`,
+          description: chrome.i18n.getMessage('threatDescReklamation', [count.toString()]) || `Found ${count} complaint(s) on reklamation.ch`,
           count: count
         }],
         details: `⚠️ ` + (chrome.i18n.getMessage('bgDetailRek', [count.toString(), domain]) || `[reklamation.ch] Found ${count} complaints for "${domain}".`) + `\n` + (chrome.i18n.getMessage('bgDetailMoreInfo') || 'More info:') + ` ${searchUrl}${linksDetail}`

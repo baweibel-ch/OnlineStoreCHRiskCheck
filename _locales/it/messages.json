@@ -65,7 +65,7 @@
   "btnSaveSettings": {"message": "Salva Impostazioni"},
   "saveStatusSuccess": {"message": "✓ Salvato!"},
   "bgThreatsReport": {"message": "$1 minaccia/e di sicurezza rilevata/e!"},
-  "bgComplaintsRek": {"message": "$1 reclamo/i trovato/i su reklamation.ch."},
+  "bgComplaintsRek": {"message": "$1 reclamo(i) trovato(i) su reklamation.ch."},
   "bgComplaintsKtipp": {"message": "$1 trovato nella Ktipp/Saldo-Warnliste."},
   "bgComplaintsNotFoundTrustedShops": {"message": "$1 non trovato nella trustedshops.ch."},
   "bgInternalPage": {"message": "Pagina interna — ignorata."},
@@ -101,5 +101,17 @@
   "apiKeyHelpLabel": {"message": "Come ottenere una chiave API?"},
   "clipboardCopied": {"message": "Copiato negli appunti!"},
   "pageTitle": {"message": "OnlineStore CH risk-check — Impostazioni"},
-  "footerText": {"message": "OnlineStore CH risk-check v1.0.3 — Sviluppato per Chrome, Chromium e Brave"}
+  "footerText": {"message": "OnlineStore CH risk-check v1.0.3 — Sviluppato per Chrome, Chromium e Brave"},
+  "threatTrustedShopsMissing": { "message": "Non trovato su Trusted-Shops.ch" },
+  "threatAdminchUidMissing": { "message": "Nessun UID trovato su www.uid.admin.ch" },
+  "threatReklamationCh": { "message": "Voci Reklamation.ch trovate" },
+  "threatKtippWarnliste": { "message": "Trovato nella lista di avvisi K-Tipp/Saldo" },
+  "enableUidLabel": { "message": "Abilita Admin.ch UID" },
+  "enableUidHint": { "message": "Controlla l'UID valido su www.uid.admin.ch" },
+  "uidAdminChLabel": { "message": "Admin.ch UID" },
+  "bgDetailUidMissing": { "message": "[uid.admin.ch] Nessun record UID attivo trovato per \"$1\".", "placeholders": { "domain": { "content": "$1" } } },
+  "bgDetailUidOk": { "message": "[uid.admin.ch] UID attivo trovato per \"$1\".", "placeholders": { "domain": { "content": "$1" } } },
+  "threatDescReklamation": { "message": "$1 reclamo(i) trovato(i) su reklamation.ch" },
+  "threatDescKtipp": { "message": "Trovato nella lista di avvisi K-Tipp/Saldo" },
+  "threatDescUidMissing": { "message": "Nessun UID attivo trovato su uid.admin.ch per $1" }
 }

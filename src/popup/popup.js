@@ -151,6 +151,8 @@ function renderState(state) {
   const detailsContentKtipp = document.getElementById('detailsContentKtipp');
   const detailsSectionTrustedshops = document.getElementById('detailsSectionTrustedshops');
   const detailsContentTrustedshops = document.getElementById('detailsContentTrustedshops');
+  const detailsSectionAdminchUid = document.getElementById('detailsSectionAdminchUid');
+  const detailsContentAdminchUid = document.getElementById('detailsContentAdminchUid');
   const detailsSection = document.getElementById('detailsSection');
   const detailsContent = document.getElementById('detailsContent');
   const checkTime = document.getElementById('checkTime');
@@ -294,6 +296,16 @@ function renderState(state) {
     detailsSectionTrustedshops.style.display = 'none';
   }
 
+  if (detailsSectionAdminchUid) {
+    if (state.detailsAdminchUid) {
+      detailsSectionAdminchUid.style.display = 'block';
+      setSafeHTML(detailsContentAdminchUid, linkify(state.detailsAdminchUid));
+    } else {
+      detailsSectionAdminchUid.style.display = 'none';
+    }
+  }
+
+
   if (state.details) {
     detailsSection.style.display = 'block';
     setSafeHTML(detailsContent, linkify(state.details));
@@ -378,6 +390,20 @@ function escapeHtml(str) {
 
 function formatThreatType(type) {
   if (!type) return 'Unknown';
+  
+  if (type === 'TRUSTED_SHOPS_MISSING') {
+    return chrome.i18n.getMessage('threatTrustedShopsMissing') || 'Nicht gefunden in Trusted-Shops.ch';
+  }
+  if (type === 'ADMINCH_UID') {
+    return chrome.i18n.getMessage('threatAdminchUidMissing') || 'Keine UID gefunden in www.uid.admin.ch';
+  }
+  if (type === 'REKLAMATION_CH') {
+    return chrome.i18n.getMessage('threatReklamationCh') || 'Reklamation.ch Einträge gefunden';
+  }
+  if (type === 'KTIPP_WARNLISTE') {
+    return chrome.i18n.getMessage('threatKtippWarnliste') || 'Auf K-Tipp/Saldo Internetshop - Warnliste gefunden';
+  }
+
   return type
     .replace(/_/g, ' ')
     .toLowerCase()

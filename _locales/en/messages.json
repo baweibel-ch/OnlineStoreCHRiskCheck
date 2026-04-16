@@ -69,7 +69,7 @@
   "pageTitle": {"message": "OnlineStore CH risk-check — Settings"},
   "footerText": {"message": "OnlineStore CH risk-check v1.0.3 — Built for Chrome, Chromium & Brave"},
   "bgThreatsReport": {"message": "$1 security threat(s) detected!"},
-  "bgComplaintsRek": {"message": "$1 consumer complaint(s) found on reklamation.ch."},
+  "bgComplaintsRek": {"message": "Found $1 complaint(s) on reklamation.ch."},
   "bgComplaintsKtipp": {"message": "$1 waning(s) found on Ktipp/Saldo-Warnliste."},
   "bgComplaintsNotFoundTrustedShops": {"message": "$1 Not found on trustedshops.ch."},
   "bgInternalPage": {"message": "Internal browser page — skipped."},
@@ -101,5 +101,17 @@
   "tsLabel": {"message": "Trusted Shops"},
   "bgDetailTS": {"message": "[TrustedShops] Certified shop \"$1\"."},
   "tsMissingDesc": {"message": "Not a Trusted Shops certified shop."},
-  "bgDetailTSMissing": {"message": "Domain \"$1\" is not a certified Trusted Shop."}
+  "bgDetailTSMissing": {"message": "Domain \"$1\" is not a certified Trusted Shop."},
+  "threatTrustedShopsMissing": { "message": "Not found on Trusted-Shops.ch" },
+  "threatAdminchUidMissing": { "message": "No UID found on www.uid.admin.ch" },
+  "threatReklamationCh": { "message": "Reklamation.ch entries found" },
+  "threatKtippWarnliste": { "message": "Found on K-Tipp/Saldo Warnliste" },
+  "enableUidLabel": { "message": "Enable Admin.ch UID" },
+  "enableUidHint": { "message": "Checks for valid UID on www.uid.admin.ch" },
+  "uidAdminChLabel": { "message": "Admin.ch UID" },
+  "bgDetailUidMissing": { "message": "[uid.admin.ch] No active UID record found for \"$1\".", "placeholders": { "domain": { "content": "$1" } } },
+  "bgDetailUidOk": { "message": "[uid.admin.ch] Active UID found for \"$1\".", "placeholders": { "domain": { "content": "$1" } } },
+  "threatDescReklamation": { "message": "Found $1 complaint(s) on reklamation.ch" },
+  "threatDescKtipp": { "message": "Found on K-Tipp/Saldo warning list" },
+  "threatDescUidMissing": { "message": "No active UID found on uid.admin.ch for $1" }
 }

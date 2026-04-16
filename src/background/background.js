@@ -7,6 +7,7 @@ import { checkReklamation } from './background_reklamation.js';
 import { checkKtipp } from './background_ktipp.js';
 import { checkTrustedshops } from './background_trustedshops.js';
 import { callWarningApi } from './background_google_safebrowsing.js';
+import { checkUid } from './background_adminch_uid.js';
 
 // --- Configuration Defaults ---
 const DEFAULT_CONFIG = {
@@ -18,6 +19,7 @@ const DEFAULT_CONFIG = {
   enableReklamation: true,
   enableKtipp: true,
   enableTrustedshops: true,
+  enableAdminchUid: true,
   whitelist: ['newtab', 'extensions', 'google.com', 'google.ch', 'gemini.google.com', 'reklamation.ch', 'ktipp.ch', 'saldo.ch', 'startpage.com']
 };
 
@@ -275,18 +277,20 @@ async function analyzeUrl(tabId, url, force = false, cachedStateDomain, cachedSt
   tabStates.set(tabId, loadingState);
   updateBadge(tabId, loadingState);
   try {
-    const [apiResult, reklamationResult, ktippResult, trustedshopsResult] = await Promise.all([
-      config.enableSafeBrowsing && !cachedStateUrl ? callWarningApi(url, config) : Promise.resolve({ threats: cachedStateUrl && cachedStateUrl.threats ? cachedStateUrl.threats.filter(s => s.type !== 'REKLAMATION_CH' && s.type !== 'KTIPP_WARNLISTE' && s.type !== 'TRUSTED_SHOPS_MISSING') : [], details: cachedStateUrl && cachedStateUrl.detailsContentApi ? cachedStateUrl.detailsContentApi : '' }),
+    const [apiResult, reklamationResult, ktippResult, trustedshopsResult, uidResult] = await Promise.all([
+      config.enableSafeBrowsing && !cachedStateUrl ? callWarningApi(url, config) : Promise.resolve({ threats: cachedStateUrl && cachedStateUrl.threats ? cachedStateUrl.threats.filter(s => s.type !== 'REKLAMATION_CH' && s.type !== 'KTIPP_WARNLISTE' && s.type !== 'TRUSTED_SHOPS_MISSING' && s.type !== 'ADMINCH_UID') : [], details: cachedStateUrl && cachedStateUrl.detailsContentApi ? cachedStateUrl.detailsContentApi : '' }),
       config.enableReklamation && !cachedStateDomain ? checkReklamation(url) : Promise.resolve({ threats: cachedStateDomain && cachedStateDomain.threats ? cachedStateDomain.threats.filter(s => s.type === 'REKLAMATION_CH') : [], details: cachedStateDomain && cachedStateDomain.detailsReklamation ? cachedStateDomain.detailsReklamation: '' }),
       config.enableKtipp && !cachedStateDomain ? checkKtipp(url) : Promise.resolve({ threats: cachedStateDomain && cachedStateDomain.threats ? cachedStateDomain.threats.filter(s => s.type === 'KTIPP_WARNLISTE') : [], details: cachedStateDomain && cachedStateDomain.detailsKtipp ? cachedStateDomain.detailsKtipp : '' }),
-      config.enableTrustedshops && !cachedStateDomain ? checkTrustedshops(url) : Promise.resolve({ threats: cachedStateDomain && cachedStateDomain.threats ? cachedStateDomain.threats.filter(s => s.type === 'TRUSTED_SHOPS_MISSING') : [], details: cachedStateDomain && cachedStateDomain.detailsTrustedshops ? cachedStateDomain.detailsTrustedshops : '' })
+      config.enableTrustedshops && !cachedStateDomain ? checkTrustedshops(url) : Promise.resolve({ threats: cachedStateDomain && cachedStateDomain.threats ? cachedStateDomain.threats.filter(s => s.type === 'TRUSTED_SHOPS_MISSING') : [], details: cachedStateDomain && cachedStateDomain.detailsTrustedshops ? cachedStateDomain.detailsTrustedshops : '' }),
+      config.enableAdminchUid && !cachedStateDomain ? checkUid(url) : Promise.resolve({ threats: cachedStateDomain && cachedStateDomain.threats ? cachedStateDomain.threats.filter(s => s.type === 'ADMINCH_UID') : [], details: cachedStateDomain && cachedStateDomain.detailsAdminchUid ? cachedStateDomain.detailsAdminchUid : '' })
     ]);
     const hasSecurityThreats = apiResult && apiResult.threats && apiResult.threats.length > 0;
     const hasReklamation = reklamationResult && reklamationResult.threats && reklamationResult.threats.length > 0;
     const hasKtipp = ktippResult && ktippResult.threats && ktippResult.threats.length > 0;
     const hasTrustedShops = trustedshopsResult && trustedshopsResult.threats && trustedshopsResult.threats.length > 0;
+    const hasUidMissing = uidResult && uidResult.threats && uidResult.threats.length > 0;
 
-    const combinedThreats = [...apiResult.threats, ...reklamationResult.threats, ...ktippResult.threats, ...trustedshopsResult.threats];
+    const combinedThreats = [...apiResult.threats, ...reklamationResult.threats, ...ktippResult.threats, ...trustedshopsResult.threats, ...uidResult.threats];
 
     let status = 'safe';
     let message = null;
@@ -314,6 +318,11 @@ async function analyzeUrl(tabId, url, force = false, cachedStateDomain, cachedSt
       const count = trustedshopsResult.threats.length || 0;
       message = (message ? message + '\n\n' : '') + '🔍 ' + (chrome.i18n.getMessage('bgComplaintsNotFoundTrustedShops', [count.toString()]) || `Not found on Trustedshops.ch.`);
     }
+    if (hasUidMissing) {
+      status = statusNotSafe?status:'warning';
+      statusNotSafe = true;
+      message = (message ? message + '\n\n' : '') + '🔍 ' + (chrome.i18n.getMessage('bgComplaintsUidMissing') || `Missing active UID on admin.ch.`);
+    }
 
     const state = {
       status: status,
@@ -323,6 +332,7 @@ async function analyzeUrl(tabId, url, force = false, cachedStateDomain, cachedSt
       detailsReklamation: reklamationResult.details,
       detailsKtipp: ktippResult.details,
       detailsTrustedshops: trustedshopsResult.details,
+      detailsAdminchUid: uidResult.details,
       checkedAt: new Date().toISOString(),
       message: message
     };

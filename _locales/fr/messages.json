@@ -101,5 +101,17 @@
   "apiKeyHelpLabel": {"message": "Comment obtenir une clé API ?"},
   "clipboardCopied": {"message": "Copié dans le presse-papiers !"},
   "pageTitle": {"message": "OnlineStore CH risk-check — Paramètres"},
-  "footerText": {"message": "OnlineStore CH risk-check v1.0.3 — Créé pour Chrome, Chromium et Brave"}
+  "footerText": {"message": "OnlineStore CH risk-check v1.0.3 — Créé pour Chrome, Chromium et Brave"},
+  "threatTrustedShopsMissing": { "message": "Non trouvé sur Trusted-Shops.ch" },
+  "threatAdminchUidMissing": { "message": "Aucun UID trouvé sur www.uid.admin.ch" },
+  "threatReklamationCh": { "message": "Entrées Reklamation.ch trouvées" },
+  "threatKtippWarnliste": { "message": "Trouvé sur la liste d'avertissement K-Tipp/Saldo" },
+  "enableUidLabel": { "message": "Activer Admin.ch UID" },
+  "enableUidHint": { "message": "Vérifie les UID valides sur www.uid.admin.ch" },
+  "uidAdminChLabel": { "message": "Admin.ch UID" },
+  "bgDetailUidMissing": { "message": "[uid.admin.ch] Aucun enregistrement UID actif trouvé pour \"$1\".", "placeholders": { "domain": { "content": "$1" } } },
+  "bgDetailUidOk": { "message": "[uid.admin.ch] UID actif trouvé pour \"$1\".", "placeholders": { "domain": { "content": "$1" } } },
+  "threatDescReklamation": { "message": "$1 plainte(s) trouvée(s) sur reklamation.ch" },
+  "threatDescKtipp": { "message": "Trouvé sur la liste d'avertissement K-Tipp/Saldo" },
+  "threatDescUidMissing": { "message": "Aucun UID actif trouvé sur uid.admin.ch pour $1" }
 }
