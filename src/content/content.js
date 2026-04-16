@@ -57,7 +57,7 @@ function showStatusBadge(state) {
     label = (label && label.length > 0?label+'<br/>':'') + chrome.i18n.getMessage('bgComplaintsRek', [reklamationThreats.length.toString()]) || `${reklamationThreats.length} consumer complaint(s) found on reklamation.ch.`;
   }
   if (ktippThreats && ktippThreats.length > 0) {
-    label = (label && label.length > 0?label+'<br/>':'') + chrome.i18n.getMessage('bgComplaintsKtipp', [ktippThreats.length.toString()]) || `${ktippThreats.length} Found on Ktipp-Warnliste.`;
+    label = (label && label.length > 0?label+'<br/>':'') + chrome.i18n.getMessage('bgComplaintsKtipp', [ktippThreats.length.toString()]) || `${ktippThreats.length} Found on Ktipp/Saldo-Warnliste.`;
   }
   if (trustedstoreThreats && trustedstoreThreats.length > 0) {
     label = (label && label.length > 0?label+'<br/>':'') + chrome.i18n.getMessage('bgComplaintsNotFoundTrustedShops', [trustedstoreThreats.length.toString()]) || `${trustedstoreThreats.length} Not found on Trustedshops.ch.`;

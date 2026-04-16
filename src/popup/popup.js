@@ -172,7 +172,7 @@ function renderState(state) {
       if (isKtipp && isReklamation) {
         label.textContent = chrome.i18n.getMessage('statusWarning') || 'Warning!';
       } else if (isKtipp) {
-        label.textContent = chrome.i18n.getMessage('ktippLabel') || 'Ktipp-Warnliste';
+        label.textContent = chrome.i18n.getMessage('ktippLabel') || 'Ktipp/Saldo-Warnliste';
       } else {
         label.textContent = chrome.i18n.getMessage('reklamationLabel') || 'Reklamation';
       }

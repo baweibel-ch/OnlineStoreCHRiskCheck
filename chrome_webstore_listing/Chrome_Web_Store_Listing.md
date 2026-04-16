@@ -4,8 +4,8 @@
 
 ## 2. Kurzbezeichnung
 
-**DE:** Prüft Online-Shops gegen Warnlisten (K-Tipp), Reklamationen & auf Trusted Shops Zertifizierung. Ihr Schutz vor Fake-Shops!
-**EN:** Checks online shops against warning lists (K-Tipp), complaints & for Trusted Shops certification. Your protection against fraud!
+**DE:** Prüft Online-Shops gegen Warnlisten (K-Tipp/Saldo), Reklamationen & auf Trusted Shops Zertifizierung. Ihr Schutz vor Fake-Shops!
+**EN:** Checks online shops against warning lists (K-Tipp/Saldo), complaints & for Trusted Shops certification. Your protection against fraud!
 **FR:** Vérifie les boutiques sur les listes d'avertissement et la certification Trusted Shops. Votre protection contre la fraude !
 **IT:** Controlla i negozi sulle liste di avvertimento e la certificazione Trusted Shops. La tua protezione contro le frodi!
 
@@ -24,7 +24,7 @@
 "Da ich kein offizieller Entwickler von Ktipp-/Saldo-Warnliste und Reklamation.ch bin, und kein API gefunden werde, wird die Prüfung dort via Web-Aufruf gemacht. Falls sich die Websiten ändern, kann die Funktionalität eingeschränkt sein danach."
 
 **Hauptfunktionen:**
-- 🛒 **K-Tipp/Saldo Warnliste:** Überprüft automatisch, ob eine Domain auf der offiziellen K-Tipp Warnliste steht.
+- 🛒 **K-Tipp/Saldo Warnliste:** Überprüft automatisch, ob eine Domain auf der offiziellen K-Tipp/Saldo Warnliste steht.
 - - Falls ein Eintrag gefunden wird, wird dieser angezeigt. Der Link öffnet die Warnlisten-Seite, die Domain muss danach jedoch selbst eingetragen werden.
 - 🛡️ **reklamation.ch Abgleich:** Sucht nach bestehenden Konsumentenbeschwerden, bevor Sie einkaufen.
 - ✅ **Trusted Shops Zertifizierung:** Prüft automatisch, ob der Shop ein gültiges Trusted Shops Gütesiegel besitzt.
@@ -48,7 +48,7 @@ Wählen Sie zwischen automatischem Scannen beim Surfen oder manuellem Scannen au
 “Since I am not an official developer of Ktipp/Saldo-Warnliste or Reklamation.ch, and I haven't been able to find an API, the check is performed via a web request. If the websites change, the functionality may be limited as a result.”
 
 **Key Features:**
-- 🛒 **K-Tipp/Saldo Warning List:** Automatically checks if a domain is listed on the official K-Tipp warning list.
+- 🛒 **K-Tipp/Saldo Warning List:** Automatically checks if a domain is listed on the official K-Tipp/Saldo warning list.
 - - If an entry is found, it will be displayed. The link opens the warning list page, but you will then need to enter the domain yourself.
 - 🛡️ **reklamation.ch Integration:** Searches for existing consumer complaints before you make a purchase.
 - ✅ **Trusted Shops Certification:** Automatically verifies if the shop holds a valid Trusted Shops trustmark.
@@ -72,7 +72,7 @@ Choose between automatic background scanning or manual on-demand scanning. Add t
 « Étant donné que je ne suis pas un développeur officiel de Ktipp-/Saldo-Warnliste et de Reklamation.ch, et que je n'ai pas trouvé d'API, la vérification s'effectue via une requête Web. Si les sites Web changent, la fonctionnalité pourrait s'en trouver limitée par la suite. »
 
 **Fonctionnalités principales :**
-- 🛒 **Liste d'avertissement K-Tipp / Saldo :** Vérifie automatiquement si un domaine figure sur la liste officielle de K-Tipp.
+- 🛒 **Liste d'avertissement K-Tipp / Saldo :** Vérifie automatiquement si un domaine figure sur la liste officielle de K-Tipp/Saldo.
 - - Si une entrée est trouvée, celle-ci s'affiche. Le lien ouvre la page de la liste d'alerte, mais vous devrez ensuite saisir vous-même le nom de domaine.
 - 🛡️ **Intégration reklamation.ch :** Recherche les plaintes de consommateurs existantes avant d'acheter.
 - ✅ **Certification Trusted Shops :** Vérifie automatiquement si la boutique possède une marque de confiance Trusted Shops valide.
@@ -93,7 +93,7 @@ Choose between automatic background scanning or manual on-demand scanning. Add t
 “Poiché non sono uno sviluppatore ufficiale di Ktipp-/Saldo-Warnliste e Reklamation.ch e non ho trovato alcuna API, la verifica viene effettuata tramite una richiesta web. Qualora i siti web subissero modifiche, la funzionalità potrebbe risultare limitata in seguito.”
 
 **Caratteristiche principali:**
-- 🛒 **Lista di avvertimento K-Tipp/Saldo:** Controlla automaticamente se un dominio è presente nella lista ufficiale di K-Tipp.
+- 🛒 **Lista di avvertimento K-Tipp/Saldo:** Controlla automaticamente se un dominio è presente nella lista ufficiale di K-Tipp/Saldo.
 - - Se viene trovato un risultato, questo verrà visualizzato. Il link apre la pagina dell'elenco di avvisi, ma il dominio dovrà poi essere inserito manualmente.
 - 🛡️ **Integrazione reklamation.ch:** Cerca reclami preesistenti dei consumatori prima di acquistare.
 - ✅ **Certificazione Trusted Shops:** Verifica automaticamente se il negozio possiede un marchio di fiducia Trusted Shops valido.
@@ -160,13 +160,13 @@ Die Erweiterung ist nach dem Prinzip der Datensparsamkeit ("Privacy by Design") 
 - **Keine Speicherung persönlicher Daten:** Wir speichern weder Ihren Browserverlauf noch personenbezogene Daten oder IP-Adressen auf eigenen Servern.
 - **Speicherung von Einstellungen:** Konfigurationen (wie API-Keys, Sprache, Whitelist) werden ausschließlich **lokal** im Speicher Ihres Browsers/Geräts (`chrome.storage.local`) aufbewahrt.
 - **URL-Prüfungen im laufenden Betrieb:** Um die Sicherheit einer aufgerufenen Webseite zu bewerten, wird die aktuelle Domain oder URL (je nach Einstellung) an Drittanbieter-Schnittstellen gesendet:
-  - *K-Tipp (ktipp.ch):* Der Domainname wird zur Prüfung gegen die K-Tipp Warnliste gesendet.
+  - *K-Tipp (ktipp.ch/saldo.ch):* Der Domainname wird zur Prüfung gegen die K-Tipp/Saldo Warnliste gesendet.
   - *Reklamation.ch:* Der Domainname wird zur Prüfung auf Konsumentenbeschwerden gesendet.
   - *Trusted Shops:* Die Domain wird über die öffentliche API abgefragt, um den Zertifizierungsstatus zu überprüfen.
   - *Google Safe Browsing (Optional):* Wenn Sie diese Funktion aktivieren und einen API-Key hinterlegen, wird die URL an die Google-Server gesendet. Die Verarbeitung richtet sich nach der Datenschutzerklärung von Google.
 
 **3. Keine Datenweitergabe an Dritte**
-Abgesehen von den zwingend notwendigen und temporären Anfragen an die oben genannten Sicherheitsdienste zur Überprüfung der Webseiten (KTipp, Reklamation, Trusted Shops, Google), geben wir keine Daten an Dritte weiter, verkaufen diese nicht und tracken keine Verläufe. Die Erweiterung enthält außerdem keine Analysedienste (wie Google Analytics).
+Abgesehen von den zwingend notwendigen und temporären Anfragen an die oben genannten Sicherheitsdienste zur Überprüfung der Webseiten (KTipp/Saldo, Reklamation, Trusted Shops, Google), geben wir keine Daten an Dritte weiter, verkaufen diese nicht und tracken keine Verläufe. Die Erweiterung enthält außerdem keine Analysedienste (wie Google Analytics).
 
 **4. Berechtigungen der Erweiterung**
 Die Erweiterung benötigt folgende Browser-Rechte, um funktionsfähig zu sein:

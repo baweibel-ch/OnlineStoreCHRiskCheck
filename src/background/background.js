@@ -13,7 +13,7 @@ const DEFAULT_CONFIG = {
   enableReklamation: true,
   enableKtipp: true,
   enableTrustedshops: true,
-  whitelist: ['newtab', 'extensions', 'google.com', 'google.ch', 'gemini.google.com', 'reklamation.ch', 'ktipp.ch', 'startpage.com']
+  whitelist: ['newtab', 'extensions', 'google.com', 'google.ch', 'gemini.google.com', 'reklamation.ch', 'ktipp.ch', 'saldo.ch', 'startpage.com']
 };
 
 // --- State ---
@@ -506,7 +506,7 @@ async function checkKtipp(urlString) {
     if (text.includes('Keine Einträge gefunden')) {
       return {
         threats: [],
-        details: `✅ ` + (chrome.i18n.getMessage('bgDetailKtippOkNotFound', [domain]) || `[Ktipp-Warnliste] No warnings found for "${domain}".`)
+        details: `✅ ` + (chrome.i18n.getMessage('bgDetailKtippOkNotFound', [domain]) || `[Ktipp/Saldo-Warnliste] No warnings found for "${domain}".`)
       };
     }
 
@@ -528,12 +528,12 @@ async function checkKtipp(urlString) {
           description: `Found on Ktipp-Warnliste`,
           count: 1
         }],
-        details: `⚠️ ` + (chrome.i18n.getMessage('bgDetailKtipp', [domain]) || `[Ktipp-Warnliste] Found entry for "${domain}".`) + `\n` + (chrome.i18n.getMessage('bgDetailMoreInfo') || 'More info:') + ` ${internetshopsUrl}\n\n${articleHtml}`
+        details: `⚠️ ` + (chrome.i18n.getMessage('bgDetailKtipp', [domain]) || `[Ktipp/Saldo-Warnliste] Found entry for "${domain}".`) + `\n` + (chrome.i18n.getMessage('bgDetailMoreInfo') || 'More info:') + ` ${internetshopsUrl}\n\n${articleHtml}`
       };
     }
     return {
       threats: [],
-      details: `✅ ` + (chrome.i18n.getMessage('bgDetailKtipp', [domain]) || `[Ktipp-Warnliste] No warnings found for "${domain}".`)
+      details: `✅ ` + (chrome.i18n.getMessage('bgDetailKtipp', [domain]) || `[Ktipp/Saldo-Warnliste] No warnings found for "${domain}".`)
     };
   } catch (e) {
     return { threats: [], details: '' };

@@ -7,7 +7,7 @@ A Chrome/Chromium/Brave browser extension that analyzes the current URL against 
 - 🌍 **Multilingual Support** — Fully localized in English, French, German, and Italian. Automatically adapts to your browser language.
 - 🔍 **Automatic & Manual Scanning** — Choose to scan every new page automatically or scan manually on demand via the popup.
 - 🛡️ **reklamation.ch Integration** — Automatically checks for consumer complaints and displays the latest alerts with direct links.
-- 🛒 **Ktipp-Warnliste Integration** — Proactively checks for entries on the Ktipp warning list by mirroring search form logic to detect flagged web shops directly.
+- 🛒 **Ktipp-Warnliste Integration** — Proactively checks for entries on the Ktipp/Saldo warning list by mirroring search form logic to detect flagged web shops directly.
 - 🛡️ **Google Safe Browsing Integration** — Default support for Google Safe Browsing v4 API to identify known malware/phishing.
 - 🔌 **Custom REST API Support** — Configure any REST API endpoint for URL threat checks.
 - 🎯 **Advanced Heuristics** — Built-in pattern detection works without an API key (e.g., suspicious TLDs, unencrypted HTTP, URL obfuscation).
@@ -20,7 +20,7 @@ A Chrome/Chromium/Brave browser extension that analyzes the current URL against 
 
 Without an API key, the plugin performs local heuristic analysis along with public domain checks:
 - **Consumer complaints** via reklamation.ch 
-- **Ktipp-Warnliste entries** via ktipp.ch
+- **Ktipp/Saldo-Warnliste entries** via ktipp.ch/saldo.ch
 - HTTP (unencrypted) connection detection
 - IP-address-based URLs fallback checks
 - Suspicious TLDs (.tk, .ml, .ga, .cf, .gq)
@@ -55,7 +55,7 @@ If no key is provided, it looks for `../warnlistenPlugin.pem` or generates a new
 
 1. Click the extension icon → **Settings**
 2. Choose your preferred scanning mode (Auto/Manual)
-3. Toggle which security services you want active (Google Safe Browsing, reklamation.ch, Ktipp-Warnliste)
+3. Toggle which security services you want active (Google Safe Browsing, reklamation.ch, Ktipp/Saldo-Warnliste)
 4. Enter your API key if you plan on using Safe Browsing (local storage only)
 5. Add domains to your whitelist (e.g. `youtube.com`)
 6. Save settings
