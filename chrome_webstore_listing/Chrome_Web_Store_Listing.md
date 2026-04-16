@@ -4,10 +4,10 @@
 
 ## 2. Kurzbezeichnung
 
-**DE:** Prüft Online-Shops gegen Warnlisten (K-Tipp/Saldo), Reklamationen & auf Trusted Shops Zertifizierung. Ihr Schutz vor Fake-Shops!
-**EN:** Checks online shops against warning lists (K-Tipp/Saldo), complaints & for Trusted Shops certification. Your protection against fraud!
-**FR:** Vérifie les boutiques sur les listes d'avertissement et la certification Trusted Shops. Votre protection contre la fraude !
-**IT:** Controlla i negozi sulle liste di avvertimento e la certificazione Trusted Shops. La tua protezione contro le frodi!
+**DE:** Prüft Online-Shops gegen Warnlisten (K-Tipp/Saldo), Reklamationen, Trusted Shops & Admin.ch UID. Ihr Schutz vor Fake-Shops!
+**EN:** Checks online shops against warning lists (K-Tipp/Saldo), complaints, Trusted Shops & Admin.ch UID. Your protection against fraud!
+**FR:** Vérifie les boutiques sur les listes d'avertissement, Trusted Shops & UID Admin.ch. Votre protection contre la fraude !
+**IT:** Controlla i negozi sulle liste di avvertimento, Trusted Shops & UID Admin.ch. La tua protezione contro le frodi!
 
 ---
 
@@ -17,11 +17,13 @@
 **Sicher einkaufen im Internet – Ihr Schutz vor Fake-Shops und Betrug**
 
 "CH Warnlisten & Shop Risk-Check" ist eine Browser-Erweiterung, die Webseiten und Online-Shops automatisch auf Sicherheitsrisiken analysiert. Die Erweiterung gleicht die aktuelle URL mit bekannten Schweizer Warnlisten ab und nutzt lokale Heuristiken, um Sie proaktiv zu schützen.
-"Eine Domain (K-Tipp/Saldo Warnliste, Reklamation.ch, Trusted Shops) wird nur 1x geprüft pro Sitzung im aktuellen- und allen Tabs. Ausser wenn die Prüfung explizit erneut ausgeführt wird."
+"Eine Domain (K-Tipp/Saldo Warnliste, Reklamation.ch, Trusted Shops, uid.admin.ch) wird nur 1x geprüft pro Sitzung im aktuellen- und allen Tabs. Ausser wenn die Prüfung explizit erneut ausgeführt wird."
 "Die Safe Browsing wird pro Url 1x ausgeführt."
 "Die Prüfung kann automatisch oder manuell eingestellt werden."
 
 "Da ich kein offizieller Entwickler von Ktipp-/Saldo-Warnliste und Reklamation.ch bin, und kein API gefunden werde, wird die Prüfung dort via Web-Aufruf gemacht. Falls sich die Websiten ändern, kann die Funktionalität eingeschränkt sein danach."
+
+"Ich habe jedoch das Einverständnis von K-Tipp/Saldo für diese Plugin."
 
 "Nach der Installation: 'An Symbolleiste anpinnen/anheften' - ansonsten macht es wenig Sinn. Dies kann jedoch nicht automatisiert werden."
 
@@ -30,6 +32,7 @@
 - - Falls ein Eintrag gefunden wird, wird dieser angezeigt. Der Link öffnet die Warnlisten-Seite, die Domain muss danach jedoch selbst eingetragen werden.
 - 🛡️ **reklamation.ch Abgleich:** Sucht nach bestehenden Konsumentenbeschwerden, bevor Sie einkaufen.
 - ✅ **Trusted Shops Zertifizierung:** Prüft automatisch, ob der Shop ein gültiges Trusted Shops Gütesiegel besitzt.
+- 🏛️ **Admin.ch UID Prüfung (NEU):** Gleicht die Domain mit dem offiziellen Unternehmensregister des Bundes ab. Shops ohne gültige Schweizer UID (Unternehmens-Identifikationsnummer) werden als Warnung angezeigt.
 - 🔒 **Google Safe Browsing (Optional):** Integration der Safe Browsing API zur Erkennung von Phishing und Malware.
 - - Für diese Funktionalität müssen Sie einen API-Key in den Einstellungen hinterlegen. Ein Anleitungs-Link zum erstellen einer solchen ist dort angezeigt
 - ⚙️ **Heuristische Prüfungen:** Lokale Erkennung von verdächtigen TLDs, unverschlüsselten HTTP-Verbindungen und URL-Verschleierung – ganz ohne API-Key.
@@ -43,11 +46,13 @@ Wählen Sie zwischen automatischem Scannen beim Surfen oder manuellem Scannen au
 **Shop Safely Online – Your Protection Against Fake Shops and Fraud**
 
 "CH Warnlisten & Shop Risk-Check" is a browser extension that automatically analyzes websites and online stores for security risks. The extension cross-references the current URL with known Swiss warning lists and uses local heuristics to proactively protect you.
-“A domain (K-Tipp/Saldo warning list, Reklamation.ch, Trusted Shops) is checked only once per session in the current tab and all other tabs, unless the check is explicitly run again.”
+“A domain (K-Tipp/Saldo warning list, Reklamation.ch, Trusted Shops, uid.admin.ch) is checked only once per session in the current tab and all other tabs, unless the check is explicitly run again.”
 “Safe Browsing is run once per URL.”
 “The check can be set to run automatically or manually.”
 
 “Since I am not an official developer of Ktipp/Saldo-Warnliste or Reklamation.ch, and I haven't been able to find an API, the check is performed via a web request. If the websites change, the functionality may be limited as a result.”
+
+“However, I have obtained permission from K-Tipp/Saldo to use this plugin.”
 
 “After installation: ‘Pin to the toolbar’—otherwise, it doesn't make much sense. However, this cannot be automated.”
 
@@ -56,6 +61,7 @@ Wählen Sie zwischen automatischem Scannen beim Surfen oder manuellem Scannen au
 - - If an entry is found, it will be displayed. The link opens the warning list page, but you will then need to enter the domain yourself.
 - 🛡️ **reklamation.ch Integration:** Searches for existing consumer complaints before you make a purchase.
 - ✅ **Trusted Shops Certification:** Automatically verifies if the shop holds a valid Trusted Shops trustmark.
+- 🏛️ **Admin.ch UID Check (NEW):** Cross-references the domain with Switzerland's official federal company register. Shops without a valid Swiss UID (company identification number) are flagged as a warning.
 - 🔒 **Google Safe Browsing (Optional):** Integration of the Safe Browsing API to detect phishing and malware.
 - - To use this feature, you must enter an API key in the settings. A link to instructions on how to create one is displayed there.
 - ⚙️ **Advanced Heuristics:** Local detection of suspicious TLDs, unencrypted HTTP connections, and URL obfuscation – no API key required.
@@ -69,11 +75,13 @@ Choose between automatic background scanning or manual on-demand scanning. Add t
 **Achetez en toute sécurité en ligne - Votre protection contre les escroqueries**
 
 "CH Warnlisten & Shop Risk-Check" est une extension de navigateur qui analyse automatiquement les sites Web et les boutiques en ligne pour détecter les risques de sécurité. L'extension compare l'URL actuelle avec les listes d'avertissement suisses connues et utilise des heuristiques locales pour vous protéger de manière proactive.
-« Un domaine (liste d'alerte K-Tipp/Saldo, Reklamation.ch, Trusted Shops) n'est vérifié qu'une seule fois par session, dans l'onglet actif et dans tous les autres onglets. Sauf si la vérification est explicitement relancée. »
+« Un domaine (liste d'alerte K-Tipp/Saldo, Reklamation.ch, Trusted Shops, uid.admin.ch) n'est vérifié qu'une seule fois par session, dans l'onglet actif et dans tous les autres onglets. Sauf si la vérification est explicitement relancée. »
 « La fonction Safe Browsing est exécutée une seule fois par URL. »
 « La vérification peut être configurée pour s'effectuer automatiquement ou manuellement. »
 
 « Étant donné que je ne suis pas un développeur officiel de Ktipp-/Saldo-Warnliste et de Reklamation.ch, et que je n'ai pas trouvé d'API, la vérification s'effectue via une requête Web. Si les sites Web changent, la fonctionnalité pourrait s'en trouver limitée par la suite. »
+
+« J'ai toutefois obtenu l'accord de K-Tipp/Saldo pour ce plugin. »
 
 « Après l'installation : « Épingler à la barre d'outils » – sinon, cela n'a pas beaucoup d'intérêt. Cela ne peut toutefois pas être automatisé. »
 
@@ -82,6 +90,7 @@ Choose between automatic background scanning or manual on-demand scanning. Add t
 - - Si une entrée est trouvée, celle-ci s'affiche. Le lien ouvre la page de la liste d'alerte, mais vous devrez ensuite saisir vous-même le nom de domaine.
 - 🛡️ **Intégration reklamation.ch :** Recherche les plaintes de consommateurs existantes avant d'acheter.
 - ✅ **Certification Trusted Shops :** Vérifie automatiquement si la boutique possède une marque de confiance Trusted Shops valide.
+- 🏛️ **Vérification UID Admin.ch (NOUVEAU) :** Compare le domaine avec le registre officiel des entreprises de la Confédération suisse. Les boutiques sans numéro UID suisse valide (numéro d'identification des entreprises) sont signalées comme avertissement.
 - 🔒 **Google Safe Browsing (Optionnel) :** Intégration de l'API Safe Browsing pour détecter le phishing et les logiciels malveillants.
 - - Pour bénéficier de cette fonctionnalité, vous devez enregistrer une clé API dans les paramètres. Un lien vers le guide expliquant comment en créer une y est affiché.
 - ⚙️ **Contrôles heuristiques :** Détection locale de TLD suspects et de connexions HTTP non chiffrées sans clé API.
@@ -92,11 +101,13 @@ Choose between automatic background scanning or manual on-demand scanning. Add t
 **Acquista in sicurezza online - La tua protezione contro truffe e negozi falsi**
 
 "CH Warnlisten & Shop Risk-Check" è un'estensione del browser che analizza automaticamente i siti Web e i negozi online per individuare rischi per la sicurezza. L'estensione confronta l'URL corrente con le note liste di avvertimento svizzere e utilizza euristiche locali per proteggerti in modo proattivo.
-“Un dominio (lista di allerta K-Tipp/Saldo, Reklamation.ch, Trusted Shops) viene controllato una sola volta per sessione nella scheda corrente e in tutte le altre schede, a meno che il controllo non venga esplicitamente ripetuto.”
+“Un dominio (lista di allerta K-Tipp/Saldo, Reklamation.ch, Trusted Shops, uid.admin.ch) viene controllato una sola volta per sessione nella scheda corrente e in tutte le altre schede, a meno che il controllo non venga esplicitamente ripetuto.”
 “Il controllo Safe Browsing viene eseguito una volta per ogni URL.”
 “Il controllo può essere impostato in modo automatico o manuale.”
 
 “Poiché non sono uno sviluppatore ufficiale di Ktipp-/Saldo-Warnliste e Reklamation.ch e non ho trovato alcuna API, la verifica viene effettuata tramite una richiesta web. Qualora i siti web subissero modifiche, la funzionalità potrebbe risultare limitata in seguito.”
+
+“Ho comunque ottenuto l'autorizzazione da K-Tipp/Saldo per questo plugin.”
 
 “Dopo l'installazione: ‘Aggiungi alla barra degli strumenti’ – altrimenti non ha molto senso. Tuttavia, questa operazione non può essere automatizzata.”
 
@@ -105,6 +116,7 @@ Choose between automatic background scanning or manual on-demand scanning. Add t
 - - Se viene trovato un risultato, questo verrà visualizzato. Il link apre la pagina dell'elenco di avvisi, ma il dominio dovrà poi essere inserito manualmente.
 - 🛡️ **Integrazione reklamation.ch:** Cerca reclami preesistenti dei consumatori prima di acquistare.
 - ✅ **Certificazione Trusted Shops:** Verifica automaticamente se il negozio possiede un marchio di fiducia Trusted Shops valido.
+- 🏛️ **Verifica UID Admin.ch (NUOVO):** Confronta il dominio con il registro ufficiale delle imprese della Confederazione svizzera. I negozi privi di un numero UID svizzero valido (numero d'identificazione delle imprese) vengono segnalati come avvertimento.
 - 🔒 **Google Safe Browsing (Opzionale):** Integrazione dell'API Safe Browsing per rilevare phishing e malware.
 - - Per poter utilizzare questa funzionalità, è necessario inserire una chiave API nelle impostazioni. In quella sezione è presente un link con le istruzioni per crearne una
 - ⚙️ **Controlli euristici:** Rilevamento locale di TLD sospetti e connessioni HTTP non crittografate senza alcuna chiave API.
@@ -171,10 +183,11 @@ Die Erweiterung ist nach dem Prinzip der Datensparsamkeit ("Privacy by Design") 
   - *K-Tipp (ktipp.ch/saldo.ch):* Der Domainname wird zur Prüfung gegen die K-Tipp/Saldo Warnliste gesendet.
   - *Reklamation.ch:* Der Domainname wird zur Prüfung auf Konsumentenbeschwerden gesendet.
   - *Trusted Shops:* Die Domain wird über die öffentliche API abgefragt, um den Zertifizierungsstatus zu überprüfen.
+  - *Admin.ch UID (uid-wse.admin.ch):* Der Domainname wird an den öffentlichen SOAP-Webservice des Bundes gesendet, um eine gültige Unternehmens-UID zu ermitteln.
   - *Google Safe Browsing (Optional):* Wenn Sie diese Funktion aktivieren und einen API-Key hinterlegen, wird die URL an die Google-Server gesendet. Die Verarbeitung richtet sich nach der Datenschutzerklärung von Google.
 
 **3. Keine Datenweitergabe an Dritte**
-Abgesehen von den zwingend notwendigen und temporären Anfragen an die oben genannten Sicherheitsdienste zur Überprüfung der Webseiten (KTipp/Saldo, Reklamation, Trusted Shops, Google), geben wir keine Daten an Dritte weiter, verkaufen diese nicht und tracken keine Verläufe. Die Erweiterung enthält außerdem keine Analysedienste (wie Google Analytics).
+Abgesehen von den zwingend notwendigen und temporären Anfragen an die oben genannten Sicherheitsdienste zur Überprüfung der Webseiten (KTipp/Saldo, Reklamation, Trusted Shops, Admin.ch UID, Google), geben wir keine Daten an Dritte weiter, verkaufen diese nicht und tracken keine Verläufe. Die Erweiterung enthält außerdem keine Analysedienste (wie Google Analytics).
 
 **4. Berechtigungen der Erweiterung**
 Die Erweiterung benötigt folgende Browser-Rechte, um funktionsfähig zu sein:
