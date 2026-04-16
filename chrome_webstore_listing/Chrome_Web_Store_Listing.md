@@ -23,7 +23,7 @@
 
 "Da ich kein offizieller Entwickler von Ktipp-/Saldo-Warnliste und Reklamation.ch bin, und kein API gefunden werde, wird die Prüfung dort via Web-Aufruf gemacht. Falls sich die Websiten ändern, kann die Funktionalität eingeschränkt sein danach."
 
-"Nach der Installation: 'An Symbolleiste anpinnen' - ansonsten macht es wenig Sinn. Dies kann jedoch nicht automatisiert werden."
+"Nach der Installation: 'An Symbolleiste anpinnen/anheften' - ansonsten macht es wenig Sinn. Dies kann jedoch nicht automatisiert werden."
 
 **Hauptfunktionen:**
 - 🛒 **K-Tipp/Saldo Warnliste:** Überprüft automatisch, ob eine Domain auf der offiziellen K-Tipp/Saldo Warnliste steht.
