@@ -12,6 +12,16 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
 });
 
+function setSafeHTML(element, html) {
+  if (!element) return;
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, 'text/html');
+  element.innerHTML = '';
+  while (doc.body.firstChild) {
+    element.appendChild(doc.body.firstChild);
+  }
+}
+
 function showStatusBadge(state) {
   // Remove existing badge
   if (statusBadge) {
@@ -70,13 +80,27 @@ function showStatusBadge(state) {
     return;
   }
 
-  statusBadge.innerHTML = `
-    <div class="warnlisten-badge-content">
-      <span class="warnlisten-badge-icon">${icon}</span>
-      <span class="warnlisten-badge-text">${label}</span>
-      <button class="warnlisten-badge-close" title="Dismiss">&times;</button>
-    </div>
-  `;
+  statusBadge.innerHTML = '';
+  const badgeContent = document.createElement('div');
+  badgeContent.className = 'warnlisten-badge-content';
+
+  const iconSpan = document.createElement('span');
+  iconSpan.className = 'warnlisten-badge-icon';
+  setSafeHTML(iconSpan, icon);
+  badgeContent.appendChild(iconSpan);
+
+  const textSpan = document.createElement('span');
+  textSpan.className = 'warnlisten-badge-text';
+  setSafeHTML(textSpan, label);
+  badgeContent.appendChild(textSpan);
+
+  const closeButton = document.createElement('button');
+  closeButton.className = 'warnlisten-badge-close';
+  closeButton.title = 'Dismiss';
+  closeButton.innerHTML = '&times;';
+  badgeContent.appendChild(closeButton);
+
+  statusBadge.appendChild(badgeContent);
 
   document.body.appendChild(statusBadge);
 

@@ -126,6 +126,16 @@ function triggerScan(tab) {
   );
 }
 
+function setSafeHTML(element, html) {
+  if (!element) return;
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, 'text/html');
+  element.innerHTML = '';
+  while (doc.body.firstChild) {
+    element.appendChild(doc.body.firstChild);
+  }
+}
+
 function renderState(state) {
   const card = document.getElementById('statusCard');
   const icon = document.getElementById('statusIcon');
@@ -151,21 +161,21 @@ function renderState(state) {
   switch (state.status) {
     case 'safe':
       card.classList.add('safe');
-      icon.innerHTML = getSafeIcon();
+      setSafeHTML(icon, getSafeIcon());
       label.textContent = chrome.i18n.getMessage('statusSafe') || 'Safe';
       detail.textContent = state.message || chrome.i18n.getMessage('statusSafeDetail') || 'No threats detected.';
       break;
 
     case 'danger':
       card.classList.add('danger');
-      icon.innerHTML = getDangerIcon();
+      setSafeHTML(icon, getDangerIcon());
       label.textContent = chrome.i18n.getMessage('statusDanger') || 'Danger!';
       detail.textContent = state.message || chrome.i18n.getMessage('statusDangerDetail') || 'Threats detected!';
       break;
 
     case 'warning':
       card.classList.add('warning');
-      icon.innerHTML = getWarningIcon();
+      setSafeHTML(icon, getWarningIcon());
       const isKtipp = state.threats?.some(t => t.type === 'KTIPP_WARNLISTE');
       const isReklamation = state.threats?.some(t => t.type === 'REKLAMATION_CH');
       
@@ -181,33 +191,33 @@ function renderState(state) {
 
     case 'loading':
       card.classList.add('loading');
-      icon.innerHTML = getLoadingIcon();
+      setSafeHTML(icon, getLoadingIcon());
       label.textContent = chrome.i18n.getMessage('statusAnalyzing') || 'Analyzing…';
       detail.textContent = chrome.i18n.getMessage('statusAnalyzingDetail') || 'Checking URL against threat databases';
       break;
 
     case 'error':
       card.classList.add('error');
-      icon.innerHTML = getErrorIcon();
+      setSafeHTML(icon, getErrorIcon());
       label.textContent = chrome.i18n.getMessage('statusError') || 'Error';
       detail.textContent = state.message || chrome.i18n.getMessage('statusErrorDetail') || 'Analysis failed.';
       break;
 
     case 'whitelisted':
       card.classList.add('safe');
-      icon.innerHTML = getSafeIcon();
+      setSafeHTML(icon, getSafeIcon());
       label.textContent = chrome.i18n.getMessage('statusWhitelisted') || 'Whitelisted';
       detail.textContent = state.message || chrome.i18n.getMessage('statusWhitelistedDetail') || 'Domain is whitelisted.';
       break;
 
     case 'skipped':
-      icon.innerHTML = getSkippedIcon();
+      setSafeHTML(icon, getSkippedIcon());
       label.textContent = chrome.i18n.getMessage('statusSkipped') || 'Skipped';
       detail.textContent = state.message || chrome.i18n.getMessage('statusSkippedDetail') || 'Internal page — not analyzed.';
       break;
     
     case 'idle':
-      icon.innerHTML = getIdleIcon();
+      setSafeHTML(icon, getIdleIcon());
       label.textContent = chrome.i18n.getMessage('statusReady') || 'Ready';
       detail.textContent = state.isWhitelisted 
         ? (chrome.i18n.getMessage('statusReadyDetailWhitelist') || 'Click "Scan" to analyze (Whitelisted).')
@@ -215,7 +225,7 @@ function renderState(state) {
       break;
 
     default:
-      icon.innerHTML = getLoadingIcon();
+      setSafeHTML(icon, getLoadingIcon());
       label.textContent = chrome.i18n.getMessage('statusUnknown') || 'Unknown';
       detail.textContent = chrome.i18n.getMessage('statusUnknownDetail') || 'Status unavailable.';
   }
@@ -229,13 +239,26 @@ function renderState(state) {
       const isWarning = threat.type === 'INSECURE_CONNECTION' || threat.type === 'SUSPICIOUS_URL_LENGTH';
       item.className = `threat-item ${isWarning ? 'warning' : ''}`;
       item.style.animationDelay = `${i * 0.08}s`;
-      item.innerHTML = `
-        <span class="threat-icon">${isWarning ? '⚠️' : '🛑'}</span>
-        <div class="threat-info">
-          <span class="threat-type">${formatThreatType(threat.type)}</span>
-          <span class="threat-desc">${threat.description || ''}</span>
-        </div>
-      `;
+
+      const threatIcon = document.createElement('span');
+      threatIcon.className = 'threat-icon';
+      threatIcon.textContent = isWarning ? '⚠️' : '🛑';
+      item.appendChild(threatIcon);
+
+      const threatInfo = document.createElement('div');
+      threatInfo.className = 'threat-info';
+
+      const threatType = document.createElement('span');
+      threatType.className = 'threat-type';
+      threatType.textContent = formatThreatType(threat.type);
+      threatInfo.appendChild(threatType);
+
+      const threatDesc = document.createElement('span');
+      threatDesc.className = 'threat-desc';
+      threatDesc.textContent = threat.description || '';
+      threatInfo.appendChild(threatDesc);
+
+      item.appendChild(threatInfo);
       threatsList.appendChild(item);
     });
   } else {
@@ -245,35 +268,35 @@ function renderState(state) {
   // Render details
   if (state.detailsApi) {
     detailsSectionApi.style.display = 'block';
-    detailsContentApi.innerHTML = linkify(state.detailsApi);
+    setSafeHTML(detailsContentApi, linkify(state.detailsApi));
   } else {
     detailsSectionApi.style.display = 'none';
   }
 
   if (state.detailsReklamation) {
     detailsSectionReklamation.style.display = 'block';
-    detailsContentReklamation.innerHTML = linkify(state.detailsReklamation);
+    setSafeHTML(detailsContentReklamation, linkify(state.detailsReklamation));
   } else {
     detailsSectionReklamation.style.display = 'none';
   }
 
   if (state.detailsKtipp) {
     detailsSectionKtipp.style.display = 'block';
-    detailsContentKtipp.innerHTML = linkify(state.detailsKtipp);
+    setSafeHTML(detailsContentKtipp, linkify(state.detailsKtipp));
   } else {
     detailsSectionKtipp.style.display = 'none';
   }
 
   if (state.detailsTrustedshops) {
     detailsSectionTrustedshops.style.display = 'block';
-    detailsContentTrustedshops.innerHTML = linkify(state.detailsTrustedshops);
+    setSafeHTML(detailsContentTrustedshops, linkify(state.detailsTrustedshops));
   } else {
     detailsSectionTrustedshops.style.display = 'none';
   }
 
   if (state.details) {
     detailsSection.style.display = 'block';
-    detailsContent.innerHTML = linkify(state.details);
+    setSafeHTML(detailsContent, linkify(state.details));
   } else {
     detailsSection.style.display = 'none';
   }
@@ -334,7 +357,14 @@ function highlightUrl(urlStr) {
     const url = new URL(urlStr);
     const protocol = url.protocol + '//';
     const rest = urlStr.substring(protocol.length);
-    urlText.innerHTML = `<span style="color: ${url.protocol === 'https:' ? 'var(--color-safe)' : 'var(--color-danger)'}">${protocol}</span>${escapeHtml(rest)}`;
+    
+    urlText.innerHTML = '';
+    const protocolSpan = document.createElement('span');
+    protocolSpan.style.color = url.protocol === 'https:' ? 'var(--color-safe)' : 'var(--color-danger)';
+    protocolSpan.textContent = protocol;
+    
+    urlText.appendChild(protocolSpan);
+    urlText.appendChild(document.createTextNode(rest));
   } catch (e) {
     urlText.textContent = urlStr;
   }
