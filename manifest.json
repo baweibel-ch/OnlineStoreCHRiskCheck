@@ -5,7 +5,11 @@
   "browser_specific_settings": {
     "gecko": {
       "id": "onlinestore-ch-riskcheck@baweibel.ch",
-      "strict_min_version": "109.0"
+      "data_collection_permissions": {
+        "required": [
+          "browsingActivity"
+        ]
+      }
     }
   },
   "description": "Prüft Online-Shops gegen Warnlisten (K-Tipp/Saldo), Reklamationen & auf Trusted Shops Zertifizierung.",
