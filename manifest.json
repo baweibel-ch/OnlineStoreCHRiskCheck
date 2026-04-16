@@ -8,8 +8,8 @@
       "strict_min_version": "109.0"
     }
   },
-  "description": "Check online store if listed as risk in ch warning-lists.",
-  "default_locale": "en",
+  "description": "Prüft Online-Shops gegen Warnlisten (K-Tipp/Saldo), Reklamationen & auf Trusted Shops Zertifizierung.",
+  "default_locale": "de",
   "permissions": [
     "activeTab",
     "storage",
