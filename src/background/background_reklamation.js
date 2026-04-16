@@ -52,10 +52,13 @@ export async function checkReklamation(urlString) {
       details: `✅ ` + (chrome.i18n.getMessage('bgDetailRekOkNotFound', [domain]) || `[reklamation.ch] No complaints found for "${domain}".`)
     };
   } catch (e) {
-    const domain = new URL(urlString).hostname.replace(/^www\./i, '');
+    console.error('checkReklamation error:', e);
     return {
-      threats: [],
-      details: `✅ ` + (chrome.i18n.getMessage('bgDetailRekOkNotFound', [domain]) || `[reklamation.ch] No complaints found for "${domain}".`)
+      threats: [{
+        type: 'SERVICE_ERROR',
+        description: chrome.i18n.getMessage('threatDescError', ['reklamation.ch']) || 'Error getting reklamation.ch'
+      }],
+      details: ''
     };
   }
 }

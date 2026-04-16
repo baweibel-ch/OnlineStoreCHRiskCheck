@@ -26,10 +26,13 @@ export async function checkTrustedshops(urlString) {
       details: `⚠️ ` + (chrome.i18n.getMessage('bgDetailTSMissing', [domain]) || `[TrustedShops] Domain "${domain}" is not certified.`)
     };
   } catch (e) {
+    console.error('checkTrustedshops error:', e);
     return {
-      // If there's a fetch error, we might not want to treat it as a hard threat, but to be consistent:
-      threats: [{ type: 'TRUSTED_SHOPS_MISSING', description: chrome.i18n.getMessage('tsMissingDesc') || 'Not a Trusted Shops certified shop.' }], 
-      details: `⚠️ ` + (chrome.i18n.getMessage('bgDetailTSMissing', ['Error']) || `[TrustedShops] Domain is not certified (Error).`)
+      threats: [{
+        type: 'SERVICE_ERROR',
+        description: chrome.i18n.getMessage('threatDescError', ['Trusted Shops']) || 'Error getting Trusted Shops'
+      }],
+      details: ''
     };
   }
 }

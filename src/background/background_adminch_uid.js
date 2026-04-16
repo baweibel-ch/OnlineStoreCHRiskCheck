@@ -83,6 +83,13 @@ export async function checkUid(urlString) {
                `` + (chrome.i18n.getMessage('bgDetailMoreInfo') || 'More info:') + ` ${link}`
     };
   } catch (e) {
-    return { threats: [], details: '' };
+    console.error('checkUid error:', e);
+    return {
+      threats: [{
+        type: 'SERVICE_ERROR',
+        description: chrome.i18n.getMessage('threatDescError', ['uid.admin.ch']) || 'Error getting uid.admin.ch'
+      }],
+      details: ''
+    };
   }
 }

@@ -101,7 +101,7 @@
   "apiKeyHelpLabel": {"message": "Wie erhalte ich einen API-Schlüssel?"},
   "clipboardCopied": {"message": "In die Zwischenablage kopiert!"},
   "pageTitle": {"message": "OnlineStore CH risk-check — Einstellungen"},
-  "footerText": {"message": "OnlineStore CH risk-check v1.0.3 — Erstellt für Chrome, Chromium & Brave"},
+  "footerText": {"message": "OnlineStore CH risk-check v1.0.4 — Erstellt für Chrome, Chromium & Brave"},
   "threatTrustedShopsMissing": { "message": "Nicht gefunden in Trusted-Shops.ch" },
   "threatAdminchUidMissing": { "message": "Keine UID gefunden in www.uid.admin.ch" },
   "threatReklamationCh": { "message": "Reklamation.ch Einträge gefunden" },
@@ -113,5 +113,6 @@
   "bgDetailUidOk": { "message": "[uid.admin.ch] Aktive UID für \"$1\" gefunden.", "placeholders": { "domain": { "content": "$1" } } },
   "threatDescReklamation": { "message": "$1 Beschwerde(n) auf reklamation.ch gefunden" },
   "threatDescKtipp": { "message": "Auf K-Tipp/Saldo-Warnliste gefunden" },
-  "threatDescUidMissing": { "message": "Keine aktive UID auf uid.admin.ch gefunden für $1" }
+  "threatDescUidMissing": { "message": "Keine aktive UID auf uid.admin.ch gefunden für $1" },
+  "threatDescError": { "message": "Fehler beim Abrufen von $1" }
 }

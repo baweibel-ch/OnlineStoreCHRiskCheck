@@ -111,6 +111,13 @@ export async function checkKtipp(urlString) {
       details: `✅ ` + (chrome.i18n.getMessage('bgDetailKtipp', [domain]) || `[Ktipp/Saldo-Warnliste] No warnings found for "${domain}".`)
     };
   } catch (e) {
-    return { threats: [], details: '' };
+    console.error('checkKtipp error:', e);
+    return {
+      threats: [{
+        type: 'SERVICE_ERROR',
+        description: chrome.i18n.getMessage('threatDescError', ['K-Tipp/Saldo']) || 'Error getting K-Tipp/Saldo'
+      }],
+      details: ''
+    };
   }
 }

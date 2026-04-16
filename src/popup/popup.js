@@ -238,7 +238,7 @@ function renderState(state) {
     threatsList.innerHTML = '';
     state.threats.forEach((threat, i) => {
       const item = document.createElement('div');
-      const isWarning = threat.type === 'INSECURE_CONNECTION' || threat.type === 'SUSPICIOUS_URL_LENGTH';
+      const isWarning = threat.type === 'INSECURE_CONNECTION' || threat.type === 'SUSPICIOUS_URL_LENGTH' || threat.type === 'SERVICE_ERROR';
       item.className = `threat-item ${isWarning ? 'warning' : ''}`;
       item.style.animationDelay = `${i * 0.08}s`;
 
@@ -402,6 +402,9 @@ function formatThreatType(type) {
   }
   if (type === 'KTIPP_WARNLISTE') {
     return chrome.i18n.getMessage('threatKtippWarnliste') || 'Auf K-Tipp/Saldo Internetshop - Warnliste gefunden';
+  }
+  if (type === 'SERVICE_ERROR') {
+    return chrome.i18n.getMessage('statusError') || 'Error';
   }
 
   return type
