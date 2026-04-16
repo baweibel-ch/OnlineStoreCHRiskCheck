@@ -25,7 +25,8 @@ export async function checkUid(urlString) {
       headers: {
         'Content-Type': 'text/xml; charset=utf-8',
         'Accept': 'text/xml',
-        'SOAPAction': '"http://www.uid.admin.ch/xmlns/uid-wse/IPublicServices/Search"'
+        'SOAPAction': '"http://www.uid.admin.ch/xmlns/uid-wse/IPublicServices/Search"',
+        'Referer': 'OnlineStoreCHRiskCheck'
       },
       body: soapEnvelope
     });
