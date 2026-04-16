@@ -318,7 +318,7 @@ function buildRequestBody(url, config) {
     return {
       client: {
         clientId: 'warnlisten-plugin',
-        clientVersion: '1.0.1'
+        clientVersion: '1.0.2'
       },
       threatInfo: {
         threatTypes: ['MALWARE', 'SOCIAL_ENGINEERING', 'UNWANTED_SOFTWARE', 'POTENTIALLY_HARMFUL_APPLICATION'],

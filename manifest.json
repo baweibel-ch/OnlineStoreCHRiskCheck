@@ -1,8 +1,14 @@
 {
   "manifest_version": 3,
-  "name": "OnlineStore CH risk-check. BETA",
-  "version": "1.0.1",
-  "description": "Check online store if listed as risk in ch warning-lists. DIESE ERWEITERUNG IST FÜR DEN BETATEST VORGESEHEN",
+  "name": "OnlineStore CH risk-check.",
+  "version": "1.0.2",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "onlinestore-ch-riskcheck@yourdomain.ch",
+      "strict_min_version": "109.0"
+    }
+  },
+  "description": "Check online store if listed as risk in ch warning-lists.",
   "default_locale": "en",
   "permissions": [
     "activeTab",
@@ -22,6 +28,7 @@
     }
   },
   "background": {
+    "scripts": ["src/background/background.js"],
     "service_worker": "src/background/background.js",
     "type": "module"
   },
