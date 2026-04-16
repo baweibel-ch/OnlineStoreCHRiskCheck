@@ -4,7 +4,7 @@
   "version": "1.0.2",
   "browser_specific_settings": {
     "gecko": {
-      "id": "onlinestore-ch-riskcheck@yourdomain.ch",
+      "id": "onlinestore-ch-riskcheck@baweibel.ch",
       "strict_min_version": "109.0"
     }
   },
