@@ -300,6 +300,7 @@ async function callWarningApi(url, config) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      'Referer': 'OnlineStoreCHRiskCheck',
       ...(config.apiUrl.includes('safebrowsing.googleapis.com') ? {} : { 'Authorization': `Bearer ${config.apiKey}` })
     },
     body: JSON.stringify(body)
@@ -366,7 +367,11 @@ async function checkReklamation(urlString) {
     const domain = url.hostname.replace(/^www\./i, '');
     const searchUrl = `https://www.reklamation.ch/complaint.php?search=true&keyword=${encodeURIComponent(domain)}`;
 
-    const response = await fetch(searchUrl);
+    const response = await fetch(searchUrl, {
+      headers: {
+        'Referer': 'OnlineStoreCHRiskCheck'
+      }
+    });
     if (!response.ok) {
       return {threats: [], details: ''};
     }
@@ -428,7 +433,11 @@ async function checkKtipp(urlString) {
     const internetshopsUrl = 'https://www.ktipp.ch/service/warnlisten/detail/warnliste/internetshops';
 
     // Step 1: Fetch the internetshops page to get the form with its action URL and hidden fields
-    const initialResponse = await fetch(internetshopsUrl);
+    const initialResponse = await fetch(internetshopsUrl, {
+      headers: {
+        'Referer': 'OnlineStoreCHRiskCheck'
+      }
+    });
     if (!initialResponse.ok) {
       return { threats: [], details: '' };
     }
@@ -491,7 +500,7 @@ async function checkKtipp(urlString) {
       body: formData,
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        'Referer': internetshopsUrl,
+        'Referer': 'OnlineStoreCHRiskCheck',
         'Origin': 'https://www.ktipp.ch'
       }
     });
@@ -550,7 +559,11 @@ async function checkTrustedshops(urlString) {
     const domain = url.hostname.replace(/^www\./i, '');
     const searchUrl = `https://www.trustedshops.ch/shops?q=${encodeURIComponent(domain)}`;
 
-    const response = await fetch(searchUrl);
+    const response = await fetch(searchUrl, {
+      headers: {
+        'Referer': 'OnlineStoreCHRiskCheck'
+      }
+    });
     const text = await response.text();
     
     // Check if the response text contains a link to the shop's review page
