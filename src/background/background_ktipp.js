@@ -9,11 +9,7 @@ export async function checkKtipp(urlString) {
     const internetshopsUrl = 'https://www.ktipp.ch/service/warnlisten/detail/warnliste/internetshops';
 
     // Step 1: Fetch the internetshops page to get the form with its action URL and hidden fields
-    const initialResponse = await fetch(internetshopsUrl, {
-      headers: {
-        'Referer': 'OnlineStoreCHRiskCheck'
-      }
-    });
+    const initialResponse = await fetch(internetshopsUrl);
     if (!initialResponse.ok) {
       return { threats: [], details: '' };
     }
@@ -75,7 +71,6 @@ export async function checkKtipp(urlString) {
       body: formData,
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        'Referer': 'OnlineStoreCHRiskCheck',
         'Origin': 'https://www.ktipp.ch'
       }
     });

@@ -18,7 +18,6 @@ export async function callWarningApi(url, config) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Referer': 'OnlineStoreCHRiskCheck',
       ...(config.apiUrl.includes('safebrowsing.googleapis.com') ? {} : { 'Authorization': `Bearer ${config.apiKey}` })
     },
     body: JSON.stringify(body)

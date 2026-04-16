@@ -8,11 +8,7 @@ export async function checkReklamation(urlString) {
     const domain = url.hostname.replace(/^www\./i, '');
     const searchUrl = `https://www.reklamation.ch/complaint.php?search=true&keyword=${encodeURIComponent(domain)}`;
 
-    const response = await fetch(searchUrl, {
-      headers: {
-        'Referer': 'OnlineStoreCHRiskCheck'
-      }
-    });
+    const response = await fetch(searchUrl);
     if (!response.ok) {
       return {threats: [], details: ''};
     }

@@ -30,7 +30,75 @@ chrome.runtime.onInstalled.addListener(async () => {
   if (!stored.config) {
     await chrome.storage.sync.set({ config: DEFAULT_CONFIG });
   }
+  await setupRefererRules();
 });
+
+// --- Referer Rule Setup for Manifest V3 ---
+async function setupRefererRules() {
+  const rules = [
+    {
+      id: 1,
+      priority: 1,
+      action: {
+        type: 'modifyHeaders',
+        requestHeaders: [
+          { header: 'Referer', operation: 'set', value: 'OnlineStoreCHRiskCheck' }
+        ]
+      },
+      condition: {
+        urlFilter: '*://*.reklamation.ch/*',
+        resourceTypes: ['xmlhttprequest']
+      }
+    },
+    {
+      id: 2,
+      priority: 1,
+      action: {
+        type: 'modifyHeaders',
+        requestHeaders: [
+          { header: 'Referer', operation: 'set', value: 'OnlineStoreCHRiskCheck' }
+        ]
+      },
+      condition: {
+        urlFilter: '*://*.ktipp.ch/*',
+        resourceTypes: ['xmlhttprequest']
+      }
+    },
+    {
+      id: 3,
+      priority: 1,
+      action: {
+        type: 'modifyHeaders',
+        requestHeaders: [
+          { header: 'Referer', operation: 'set', value: 'OnlineStoreCHRiskCheck' }
+        ]
+      },
+      condition: {
+        urlFilter: '*://*.trustedshops.ch/*',
+        resourceTypes: ['xmlhttprequest']
+      }
+    },
+    {
+      id: 4,
+      priority: 1,
+      action: {
+        type: 'modifyHeaders',
+        requestHeaders: [
+          { header: 'Referer', operation: 'set', value: 'OnlineStoreCHRiskCheck' }
+        ]
+      },
+      condition: {
+        urlFilter: '*://safebrowsing.googleapis.com/*',
+        resourceTypes: ['xmlhttprequest']
+      }
+    }
+  ];
+
+  await chrome.declarativeNetRequest.updateDynamicRules({
+    removeRuleIds: rules.map(r => r.id),
+    addRules: rules
+  });
+}
 
 // --- Tab Navigation & Removal Listeners ---
 chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {

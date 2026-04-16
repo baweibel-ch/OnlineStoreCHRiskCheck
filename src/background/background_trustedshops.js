@@ -8,11 +8,7 @@ export async function checkTrustedshops(urlString) {
     const domain = url.hostname.replace(/^www\./i, '');
     const searchUrl = `https://www.trustedshops.ch/shops?q=${encodeURIComponent(domain)}`;
 
-    const response = await fetch(searchUrl, {
-      headers: {
-        'Referer': 'OnlineStoreCHRiskCheck'
-      }
-    });
+    const response = await fetch(searchUrl);
     const text = await response.text();
     
     // Check if the response text contains a link to the shop's review page
