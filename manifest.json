@@ -50,6 +50,5 @@
     "48": "src/icons/icon48.png",
     "128": "src/icons/icon128.png"
   },
-  "author": "baweibel.ch",
-  "_cross_browser_note": "Chrome MV3 uses 'service_worker', while Firefox MV3 requires 'scripts'. package_xpi.sh handles this conversion automatically."
+  "author": "onlinestore-ch-riskcheck@baweibel.ch"
 }
