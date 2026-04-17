@@ -193,6 +193,7 @@ Abgesehen von den zwingend notwendigen und temporären Anfragen an die oben gena
 Die Erweiterung benötigt folgende Browser-Rechte, um funktionsfähig zu sein:
 - `activeTab`: Um die URL der aktuell geöffneten Seite auszulesen und zu prüfen.
 - `storage`: Um Ihre Einstellungen (wie API-Keys, Sprache oder Whitelists) lokal in Ihrem Browser zu speichern.
-- `tabs`: Wird für die URL-Prüfung im Hintergrund bei Tab-Wechseln und für die Navigation auf die Einstellungsseite benötigt.
+- `tabs`: Wird für die URL-Prüfung im Hintergrund bei Tab-Wechseln benötigt, sodass jede Domain nur 1x geprüft wird (K-Tipp/Saldo Warnliste, Reklamation.ch, Trusted-Shops, uid auf admin.ch), resp. jede URL (Google Safe-Browsing).
+- `declarativeNetRequest`: Wird benötigt, um den `Referer`-Header bei Anfragen an Sicherheitsdienste zu setzen. Da Manifest V3 Service Worker das manuelle Setzen dieses Headers aus Sicherheitsgründen einschränken, stellt dies sicher, dass unsere Anfragen korrekt identifiziert und verarbeitet werden können.
 - `host_permissions (<all_urls>)`: Zwingend erforderlich, um Webseiten in die Analyse einzuschließen und Statusmeldungen (Badges, In-Page Warnungen) auf den jeweiligen Seiten platzieren zu können.
 
