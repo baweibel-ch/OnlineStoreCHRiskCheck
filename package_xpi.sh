@@ -19,6 +19,19 @@ if ! command -v zip &> /dev/null; then
     exit 1
 fi
 
+# Create a temporary manifest for Firefox MV3
+# Firefox requires 'scripts' instead of 'service_worker' in MV3 background
+cp manifest.json manifest.json.tmp
+sed -i 's/"service_worker": "src\/background\/background.js"/"scripts": ["src\/background\/background.js"]/' manifest.json.tmp
+# Remove "type": "module" if it's there as it's redundant/invalid for 'scripts' key in some cases
+sed -i '/"type": "module"/d' manifest.json.tmp
+# Clean up trailing comma if "type": "module" was last
+sed -i 'N;s/,\n  }/\n  }/;P;D' manifest.json.tmp
+
+# Store original manifest and put the temporary one in place
+mv manifest.json manifest.json.bak
+mv manifest.json.tmp manifest.json
+
 # Create the xpi (zip) file
 # Excluding: scripts, project files, backups, and hidden files
 zip -r "$XPI_FILE" manifest.json src/ _locales/ \
@@ -28,6 +41,9 @@ zip -r "$XPI_FILE" manifest.json src/ _locales/ \
     -x "*.iml" \
     -x "chrome_webstore_listing/*" \
     -x "*.DS_Store*"
+
+# Restore original manifest
+mv manifest.json.bak manifest.json
 
 if [ -f "$XPI_FILE" ]; then
     echo "------------------------------------------------"
