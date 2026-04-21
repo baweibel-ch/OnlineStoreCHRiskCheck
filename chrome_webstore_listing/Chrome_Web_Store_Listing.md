@@ -4,10 +4,10 @@
 
 ## 2. Kurzbezeichnung
 
-**DE:** Prüft Online-Shops gegen Warnlisten (K-Tipp/Saldo), Reklamationen, Trusted Shops & Admin.ch UID. Ihr Schutz vor Fake-Shops!
-**EN:** Checks online shops against warning lists (K-Tipp/Saldo), complaints, Trusted Shops & Admin.ch UID. Your protection against fraud!
-**FR:** Vérifie les boutiques sur les listes d'avertissement, Trusted Shops & UID Admin.ch. Votre protection contre la fraude !
-**IT:** Controlla i negozi sulle liste di avvertimento, Trusted Shops & UID Admin.ch. La tua protezione contro le frodi!
+**DE:** Prüft Online-Shops gegen Warnlisten (K-Tipp/Saldo), Reklamation.ch, Trusted Shops & Admin.ch UID. Ihr Schutz vor Fake-Shops!
+**EN:** Checks online shops against warning lists (K-Tipp/Saldo), Reklamation.ch, Trusted Shops & Admin.ch UID. Your protection against fraud!
+**FR:** Vérifie les boutiques sur les listes d'avertissement (K-Tipp/Saldo), Reklamation.ch, Trusted Shops & UID Admin.ch. Votre protection contre la fraude !
+**IT:** Controlla i negozi sulle liste di avvertimento(K-Tipp/Saldo), Reklamation.ch, Trusted Shops & UID Admin.ch. La tua protezione contro le frodi!
 
 ---
 
@@ -16,14 +16,18 @@
 ### Deutsch (DE)
 **Sicher einkaufen im Internet – Ihr Schutz vor Fake-Shops und Betrug**
 
-"CH Warnlisten & Shop Risk-Check" ist eine Browser-Erweiterung, die Webseiten und Online-Shops automatisch auf Sicherheitsrisiken analysiert. Die Erweiterung gleicht die aktuelle URL mit bekannten Schweizer Warnlisten ab und nutzt lokale Heuristiken, um Sie proaktiv zu schützen.
+"CH Warnlisten & Shop Risk-Check" ist eine Browser-Erweiterung, die Webseiten und Online-Shops automatisch auf Sicherheitsrisiken analysiert. Die Erweiterung gleicht die aktuelle URL mit der Schweizer Warnliste von K-Tipp/Saldo ab und nutzt lokale Heuristiken, um Sie proaktiv zu schützen.
 "Eine Domain (K-Tipp/Saldo Warnliste, Reklamation.ch, Trusted Shops, uid.admin.ch) wird nur 1x geprüft pro Sitzung im aktuellen- und allen Tabs. Ausser wenn die Prüfung explizit erneut ausgeführt wird."
 "Die Safe Browsing wird pro Url 1x ausgeführt."
 "Die Prüfung kann automatisch oder manuell eingestellt werden."
 
-"Da ich kein offizieller Entwickler von Ktipp-/Saldo-Warnliste und Reklamation.ch bin, und kein API gefunden werde, wird die Prüfung dort via Web-Aufruf gemacht. Falls sich die Websiten ändern, kann die Funktionalität eingeschränkt sein danach."
+"Automatische Überprüfung via:"
+- www.ktipp.ch/service/warnlisten/detail/warnliste/internetshops
+- www.reklamation.ch
+- www.uid.admin.ch
+- Google Safe Browsing (Optional)
 
-"Ich habe jedoch das Einverständnis von K-Tipp/Saldo für diese Plugin."
+"Da ich kein offizieller Entwickler von Ktipp-/Saldo-Warnliste und Reklamation.ch bin, und kein API gefunden werde, wird die Prüfung dort via Web-Aufruf gemacht. Falls sich die Websiten ändern, kann die Funktionalität eingeschränkt sein danach."
 
 "Nach der Installation: 'An Symbolleiste anpinnen/anheften' - ansonsten macht es wenig Sinn. Dies kann jedoch nicht automatisiert werden."
 
