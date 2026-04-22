@@ -34,3 +34,6 @@ So funktioniert's:
 - Eine Domain wird nur 1x geprüft pro Sitzung im aktuellen- und allen Tabs (für K-Tipp/Saldo Warnliste, Reklamation.ch, Trusted Shops, uid.admin.ch).
 - Die Safe Browsing wird pro Url 1x ausgeführt.
 - Ausser wenn die Prüfung explizit erneut ausgeführt wird.
+
+Open Source & Transparenz:
+Dieses Projekt ist Open Source unter der GPL-3.0 Lizenz. Den vollständigen Quellcode finden Sie auf GitHub: https://github.com/baweibel-ch/OnlineStoreCHRiskCheck

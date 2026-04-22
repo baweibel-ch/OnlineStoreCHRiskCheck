@@ -34,3 +34,6 @@ Come funziona:
 - Un dominio viene verificato solo una volta per sessione nella scheda corrente e in tutte le schede (per la lista di avvisi K-Tipp/Saldo, Reklamation.ch, Trusted Shops, uid.admin.ch).
 - Safe Browsing viene eseguito una volta per URL.
 - A meno che il controllo non venga eseguito esplicitamente di nuovo.
+
+Open source e trasparenza:
+Questo progetto è open source ed è distribuito sotto licenza GPL 3.0. Il codice sorgente completo è disponibile su GitHub: https://github.com/baweibel-ch/OnlineStoreCHRiskCheck
