@@ -1,0 +1,36 @@
+Acquista in sicurezza su Internet – La tua protezione contro i falsi negozi e le frodi
+
+"CH Warnlisten & Shop Risk-Check" è un'estensione per browser che analizza automaticamente siti web e negozi online alla ricerca di rischi per la sicurezza.
+
+L'estensione confronta l'URL corrente con l'elenco di avvisi svizzero di K-Tipp/Saldo e utilizza euristiche locali per proteggerti in modo proattivo.
+
+Il controllo può essere impostato su automatico o manuale.
+
+Verifica automatica tramite:
+- www.ktipp.ch/service/warnlisten/detail/warnliste/internetshops
+- www.reklamation.ch
+- www.uid.admin.ch
+- Google Safe Browsing (Opzionale)
+
+Poiché non sono uno sviluppatore ufficiale della lista di avvisi K-Tipp/Saldo o di Reklamation.ch, e non è stata trovata alcuna API, il controllo viene effettuato tramite richieste web. Se i siti web cambiano, la funzionalità potrebbe essere limitata successivamente.
+
+Dopo l'installazione: 'Aggiungi alla barra degli strumenti' - altrimenti ha poco senso. Tuttavia, questo non può essere automatizzato.
+
+Caratteristiche principali:
+- 🛒 **Lista di avvisi K-Tipp/Saldo:** Verifica automaticamente se un dominio è presente nell'elenco ufficiale di avvisi K-Tipp/Saldo.
+- - Se viene trovata una voce, verrà visualizzata. Il link apre la pagina della lista di avvisi, ma il dominio deve poi essere inserito manualmente.
+- 🛡️ **Confronto reklamation.ch:** Cerca reclami dei consumatori esistenti prima di fare acquisti.
+- ✅ **Certificazione Trusted Shops:** Verifica automaticamente se il negozio ha un marchio di qualità Trusted Shops valido.
+- 🏛️ **Controllo UID Admin.ch:** Confronta il dominio con il registro federale ufficiale delle imprese. I negozi senza un UID (numero di identificazione delle imprese) svizzero valido vengono visualizzati come un avviso.
+- 🔒 **Google Safe Browsing (Opzionale):** Integrazione dell'API Safe Browsing per rilevare phishing e malware.
+- - Per questa funzionalità, è necessario fornire una chiave API nelle impostazioni. Lì è visualizzato un link alle istruzioni su come crearne una.
+- ⚙️ **Controlli euristici:** Rilevamento locale di TLD sospetti, connessioni HTTP non crittografate e offuscamento degli URL – senza alcuna chiave API.
+- 🚦 **Avvisi visibili:** Un sistema di colori nell'icona (badge) e avvisi diretti sui siti pericolosi ti informano immediatamente.
+- 🛡️ **Privacy prima di tutto:** Nessun tracciamento degli utenti, nessuna memorizzazione della cronologia di navigazione sui nostri server.
+
+
+Come funziona:
+- Scegli tra la scansione automatica durante la navigazione o la scansione manuale con la semplice pressione di un pulsante. Aggiungi i siti attendibili a una whitelist, se necessario.
+- Un dominio viene verificato solo una volta per sessione nella scheda corrente e in tutte le schede (per la lista di avvisi K-Tipp/Saldo, Reklamation.ch, Trusted Shops, uid.admin.ch).
+- Safe Browsing viene eseguito una volta per URL.
+- A meno che il controllo non venga eseguito esplicitamente di nuovo.

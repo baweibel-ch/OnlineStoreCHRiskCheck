@@ -1,0 +1,36 @@
+Achetez en toute sécurité sur Internet – Votre protection contre les fausses boutiques et la fraude
+
+"CH Warnlisten & Shop Risk-Check" est une extension de navigateur qui analyse automatiquement les sites Web et les boutiques en ligne pour détecter les risques de sécurité.
+
+L'extension compare l'URL actuelle avec la liste d'avertissement suisse de K-Tipp/Saldo et utilise des heuristiques locales pour vous protéger de manière proactive.
+
+La vérification peut être réglée sur automatique ou manuelle.
+
+Vérification automatique via :
+- www.ktipp.ch/service/warnlisten/detail/warnliste/internetshops
+- www.reklamation.ch
+- www.uid.admin.ch
+- Google Safe Browsing (Optionnel)
+
+Étant donné que je ne suis pas un développeur officiel de la liste d'avertissement K-Tipp/Saldo ou de Reklamation.ch et qu'aucune API n'a été trouvée, la vérification s'effectue via des requêtes Web. Si les sites Web changent, la fonctionnalité pourrait être restreinte par la suite.
+
+Après l'installation : 'Épingler à la barre d'outils' - sinon, cela n'a pas beaucoup de sens. Cela ne peut cependant pas être automatisé.
+
+Fonctionnalités principales :
+- 🛒 **Liste d'avertissement K-Tipp/Saldo :** Vérifie automatiquement si un domaine figure sur la liste officielle d'avertissement de K-Tipp/Saldo.
+- - Si une entrée est trouvée, elle sera affichée. Le lien ouvre la page de la liste d'avertissement, mais le domaine doit ensuite être saisi manuellement.
+- 🛡️ **Comparaison reklamation.ch :** Recherche les plaintes de consommateurs existantes avant vos achats.
+- ✅ **Certification Trusted Shops :** Vérifie automatiquement si la boutique possède un label de qualité Trusted Shops valide.
+- 🏛️ **Vérification UID Admin.ch :** Compare le domaine avec le registre fédéral officiel des entreprises. Les boutiques sans UID (numéro d'identification des entreprises) suisse valide sont affichées comme un avertissement.
+- 🔒 **Google Safe Browsing (Optionnel) :** Intégration de l'API Safe Browsing pour détecter l'hameçonnage et les logiciels malveillants.
+- - Pour cette fonctionnalité, vous devez fournir une clé API dans les paramètres. Un lien vers les instructions de création s'y affiche.
+- ⚙️ **Vérifications heuristiques :** Détection locale de TLD suspects, de connexions HTTP non chiffrées et d'obfuscation d'URL – sans aucune clé API.
+- 🚦 **Avertissements visibles :** Un système de couleurs dans l'icône (badge) et des avertissements directs sur les sites dangereux vous informent immédiatement.
+- 🛡️ **La confidentialité avant tout :** Aucun suivi des utilisateurs (tracking), aucune conservation des historiques de navigation sur nos serveurs.
+
+
+Comment ça marche :
+- Choisissez entre l'analyse automatique pendant la navigation ou l'analyse manuelle sur simple pression d'un bouton. Ajoutez les sites de confiance à une liste blanche si nécessaire.
+- Un domaine n'est vérifié qu'une seule fois par session dans l'onglet actuel et tous les onglets (pour la liste d'avertissement K-Tipp/Saldo, Reklamation.ch, Trusted Shops, uid.admin.ch).
+- Safe Browsing est exécuté une fois par URL.
+- Sauf si la vérification est explicitement relancée.
