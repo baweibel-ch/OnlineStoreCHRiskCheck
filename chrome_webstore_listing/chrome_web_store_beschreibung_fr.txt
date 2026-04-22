@@ -34,3 +34,6 @@ Comment ça marche :
 - Un domaine n'est vérifié qu'une seule fois par session dans l'onglet actuel et tous les onglets (pour la liste d'avertissement K-Tipp/Saldo, Reklamation.ch, Trusted Shops, uid.admin.ch).
 - Safe Browsing est exécuté une fois par URL.
 - Sauf si la vérification est explicitement relancée.
+
+Open source et transparence :
+Ce projet est open source sous licence GPL 3.0. Vous trouverez le code source complet sur GitHub : https://github.com/baweibel-ch/OnlineStoreCHRiskCheck
