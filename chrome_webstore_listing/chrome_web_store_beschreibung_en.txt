@@ -1,8 +1,8 @@
 Shop safely on the Internet – Your protection against fake shops and fraud
 
-"CH Warnlisten & Shop Risk-Check" is a browser extension that automatically analyzes websites and online shops for security risks.
+"CH Warnlisten & Shop Risk-Check" is a browser extension that automatically or manually analyzes websites and online shops for security risks.
 
-The extension compares the current URL with the Swiss warning list from K-Tipp/Saldo and uses local heuristics to protect you proactively.
+It compares the current URL with the Swiss warning list from K-Tipp/Saldo (ktipp.ch/service/warnlisten/detail/warnliste/internetshops), reklamation.ch and uid.admin.ch. Optional Google-Safe-Browsing or heuristic checks.
 
 The check can be set to automatic or manual.
 

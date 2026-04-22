@@ -2,7 +2,7 @@ Acquista in sicurezza su Internet – La tua protezione contro i falsi negozi e 
 
 "CH Warnlisten & Shop Risk-Check" è un'estensione per browser che analizza automaticamente siti web e negozi online alla ricerca di rischi per la sicurezza.
 
-L'estensione confronta l'URL corrente con l'elenco di avvisi svizzero di K-Tipp/Saldo e utilizza euristiche locali per proteggerti in modo proattivo.
+Confronta l'URL corrente con l'elenco svizzero dei siti a rischio pubblicato da K-Tipp/Saldo (ktipp.ch/service/warnlisten/detail/warnliste/internetshops), reklamation.ch e uid.admin.ch. Controlli opzionali tramite Google Safe Browsing o analisi euristica.
 
 Il controllo può essere impostato su automatico o manuale.
 
