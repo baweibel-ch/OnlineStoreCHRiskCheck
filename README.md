@@ -8,8 +8,10 @@ A Chrome/Chromium/Brave browser extension that analyzes the current URL against 
 - 🔍 **Automatic & Manual Scanning** — Choose to scan every new page automatically or scan manually on demand via the popup.
 - 🛡️ **reklamation.ch Integration** — Automatically checks for consumer complaints and displays the latest alerts with direct links.
 - 🛒 **Ktipp-Warnliste Integration** — Proactively checks for entries on the Ktipp/Saldo warning list by mirroring search form logic to detect flagged web shops directly.
+- ✅ **Trusted Shops Integration** — Validates online stores against the Trusted Shops database for certified reliability.
+- 🏢 **UID Register Integration (admin.ch)** — Cross-checks with the Swiss UID register to verify official business registration.
 - 🛡️ **Google Safe Browsing Integration** — Default support for Google Safe Browsing v4 API to identify known malware/phishing.
-- 🔌 **Custom REST API Support** — Configure any REST API endpoint for URL threat checks.
+- - For this functionality, you need to provide an API key in the settings. A link to instructions on how to create one is displayed there
 - 🎯 **Advanced Heuristics** — Built-in pattern detection works without an API key (e.g., suspicious TLDs, unencrypted HTTP, URL obfuscation).
 - 🏳️ **Whitelist Support** — Skip trusted domains and their subdomains from automated analyses to preserve resources.
 - ⚡ **Real-time Badge Updates** — Color-coded popup badge shows the site's security status at a glance.
@@ -55,7 +57,7 @@ If no key is provided, it looks for `../warnlistenPlugin.pem` or generates a new
 
 1. Click the extension icon → **Settings**
 2. Choose your preferred scanning mode (Auto/Manual)
-3. Toggle which security services you want active (Google Safe Browsing, reklamation.ch, Ktipp/Saldo-Warnliste)
+3. Toggle which security services you want active (Google Safe Browsing, reklamation.ch, Ktipp/Saldo-Warnliste, Trusted Shops, UID Register)
 4. Enter your API key if you plan on using Safe Browsing (local storage only)
 5. Add domains to your whitelist (e.g. `youtube.com`)
 6. Save settings
@@ -132,7 +134,36 @@ Open the project in IntelliJ IDEA:
 | Chromium  | ✅        |
 | Brave     | ✅        |
 | Edge      | ✅        |
+| Firefox / Mozilla (incl. Android) | ✅        |
+
+### Packaging to .xpi (Firefox)
+
+You can package the extension into an installable `.xpi` file using the provided script:
+```bash
+./package_xpi.sh
+```
+
+**Hint for Debugging on Firefox-Android:**
+If you want to debug the extension manually on Firefox-Android, you must add the following to your `manifest.json`:
+```json
+"background": {
+  "scripts": [
+    "src/background/background.js"
+  ]
+}
+```
+This is because for multi-browser support, the background script is not included directly in `manifest.json` by default, but is added automatically during the packaging process by `package_xpi.sh`.
+
+## Publishing as Open Source (GPL-3.0)
+
+If you intend to publish a fork or modified version of this extension as Open Source under the GPL-3.0 license:
+
+1. **Source Code Availability**: Ensure all source code is published and accessible (e.g., on GitHub/GitLab).
+2. **License Headers**: Include the standard GPL-3.0 license header in all newly created source files.
+3. **Distribution**: If distributing packaged binaries (e.g., `.crx` or `.xpi`), you must also make the complete Corresponding Source available.
+4. **State Modifications**: State prominently in any modified files that you changed them and provide the date.
+5. **API Keys**: Do not commit private API keys (like Google Safe Browsing keys) to the public repository. The extension relies on users configuring their own keys in the settings.
 
 ## License
 
-MIT
+GPL-3.0 License
