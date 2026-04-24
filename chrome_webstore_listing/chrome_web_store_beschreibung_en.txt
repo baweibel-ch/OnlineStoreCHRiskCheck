@@ -6,11 +6,12 @@ It compares the current URL with the Swiss warning list from K-Tipp/Saldo (ktipp
 
 The check can be set to automatic or manual.
 
-Automatic verification via:
+Automatic or manuel verification via:
 - www.ktipp.ch/service/warnlisten/detail/warnliste/internetshops
 - www.reklamation.ch
 - www.uid.admin.ch
-- Google Safe Browsing (Optional)
+- www.trustedshops.ch
+- Google Safe Browsing (safebrowsing.googleapis.com)
 
 Since I am not an official developer of the Ktipp/Saldo warning list or Reklamation.ch, and no API is found, the check is done via web requests. If the websites change, the functionality may be restricted afterwards.
 

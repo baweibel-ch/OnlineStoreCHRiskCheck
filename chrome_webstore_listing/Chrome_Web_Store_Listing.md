@@ -25,6 +25,7 @@
 - www.ktipp.ch/service/warnlisten/detail/warnliste/internetshops
 - www.reklamation.ch
 - www.uid.admin.ch
+- www.trustedshops.ch
 - Google Safe Browsing (Optional)
 
 "Da ich kein offizieller Entwickler von Ktipp-/Saldo-Warnliste und Reklamation.ch bin, und kein API gefunden werde, wird die Prüfung dort via Web-Aufruf gemacht. Falls sich die Websiten ändern, kann die Funktionalität eingeschränkt sein danach."
