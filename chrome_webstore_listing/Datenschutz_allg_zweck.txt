@@ -1,9 +1,15 @@
 Prüft Online-Shop-Domains/Urls gegen Warnlisten (K-Tipp/Saldo), Reklamationen, Trusted Shops & Admin.ch UID.
 Sendet dazu die Domain an:
 * www.ktipp.ch/service/warnlisten/detail/warnliste/internetshops
+* * https://www.ktipp.ch/ueber-uns/datenschutz
 * www.reklamation.ch
+* * https://reklamation.ch/datenschutz.php
 * www.uid.admin.ch
+* * https://www.admin.ch/de/rechtliches
+* www.trustedshops.ch
+* * https://www.trustedshops.ch/impressum/#data-protection
 Und die Url an:
 * Google Safe Browsing
+* * https://developers.google.com/safe-browsing / https://policies.google.com/privacy
 
 Jede dieser Prüfungen ist in den Einstellungen optional zu setzen und kann manuell (empfohlen) oder automatisch erfolgen - auch in den Einstellungen.

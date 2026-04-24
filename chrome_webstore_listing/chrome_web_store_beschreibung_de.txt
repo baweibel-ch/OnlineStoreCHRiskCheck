@@ -6,11 +6,12 @@ Es vergleicht die aktuelle URL mit der Schweizer Warnliste von K-Tipp/Saldo (kti
 
 Die Prüfung kann automatisch oder manuell eingestellt werden.
 
-Automatische Überprüfung via:
+Automatische oder manuelle Überprüfung via:
 - www.ktipp.ch/service/warnlisten/detail/warnliste/internetshops
 - www.reklamation.ch
 - www.uid.admin.ch
-- Google Safe Browsing (Optional)
+- www.trustedshops.ch
+- Google Safe Browsing (safebrowsing.googleapis.com)
 
 Da ich kein offizieller Entwickler von Ktipp-/Saldo-Warnliste und Reklamation.ch bin, und kein API gefunden werde, wird die Prüfung dort via Web-Aufruf gemacht. Falls sich die Websiten ändern, kann die Funktionalität eingeschränkt sein danach.
 

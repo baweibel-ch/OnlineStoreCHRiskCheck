@@ -6,11 +6,12 @@ Confronta l'URL corrente con l'elenco svizzero dei siti a rischio pubblicato da 
 
 Il controllo può essere impostato su automatico o manuale.
 
-Verifica automatica tramite:
+Verifica automatica o manuale tramite:
 - www.ktipp.ch/service/warnlisten/detail/warnliste/internetshops
 - www.reklamation.ch
 - www.uid.admin.ch
-- Google Safe Browsing (Opzionale)
+- www.trustedshops.ch
+- Google Safe Browsing (safebrowsing.googleapis.com)
 
 Poiché non sono uno sviluppatore ufficiale della lista di avvisi K-Tipp/Saldo o di Reklamation.ch, e non è stata trovata alcuna API, il controllo viene effettuato tramite richieste web. Se i siti web cambiano, la funzionalità potrebbe essere limitata successivamente.
 
