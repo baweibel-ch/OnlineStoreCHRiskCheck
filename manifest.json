@@ -12,7 +12,7 @@
       }
     }
   },
-  "description": "Prüft die aktuelle URL mit der Schweizer Warnliste von K-Tipp/Saldo (ktipp.ch/service/warnlisten/detail/warnliste/internetshops), reklamation.ch und uid.admin.ch. Optional werden Google Safe Browsing- oder heuristische Prüfungen durchgeführt.",
+  "description": "Prüft die aktuelle URL mit der Schweizer Warnliste von K-Tipp/Saldo, reklamation.ch und uid.admin.ch.",
   "default_locale": "de",
   "permissions": [
     "activeTab",
