@@ -45,3 +45,7 @@ else
     echo "Failed to create .crx file"
     exit 1
 fi
+
+echo "creating zip"
+zip -r OnlineStoreCHRiskCheck.zip manifest.json _locales src icons
+echo "Successfully created OnlineStoreCHRiskCheck.zip"
