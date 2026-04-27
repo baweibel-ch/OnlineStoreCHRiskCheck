@@ -50,7 +50,7 @@
   "enableRekHint": {"message": "Sucht nach Beschwerden auf reklamation.ch"},
   "enableKtippLabel": {"message": "Ktipp/Saldo-Warnliste aktivieren"},
   "enableKtippHint": {"message": "Prüft auf Einträge in der Ktipp/Saldo-Warnliste"},
-  "apiConfigTitle": {"message": "🔌 API-Konfiguration"},
+  "apiConfigTitle": {"message": "🔌 Google Safe-Browsing-API-Konfiguration"},
   "apiUrlLabel": {"message": "REST-API Endpunkt"},
   "apiUrlHint": {"message": "Geben Sie die URL Ihrer REST-API an. Standard ist Google Safe Browsing v4."},
   "apiKeyLabel": {"message": "API-Schlüssel"},
