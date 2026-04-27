@@ -28,6 +28,28 @@
     </header>
 
     <main class="options-main">
+      <!-- Appearance -->
+      <section class="settings-section">
+        <h2 class="section-title" data-i18n="themeLabel">🎨 Theme</h2>
+        <div class="setting-group">
+          <p class="setting-hint" style="margin-bottom: 12px; font-size: 13px;" data-i18n="themeHint">Choose the appearance of the extension:</p>
+          <div class="radio-group horizontal">
+            <label class="radio-label">
+              <input type="radio" name="theme" value="light" id="themeLight">
+              <div class="radio-content">
+                <span class="radio-title" data-i18n="themeLight">Light Theme</span>
+              </div>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="theme" value="dark" id="themeDark" checked>
+              <div class="radio-content">
+                <span class="radio-title" data-i18n="themeDark">Dark Theme</span>
+              </div>
+            </label>
+          </div>
+        </div>
+      </section>
+
       <!-- Scanning Mode -->
       <section class="settings-section">
         <h2 class="section-title" data-i18n="scanningModeLabel">🔍 Scanning Mode</h2>
@@ -109,15 +131,10 @@
 
       <!-- API Configuration -->
       <section class="settings-section">
-        <h2 class="section-title" data-i18n="apiConfigTitle">🔌 API Configuration</h2>
-        <div class="setting-group">
-          <label for="apiUrl" class="setting-label" data-i18n="apiUrlLabel">REST API Endpoint</label>
-          <input type="url" id="apiUrl" class="setting-input" placeholder="https://safebrowsing.googleapis.com/v4/threatMatches:find">
-          <p class="setting-hint" data-i18n="apiUrlHint">Enter the URL of your warning list REST API. Default is Google Safe Browsing v4.</p>
-        </div>
+        <h2 class="section-title" data-i18n="apiConfigTitle">🔌 Google Safe-Browsing-API Configuration</h2>
         <div class="setting-group">
           <label for="apiKey" class="setting-label" data-i18n="apiKeyLabel">API Key</label>
-          <a href="#" id="apiKeyHelpLink" target="_blank" data-i18n="apiKeyHelpLabel" style="color: white; text-decoration: underline;">How to get an API key?</a>
+          <a href="#" id="apiKeyHelpLink" target="_blank" data-i18n="apiKeyHelpLabel">How to get an API key?</a>
           <div class="input-with-toggle">
             <input type="password" id="apiKey" class="setting-input" placeholder="Enter your API key" data-i18n-placeholder="apiKeyPlaceholder">
             <button class="toggle-visibility" id="toggleKeyVisibility" title="Show/Hide">
@@ -131,28 +148,13 @@
         </div>
       </section>
 
-      <!-- Behavior -->
+      <!-- Whitelist -->
       <section class="settings-section">
         <h2 class="section-title" data-i18n="whitelistTitle">🛡️ Whitelist</h2>
         <div class="setting-group">
           <label for="whitelist" class="setting-label" data-i18n="whitelistLabel">Whitelisted Domains</label>
           <textarea id="whitelist" class="setting-input" rows="4" placeholder="example.com&#10;internal.org"></textarea>
           <p class="setting-hint" data-i18n="whitelistHint">Enter domains to skip from analysis (one per line). All subdomains will also be skipped.</p>
-        </div>
-      </section>
-
-      <!-- Behavior -->
-      <section class="settings-section">
-        <h2 class="section-title" data-i18n="behaviorTitle">⚙️ Behavior</h2>
-        <div class="setting-group toggle-group">
-          <div class="toggle-info">
-            <label class="setting-label" for="notificationsEnabled" data-i18n="notificationsLabel">Show in-page warnings</label>
-            <p class="setting-hint" data-i18n="notificationsHint">Display a badge on the page when threats are detected</p>
-          </div>
-          <label class="toggle-switch">
-            <input type="checkbox" id="notificationsEnabled" checked>
-            <span class="toggle-slider"></span>
-          </label>
         </div>
       </section>
 

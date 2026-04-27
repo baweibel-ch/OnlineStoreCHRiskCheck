@@ -39,6 +39,9 @@ async function init() {
 
   // Get current status from background
   chrome.runtime.sendMessage({ action: 'getConfig' }, (config) => {
+    // Apply theme
+    document.documentElement.setAttribute('data-theme', config.theme || 'dark');
+
     chrome.runtime.sendMessage({ action: 'getStatus', tabId: tab.id }, (state) => {
       const domain = new URL(tab.url).hostname.replace(/^www\./i, '');
       const isWhitelisted = config.whitelist && config.whitelist.some(w => {

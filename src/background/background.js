@@ -36,6 +36,7 @@ const DEFAULT_CONFIG = {
   enableKtipp: true,
   enableTrustedshops: true,
   enableAdminchUid: true,
+  theme: 'light',
   whitelist: ['newtab', 'extensions', 'google.com', 'google.ch', 'gemini.google.com', 'reklamation.ch', 'ktipp.ch', 'saldo.ch', 'startpage.com']
 };
 
