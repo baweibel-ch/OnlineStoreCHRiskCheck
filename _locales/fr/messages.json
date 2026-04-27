@@ -101,7 +101,7 @@
   "apiKeyHelpLabel": {"message": "Comment obtenir une clé API ?"},
   "clipboardCopied": {"message": "Copié dans le presse-papiers !"},
   "pageTitle": {"message": "OnlineStore CH risk-check — Paramètres"},
-  "footerText": {"message": "OnlineStore CH risk-check v1.0.5 — Créé pour Chrome, Chromium, Brave & Firefox"},
+  "footerText": {"message": "OnlineStore CH risk-check v1.0.6 — Créé pour Chrome, Chromium, Brave. Edge & Firefox"},
   "threatTrustedShopsMissing": { "message": "Non trouvé sur Trusted-Shops.ch" },
   "threatAdminchUidMissing": { "message": "Aucun UID trouvé sur www.uid.admin.ch" },
   "threatReklamationCh": { "message": "Entrées Reklamation.ch trouvées" },

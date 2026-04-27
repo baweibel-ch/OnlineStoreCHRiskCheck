@@ -24,9 +24,10 @@ fi
 cp manifest.json manifest.json.tmp
 sed -i 's/"service_worker": "src\/background\/background.js"/"scripts": ["src\/background\/background.js"]/' manifest.json.tmp
 # Remove "type": "module" if it's there as it's redundant/invalid for 'scripts' key in some cases
-sed -i '/"type": "module"/d' manifest.json.tmp
+# Actually, Firefox needs "type": "module" for ES imports in background scripts
+# sed -i '/"type": "module"/d' manifest.json.tmp
 # Clean up trailing comma if "type": "module" was last
-sed -i 'N;s/,\n  }/\n  }/;P;D' manifest.json.tmp
+# sed -i 'N;s/,\n  }/\n  }/;P;D' manifest.json.tmp
 
 # Store original manifest and put the temporary one in place
 mv manifest.json manifest.json.bak
