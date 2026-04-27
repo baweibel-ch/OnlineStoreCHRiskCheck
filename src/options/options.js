@@ -15,20 +15,25 @@ async function loadSettings() {
 
   const config = await getConfig();
 
-  document.getElementById('apiUrl').value = config.apiUrl || '';
-  document.getElementById('apiKey').value = config.apiKey || '';
+  if (document.getElementById('apiUrl')) document.getElementById('apiUrl').value = config.apiUrl || '';
+  if (document.getElementById('apiKey')) document.getElementById('apiKey').value = config.apiKey || '';
   
   const isAuto = config.checkAutomatically !== false;
-  document.getElementById('scanModeAuto').checked = isAuto;
-  document.getElementById('scanModeManual').checked = !isAuto;
+  if (document.getElementById('scanModeAuto')) document.getElementById('scanModeAuto').checked = isAuto;
+  if (document.getElementById('scanModeManual')) document.getElementById('scanModeManual').checked = !isAuto;
 
-  document.getElementById('notificationsEnabled').checked = config.notificationsEnabled !== false;
-  document.getElementById('enableSafeBrowsing').checked = config.enableSafeBrowsing !== false;
-  document.getElementById('enableReklamation').checked = config.enableReklamation !== false;
-  document.getElementById('enableKtipp').checked = config.enableKtipp !== false;
-  document.getElementById('enableTrustedshops').checked = config.enableTrustedshops !== false;
-  document.getElementById('enableAdminchUid').checked = config.enableAdminchUid !== false;
-  document.getElementById('whitelist').value = (config.whitelist || []).join('\n');
+  const theme = config.theme || 'dark';
+  if (document.getElementById('themeLight')) document.getElementById('themeLight').checked = theme === 'light';
+  if (document.getElementById('themeDark')) document.getElementById('themeDark').checked = theme === 'dark';
+  applyTheme(theme);
+
+  if (document.getElementById('notificationsEnabled')) document.getElementById('notificationsEnabled').checked = config.notificationsEnabled !== false;
+  if (document.getElementById('enableSafeBrowsing')) document.getElementById('enableSafeBrowsing').checked = config.enableSafeBrowsing !== false;
+  if (document.getElementById('enableReklamation')) document.getElementById('enableReklamation').checked = config.enableReklamation !== false;
+  if (document.getElementById('enableKtipp')) document.getElementById('enableKtipp').checked = config.enableKtipp !== false;
+  if (document.getElementById('enableTrustedshops')) document.getElementById('enableTrustedshops').checked = config.enableTrustedshops !== false;
+  if (document.getElementById('enableAdminchUid')) document.getElementById('enableAdminchUid').checked = config.enableAdminchUid !== false;
+  if (document.getElementById('whitelist')) document.getElementById('whitelist').value = (config.whitelist || []).join('\n');
 
   // Save handler
   document.getElementById('btnSave').addEventListener('click', saveSettings);
@@ -42,21 +47,33 @@ async function loadSettings() {
   // Set API Key Help Link URL
   const lang = chrome.i18n.getUILanguage().split('-')[0] || 'en';
   document.getElementById('apiKeyHelpLink').href = `https://developers.google.com/safe-browsing/v4/get-started?hl=${lang}`;
+
+  // Theme change preview
+  document.querySelectorAll('input[name="theme"]').forEach(radio => {
+    radio.addEventListener('change', (e) => {
+      applyTheme(e.target.value);
+    });
+  });
+}
+
+function applyTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
 }
 
 async function saveSettings() {
   const config = {
-    apiUrl: document.getElementById('apiUrl').value.trim() ||
+    apiUrl: document.getElementById('apiUrl')?.value?.trim() ||
       'https://safebrowsing.googleapis.com/v4/threatMatches:find',
-    apiKey: document.getElementById('apiKey').value.trim(),
-    checkAutomatically: document.getElementById('scanModeAuto').checked,
-    notificationsEnabled: document.getElementById('notificationsEnabled').checked,
-    enableSafeBrowsing: document.getElementById('enableSafeBrowsing').checked,
-    enableReklamation: document.getElementById('enableReklamation').checked,
-    enableKtipp: document.getElementById('enableKtipp').checked,
-    enableTrustedshops: document.getElementById('enableTrustedshops').checked,
-    enableAdminchUid: document.getElementById('enableAdminchUid').checked,
-    whitelist: document.getElementById('whitelist').value.split('\n')
+    apiKey: document.getElementById('apiKey')?.value?.trim() || '',
+    checkAutomatically: document.getElementById('scanModeAuto')?.checked ?? true,
+    notificationsEnabled: document.getElementById('notificationsEnabled')?.checked ?? true,
+    enableSafeBrowsing: document.getElementById('enableSafeBrowsing')?.checked ?? false,
+    enableReklamation: document.getElementById('enableReklamation')?.checked ?? true,
+    enableKtipp: document.getElementById('enableKtipp')?.checked ?? true,
+    enableTrustedshops: document.getElementById('enableTrustedshops')?.checked ?? true,
+    enableAdminchUid: document.getElementById('enableAdminchUid')?.checked ?? true,
+    theme: document.querySelector('input[name="theme"]:checked')?.value || 'dark',
+    whitelist: (document.getElementById('whitelist')?.value || '').split('\n')
       .map(line => line.trim())
       .filter(line => line.length > 0)
   };
