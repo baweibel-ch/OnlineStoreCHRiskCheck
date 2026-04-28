@@ -4,4 +4,4 @@
 cd "$(dirname "$0")" || exit
 
 # Generiere PDF aus Markdown
-pandoc Datenschutz.md -o Datenschutz.pdf
+pandoc Datenschutz.md -V mainfont="Arial" -o Datenschutz.pdf
