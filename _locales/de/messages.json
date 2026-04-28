@@ -5,7 +5,7 @@
   "popupSubtitle": {"message": "URL-Sicherheitsanalysator"},
   "urlSectionLabel": {"message": "Aktuelle URL"},
   "threatsSectionLabel": {"message": "Gefundene Probleme"},
-  "securityAnalysisLabel": {"message": "Sicherheitsanalyse"},
+  "securityAnalysisLabel": {"message": "Google Safe-Browsing Analyse"},
   "reklamationLabel": {"message": "reklamation.ch Beschwerden"},
   "ktippLabel": {"message": "K-Tipp/Saldo Warnliste"},
   "analysisDetailsLabel": {"message": "Analysedetails"},
