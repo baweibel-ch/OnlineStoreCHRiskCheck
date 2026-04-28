@@ -118,5 +118,7 @@
   "threatDescReklamation": { "message": "$1 plainte(s) trouvée(s) sur reklamation.ch" },
   "threatDescKtipp": { "message": "Trouvé sur la liste d'avertissement K-Tipp/Saldo" },
   "threatDescUidMissing": { "message": "Aucun UID actif trouvé sur uid.admin.ch pour $1" },
-  "threatDescError": { "message": "Erreur lors de la récupération de $1" }
+  "threatDescError": { "message": "Erreur lors de la récupération de $1" },
+  "safebrowsingNoThreats": { "message": "Aucune menace trouvée dans la base de données Google Safe Browsing." },
+  "safebrowsingFound": { "message": "Trouvé :" }
 }

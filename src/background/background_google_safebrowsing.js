@@ -61,8 +61,8 @@ export function parseApiResponse(data, config) {
         url: m.threat?.url
       })),
       details: matches.length > 0
-        ? `Found: ${matches.map(m => m.threatType).join(', ')}`
-        : 'No threats found in Google Safe Browsing database.'
+        ? `${chrome.i18n.getMessage('safebrowsingFound') || 'Found:'} ${matches.map(m => m.threatType).join(', ')}`
+        : (chrome.i18n.getMessage('safebrowsingNoThreats') || 'No threats found in Google Safe Browsing database.')
     };
   }
 
