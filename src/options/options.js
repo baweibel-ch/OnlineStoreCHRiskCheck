@@ -37,6 +37,22 @@ async function loadSettings() {
   if (document.getElementById('enableKtipp')) document.getElementById('enableKtipp').checked = config.enableKtipp !== false;
   if (document.getElementById('enableTrustedshops')) document.getElementById('enableTrustedshops').checked = config.enableTrustedshops !== false;
   if (document.getElementById('enableAdminchUid')) document.getElementById('enableAdminchUid').checked = config.enableAdminchUid !== false;
+
+  // Disable enableAdminchUid for Firefox Android
+  const isFirefoxAndroid = navigator.userAgent.toLowerCase().includes('android') && navigator.userAgent.toLowerCase().includes('firefox');
+  if (isFirefoxAndroid) {
+    const adminchUidCheckbox = document.getElementById('enableAdminchUid');
+    if (adminchUidCheckbox) {
+      adminchUidCheckbox.checked = false;
+      adminchUidCheckbox.disabled = true;
+      const hintEl = adminchUidCheckbox.closest('.toggle-group').querySelector('.setting-hint');
+      if (hintEl) {
+        const notSupportedMsg = chrome.i18n.getMessage('notSupportedFirefoxAndroid') || 'Not supported for Firefox-Android';
+        hintEl.innerHTML += `<br><span style="color: #ffaa00; font-size: 0.9em; margin-top: 4px; display: inline-block;">${notSupportedMsg}</span>`;
+      }
+    }
+  }
+
   if (document.getElementById('whitelist')) document.getElementById('whitelist').value = (config.whitelist || []).join('\n');
 
   // Save handler

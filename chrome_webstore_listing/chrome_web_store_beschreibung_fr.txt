@@ -29,6 +29,7 @@ Fonctionnalités principales :
 - 🛡️ **Comparaison reklamation.ch :** Recherche les plaintes de consommateurs existantes avant vos achats.
 - ✅ **Certification Trusted Shops :** Vérifie automatiquement si la boutique possède un label de qualité Trusted Shops valide.
 - 🏛️ **Vérification UID Admin.ch :** Compare le domaine avec le registre fédéral officiel des entreprises. Les boutiques sans UID (numéro d'identification des entreprises) suisse valide sont affichées comme un avertissement.
+- - (Non pris en charge pour Firefox-Android)
 - 🔒 **Google Safe Browsing (Optionnel) :** Intégration de l'API Safe Browsing pour détecter l'hameçonnage et les logiciels malveillants.
 - - Pour cette fonctionnalité, vous devez fournir une clé API dans les paramètres. Un lien vers les instructions de création s'y affiche.
 - ⚙️ **Vérifications heuristiques :** Détection locale de TLD suspects, de connexions HTTP non chiffrées et d'obfuscation d'URL – sans aucune clé API.

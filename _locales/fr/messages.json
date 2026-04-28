@@ -120,5 +120,6 @@
   "threatDescUidMissing": { "message": "Aucun UID actif trouvé sur uid.admin.ch pour $1" },
   "threatDescError": { "message": "Erreur lors de la récupération de $1" },
   "safebrowsingNoThreats": { "message": "Aucune menace trouvée dans la base de données Google Safe Browsing." },
-  "safebrowsingFound": { "message": "Trouvé :" }
+  "safebrowsingFound": { "message": "Trouvé :" },
+  "notSupportedFirefoxAndroid": { "message": "Non pris en charge pour Firefox-Android" }
 }

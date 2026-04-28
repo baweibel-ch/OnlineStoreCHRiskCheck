@@ -29,6 +29,7 @@ Main features:
 - 🛡️ **reklamation.ch Comparison:** Searches for existing consumer complaints before you shop.
 - ✅ **Trusted Shops Certification:** Automatically checks whether the shop has a valid Trusted Shops seal of approval.
 - 🏛️ **Admin.ch UID Check:** Compares the domain with the official federal business register. Shops without a valid Swiss UID (Business Identification Number) are displayed as a warning.
+- - (Not supported for Firefox-Android)
 - 🔒 **Google Safe Browsing (Optional):** Integration of the Safe Browsing API to detect phishing and malware.
 - - For this functionality, you need to provide an API key in the settings. A link to instructions on how to create one is displayed there.
 - ⚙️ **Heuristic Checks:** Local detection of suspicious TLDs, unencrypted HTTP connections, and URL obfuscation - entirely without an API key.
