@@ -5,7 +5,7 @@
   "popupSubtitle": {"message": "URL-Sicherheitsanalysator"},
   "urlSectionLabel": {"message": "Aktuelle URL"},
   "threatsSectionLabel": {"message": "Gefundene Probleme"},
-  "securityAnalysisLabel": {"message": "Sicherheitsanalyse"},
+  "securityAnalysisLabel": {"message": "Google Safe-Browsing Analyse"},
   "reklamationLabel": {"message": "reklamation.ch Beschwerden"},
   "ktippLabel": {"message": "K-Tipp/Saldo Warnliste"},
   "analysisDetailsLabel": {"message": "Analysedetails"},
@@ -105,7 +105,7 @@
   "apiKeyHelpLabel": {"message": "Wie erhalte ich einen API-Schlüssel?"},
   "clipboardCopied": {"message": "In die Zwischenablage kopiert!"},
   "pageTitle": {"message": "OnlineStore CH risk-check — Einstellungen"},
-  "footerText": {"message": "OnlineStore CH risk-check v1.0.6 — Erstellt für Chrome, Chromium, Brave. Edge & Firefox"},
+  "footerText": {"message": "OnlineStore CH risk-check v__VERSION__ — Erstellt für Chrome, Chromium, Brave. Edge & Firefox"},
   "threatTrustedShopsMissing": { "message": "Nicht gefunden in Trusted-Shops.ch" },
   "threatAdminchUidMissing": { "message": "Keine UID gefunden in www.uid.admin.ch" },
   "threatReklamationCh": { "message": "Reklamation.ch Einträge gefunden" },
@@ -118,5 +118,7 @@
   "threatDescReklamation": { "message": "$1 Beschwerde(n) auf reklamation.ch gefunden" },
   "threatDescKtipp": { "message": "Auf K-Tipp/Saldo-Warnliste gefunden" },
   "threatDescUidMissing": { "message": "Keine aktive UID auf uid.admin.ch gefunden für $1" },
-  "threatDescError": { "message": "Fehler beim Abrufen von $1" }
+  "threatDescError": { "message": "Fehler beim Abrufen von $1" },
+  "safebrowsingNoThreats": { "message": "Keine Bedrohungen in der Google Safe Browsing-Datenbank gefunden." },
+  "safebrowsingFound": { "message": "Gefunden:" }
 }
