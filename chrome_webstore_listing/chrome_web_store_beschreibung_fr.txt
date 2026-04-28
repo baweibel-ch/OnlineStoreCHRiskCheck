@@ -13,7 +13,13 @@ Vérification automatique ou manuel via :
 - www.trustedshops.ch
 - Google Safe Browsing (safebrowsing.googleapis.com)
 
-Étant donné que je ne suis pas un développeur officiel de la liste d'avertissement K-Tipp/Saldo ou de Reklamation.ch et qu'aucune API n'a été trouvée, la vérification s'effectue via des requêtes Web. Si les sites Web changent, la fonctionnalité pourrait être restreinte par la suite.
+Activité réduite :
+- Chaque domaine n'est vérifié qu'une fois, que vous continuiez à cliquer sur la page dans le même onglet ou que le même domaine soit ouvert dans d'autres onglets.
+- Si Google Safe Browsing est activé, chaque nouvelle URL est à nouveau vérifiée pour détecter les risques de sécurité.
+- - Ex. https://testsafebrowsing.appspot.com/ ok. https://testsafebrowsing.appspot.com/s/phishing.html - Avertissement.
+- En mode manuel, une fois la vérification déclenchée, pour chaque page suivante du même domaine, les avertissements pour le domaine sont affichés sans vérification supplémentaire et l'URL est testée via Google Safe Browsing (si activé).
+
+Étant donné que je ne suis pas un développeur officiel de l'un des services Web, la fonctionnalité peut être restreinte si les services changent.
 
 Après l'installation : 'Épingler à la barre d'outils' - sinon, cela n'a pas beaucoup de sens. Cela ne peut cependant pas être automatisé.
 
