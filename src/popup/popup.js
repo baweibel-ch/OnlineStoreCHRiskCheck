@@ -10,8 +10,8 @@ async function init() {
     const key = el.getAttribute('data-i18n');
     let msg = chrome.i18n.getMessage(key);
     if (msg) {
-      if (msg.includes('$VERSION$')) {
-        msg = msg.replace('$VERSION$', chrome.runtime.getManifest().version);
+      if (msg.includes('__VERSION__')) {
+        msg = msg.replace('__VERSION__', chrome.runtime.getManifest().version);
       }
       if (el.id === 'btnAddWhitelist' || el.id === 'btnRemoveWhitelist') {
         el.title = msg;

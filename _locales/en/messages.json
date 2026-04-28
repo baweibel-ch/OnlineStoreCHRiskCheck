@@ -71,7 +71,7 @@
   "saveStatusSuccess": {"message": "✓ Saved!"},
   "clipboardCopied": {"message": "Copied to clipboard!"},
   "pageTitle": {"message": "OnlineStore CH risk-check — Settings"},
-  "footerText": {"message": "OnlineStore CH risk-check v$VERSION$ — Built for Chrome, Chromium, Brave. Edge & Firefox"},
+  "footerText": {"message": "OnlineStore CH risk-check v__VERSION__ — Built for Chrome, Chromium, Brave. Edge & Firefox"},
   "bgThreatsReport": {"message": "$1 security threat(s) detected!"},
   "bgComplaintsRek": {"message": "Found $1 complaint(s) on reklamation.ch."},
   "bgComplaintsKtipp": {"message": "$1 waning(s) found on Ktipp/Saldo-Warnliste."},
