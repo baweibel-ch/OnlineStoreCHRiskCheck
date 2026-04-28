@@ -8,8 +8,11 @@ document.addEventListener('DOMContentLoaded', init);
 async function init() {
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
-    const msg = chrome.i18n.getMessage(key);
+    let msg = chrome.i18n.getMessage(key);
     if (msg) {
+      if (msg.includes('$VERSION$')) {
+        msg = msg.replace('$VERSION$', chrome.runtime.getManifest().version);
+      }
       if (el.id === 'btnAddWhitelist' || el.id === 'btnRemoveWhitelist') {
         el.title = msg;
       } else {
@@ -26,6 +29,12 @@ async function init() {
       }
     }
   });
+
+  // Set app version
+  const appVersionEl = document.getElementById('appVersion');
+  if (appVersionEl) {
+    appVersionEl.textContent = 'v' + chrome.runtime.getManifest().version;
+  }
 
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
   if (!tab) return;

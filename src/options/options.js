@@ -6,7 +6,11 @@ document.addEventListener('DOMContentLoaded', loadSettings);
 
 async function loadSettings() {
   document.querySelectorAll('[data-i18n]').forEach(el => {
-    el.innerText = chrome.i18n.getMessage(el.getAttribute('data-i18n')) || el.innerText;
+    let msg = chrome.i18n.getMessage(el.getAttribute('data-i18n')) || el.innerText;
+    if (msg.includes('$VERSION$')) {
+      msg = msg.replace('$VERSION$', chrome.runtime.getManifest().version);
+    }
+    el.innerText = msg;
   });
 
   document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
