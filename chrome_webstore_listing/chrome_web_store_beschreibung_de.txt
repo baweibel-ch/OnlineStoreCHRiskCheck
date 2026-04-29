@@ -14,7 +14,7 @@ Automatische oder manuelle Überprüfung via:
 - Google Safe Browsing (safebrowsing.googleapis.com)
 
 Reduzierte Aktivität:
-- Jede Domain wird nur 1x geprüft, egal ob Sie im gleichen Tab auf der Seite weiterclicken oder dieselbe Domain in anderen Tabs geöffnet haben.
+- Jede Domain wird nur 1x geprüft, egal ob Sie im gleichen Tab auf der Seite weiterklicken oder dieselbe Domain in anderen Tabs geöffnet haben.
 - Wenn Google-Safe-Browsing aktiviert ist, wird jedoch jede neue URL erneut auf Sicherheitsrisiken geprüft.
 - - Bsp. https://testsafebrowsing.appspot.com/ ok. https://testsafebrowsing.appspot.com/s/phishing.html - Warnung.
 - Im manuellen Modus, wenn die Prüfung ausgelöst wurde, werden für jede weitere Seite derselben Domain die Warnungen für die Domain ohne weitere Prüfung angezeigt und die URL via Google-Safe-Browsing getestet (falls aktiviert).
