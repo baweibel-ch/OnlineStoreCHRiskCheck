@@ -36,7 +36,16 @@ Main features:
 - - For this functionality, you need to provide an API key in the settings. A link to instructions on how to create one is displayed there.
 - ⚙️ **Heuristic Checks:** Local detection of suspicious TLDs, unencrypted HTTP connections, and URL obfuscation - entirely without an API key.
 - 🚦 **Visible Warnings:** A color system in the icon (badge) and direct warnings on dangerous sites inform you immediately.
-- 🛡️ **Privacy First:** No user tracking, no storing of browsing history on our servers.
+- - Icon badges in the browser toolbar show the current status at a glance:
+- - – Security threat detected (red, „❗“).
+- - – Warning / complaints found (orange, „❗“).
+- - – No issues found (green, „✅“).
+- - – Domain on whitelist (white, „✔“).
+- - – No check performed yet (white, „?“).
+- - – Check skipped, e.g. localhost/IP/non-Http(s) (grey, „-“).
+- 🛡️ **Privacy First:**
+- - No user tracking, no storing of browsing history on our servers.
+- - 'OnlineStoreCHRiskCheck' is sent as 'Referer' (HTTP header indicating the website a request comes from / the previous page that referred the user to the current page) to the check pages.
 
 
 How it works:

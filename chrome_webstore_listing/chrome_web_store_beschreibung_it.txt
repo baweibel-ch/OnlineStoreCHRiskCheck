@@ -36,7 +36,16 @@ Caratteristiche principali:
 - - Per questa funzionalità, è necessario fornire una chiave API nelle impostazioni. Lì è visualizzato un link alle istruzioni su come crearne una.
 - ⚙️ **Controlli euristici:** Rilevamento locale di TLD sospetti, connessioni HTTP non crittografate e offuscamento degli URL – senza alcuna chiave API.
 - 🚦 **Avvisi visibili:** Un sistema di colori nell'icona (badge) e avvisi diretti sui siti pericolosi ti informano immediatamente.
-- 🛡️ **Privacy prima di tutto:** Nessun tracciamento degli utenti, nessuna memorizzazione della cronologia di navigazione sui nostri server.
+- - I badge dell'icona nella barra degli strumenti del browser mostrano lo stato attuale a colpo d'occhio:
+- - – Minaccia di sicurezza rilevata (rosso, „❗“).
+- - – Avviso / reclami trovati (arancione, „❗“).
+- - – Nessuna anomalia rilevata (verde, „✅“).
+- - – Dominio nella whitelist (bianco, „✔“).
+- - – Nessuna verifica ancora eseguita (bianco, „?“).
+- - – Verifica saltata, ad es. localhost/IP/non-Http(s) (grigio, „-“).
+- 🛡️ **Privacy prima di tutto:**
+- - Nessun tracciamento degli utenti, nessuna memorizzazione della cronologia di navigazione sui nostri server.
+- - 'OnlineStoreCHRiskCheck' viene indicato come 'Referer' (intestazione HTTP che indica da quale sito web proviene una richiesta / la pagina precedente che ha indirizzato l'utente alla pagina corrente) alle pagine di verifica.
 
 
 Come funziona:

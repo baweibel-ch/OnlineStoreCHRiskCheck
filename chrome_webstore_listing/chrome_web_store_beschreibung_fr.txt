@@ -36,7 +36,16 @@ Fonctionnalités principales :
 - - Pour cette fonctionnalité, vous devez fournir une clé API dans les paramètres. Un lien vers les instructions de création s'y affiche.
 - ⚙️ **Vérifications heuristiques :** Détection locale de TLD suspects, de connexions HTTP non chiffrées et d'obfuscation d'URL – sans aucune clé API.
 - 🚦 **Avertissements visibles :** Un système de couleurs dans l'icône (badge) et des avertissements directs sur les sites dangereux vous informent immédiatement.
-- 🛡️ **La confidentialité avant tout :** Aucun suivi des utilisateurs (tracking), aucune conservation des historiques de navigation sur nos serveurs.
+- - Les badges d'icône dans la barre d'outils du navigateur indiquent l'état actuel en un coup d'œil :
+- - – Menace de sécurité détectée (rouge, « ❗ »).
+- - – Avertissement / plaintes trouvées (orange, « ❗ »).
+- - – Aucune anomalie détectée (vert, « ✅ »).
+- - – Domaine sur la liste blanche (blanc, « ✔ »).
+- - – Aucune vérification effectuée pour le moment (blanc, « ? »).
+- - – Vérification ignorée, par ex. localhost/IP/non-Http(s) (gris, « - »).
+- 🛡️ **La confidentialité avant tout :**
+- - Aucun suivi des utilisateurs (tracking), aucune conservation des historiques de navigation sur nos serveurs.
+- - 'OnlineStoreCHRiskCheck' est indiqué comme 'Referer' (en-tête HTTP indiquant le site Web d'où provient une requête / la page précédente ayant redirigé l'utilisateur vers la page actuelle) aux pages de vérification.
 
 
 Comment ça marche :

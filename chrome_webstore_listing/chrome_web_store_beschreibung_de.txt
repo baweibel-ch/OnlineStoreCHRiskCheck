@@ -36,8 +36,16 @@ Hauptfunktionen:
 - - Für diese Funktionalität müssen Sie einen API-Key in den Einstellungen hinterlegen. Ein Anleitungs-Link zum erstellen einer solchen ist dort angezeigt
 - ⚙️ **Heuristische Prüfungen:** Lokale Erkennung von verdächtigen TLDs, unverschlüsselten HTTP-Verbindungen und URL-Verschleierung – ganz ohne API-Key.
 - 🚦 **Sichtbare Warnungen:** Ein Farbsystem im Icon (Badge) und direkte Warnungen auf gefährlichen Seiten informieren Sie sofort.
-- 🛡️ **Datenschutz an erster Stelle:** Keine Nutzerverfolgung (Tracking), keine Speicherung von Browserverläufen auf unseren Servern.
-
+- - Icon-Badges in der Symbolleiste des Browsers zeigen den aktuellen Status auf einen Blick:
+- - – Sicherheitsbedrohung erkannt (rot, „❗“).
+- - – Warnung / Beschwerden gefunden (orange, „❗“).
+- - – Keine Auffälligkeiten gefunden (grün, „✅“).
+- - – Domain auf Whitelist (weiss, „✔“).
+- - – Noch keine Prüfung durchgeführt (weiss, „?“).
+- - – Prüfung übersprungen, z. B. localhost/IP/nicht-Http(s) (grau, „-“).
+- 🛡️ **Datenschutz an erster Stelle:**
+- - Keine Nutzerverfolgung (Tracking), keine Speicherung von Browserverläufen auf unseren Servern.
+- - 'OnlineStoreCHRiskCheck' wird den Prüf-Seiten als 'Referer' angegeben (HTTP-Header, der angibt, von welcher Webseite eine Anfrage kommt / die vorherige Seite, die den Nutzer zur aktuellen Seite weitergeleitet hat) wird
 
 So funktioniert's:
 - Wählen Sie zwischen automatischem Scannen beim Surfen oder manuellem Scannen auf Knopfdruck. Fügen Sie vertrauenswürdige Seiten bei Bedarf einer Whitelist hinzu.
