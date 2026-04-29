@@ -4,6 +4,8 @@ Acquista in sicurezza su Internet – La tua protezione contro i falsi negozi e 
 
 Confronta l'URL corrente con l'elenco svizzero dei siti a rischio pubblicato da K-Tipp/Saldo (ktipp.ch/service/warnlisten/detail/warnliste/internetshops), reklamation.ch e uid.admin.ch. Controlli opzionali tramite Google Safe Browsing o analisi euristica.
 
+Vengono analizzati solo indirizzi internet (https:// o http://), né localhost né IP (http://127.0.0.1 ecc.).
+
 Il controllo può essere impostato su automatico o manuale.
 
 Verifica automatica o manuale tramite:

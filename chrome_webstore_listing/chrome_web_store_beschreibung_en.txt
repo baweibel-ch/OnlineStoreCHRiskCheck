@@ -4,6 +4,8 @@ Shop safely on the Internet – Your protection against fake shops and fraud
 
 It compares the current URL with the Swiss warning list from K-Tipp/Saldo (ktipp.ch/service/warnlisten/detail/warnliste/internetshops), reklamation.ch and uid.admin.ch. Optional Google-Safe-Browsing or heuristic checks.
 
+Only internet addresses (https:// or http://) are analyzed, neither localhost nor IP (http://127.0.0.1 etc.).
+
 The check can be set to automatic or manual.
 
 Automatic or manuel verification via:
