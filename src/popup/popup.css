@@ -477,13 +477,21 @@ body {
   box-shadow: 0 2px 8px var(--accent-primary-glow);
 }
 
-.btn-primary:hover {
+.btn-primary:hover:not(:disabled) {
   box-shadow: 0 4px 16px var(--accent-primary-glow);
   transform: translateY(-1px);
 }
 
-.btn-primary:active {
+.btn-primary:active:not(:disabled) {
   transform: translateY(0);
+}
+
+.btn-primary:disabled {
+  background: grey;
+  color: white;
+  box-shadow: none;
+  cursor: not-allowed;
+  border: 1px solid var(--border-subtle);
 }
 
 .btn-secondary {

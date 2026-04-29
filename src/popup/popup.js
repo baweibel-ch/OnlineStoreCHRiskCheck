@@ -172,6 +172,11 @@ function renderState(state) {
   // Reset classes
   card.className = 'status-card';
 
+  const btnRescan = document.getElementById('btnRescan');
+  if (btnRescan) {
+    btnRescan.disabled = (state.status === 'skipped');
+  }
+
   switch (state.status) {
     case 'safe':
       card.classList.add('safe');
