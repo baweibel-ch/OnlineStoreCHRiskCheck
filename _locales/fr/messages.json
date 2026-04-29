@@ -26,7 +26,7 @@
   "statusWhitelisted": {"message": "Sur liste blanche"},
   "statusWhitelistedDetail": {"message": "Le domaine est sur liste blanche."},
   "statusSkipped": {"message": "Ignoré"},
-  "statusSkippedDetail": {"message": "Page interne — non analysée."},
+  "statusSkippedDetail": {"message": "Pas d'adresse Internet / localhost / IP — non analysée."},
   "statusReady": {"message": "Prêt"},
   "statusReadyDetailWhitelist": {"message": "Cliquez sur « Analyser » (Liste blanche)."},
   "statusReadyDetail": {"message": "Cliquez sur « Analyser » pour vérifier cette page."},
@@ -72,7 +72,7 @@
   "bgComplaintsRek": {"message": "$1 plainte(s) trouvée(s) sur reklamation.ch."},
   "bgComplaintsKtipp": {"message": "$1 entrée(s) trouvé sur la liste K-Tipp/Saldo."},
   "bgComplaintsNotFoundTrustedShops": {"message": "$1 ne pas trouvé sur trustedshops.ch."},
-  "bgInternalPage": {"message": "Page interne — ignorée."},
+  "bgSkippedPage": {"message": "Pas d'adresse Internet / localhost / IP — ignorée."},
   "bgWhitelistedMsg": {"message": "Le domaine « $1 » est sur liste blanche."},
   "bgErrorMsg": {"message": "L'analyse a échoué : $1"},
   "bgDetailRek": {"message": "$1 plaintes trouvées pour « $2 »."},
@@ -120,5 +120,6 @@
   "threatDescUidMissing": { "message": "Aucun UID actif trouvé sur uid.admin.ch pour $1" },
   "threatDescError": { "message": "Erreur lors de la récupération de $1" },
   "safebrowsingNoThreats": { "message": "Aucune menace trouvée dans la base de données Google Safe Browsing." },
-  "safebrowsingFound": { "message": "Trouvé :" }
+  "safebrowsingFound": { "message": "Trouvé :" },
+  "notSupportedFirefoxAndroid": { "message": "Non pris en charge pour Firefox-Android" }
 }

@@ -37,7 +37,7 @@ const DEFAULT_CONFIG = {
   enableTrustedshops: true,
   enableAdminchUid: true,
   theme: 'light',
-  whitelist: ['newtab', 'extensions', 'google.com', 'google.ch', 'gemini.google.com', 'reklamation.ch', 'ktipp.ch', 'saldo.ch', 'startpage.com']
+  whitelist: ['reklamation.ch', 'ktipp.ch', 'saldo.ch', 'startpage.com']
 };
 
 // --- State ---
@@ -122,6 +122,14 @@ async function setupRefererRules() {
 // --- Tab Navigation & Removal Listeners ---
 chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
   if (changeInfo.status === 'complete' && tab.url) {
+    if (isSkippedUrl(tab.url)) {
+      const state = { status: 'skipped', url: tab.url, message: chrome.i18n.getMessage('bgSkippedPage') || 'No web address / localhost / IP — skipped.' };
+      tabStates.set(tabId, state);
+      updateBadge(tabId, state);
+      chrome.tabs.sendMessage(tabId, { action: 'updateStatus', state: state }).catch(() => {});
+      return;
+    }
+
     const config = await getConfig();
     const urlObj = new URL(tab.url);
     const domain = urlObj.hostname.toLowerCase();
@@ -247,8 +255,8 @@ async function handleAnalyzeRequest(url, tabId, force = false) {
 }
 
 async function analyzeUrl(tabId, url, force = false, cachedStateDomain, cachedStateUrl) {
-  if (!url || url.startsWith('chrome://') || url.startsWith('chrome-extension://') || url.startsWith('about:')) {
-    const state = { status: 'skipped', url, message: chrome.i18n.getMessage('bgInternalPage') || 'Internal browser page — skipped.' };
+  if (isSkippedUrl(url)) {
+    const state = { status: 'skipped', url, message: chrome.i18n.getMessage('bgSkippedPage') || 'No web address / localhost / IP — skipped.' };
     tabStates.set(tabId, state);
     updateBadge(tabId, state);
     return state;
@@ -390,7 +398,7 @@ function updateBadge(tabId, state) {
     error: { text: '✕', color: '#F59E0B', textColor: '#FFFFFF' },
     whitelisted: { text: '✓', color: '#FFFFFF', textColor: '#1F2937' },
     idle: { text: '?', color: '#FFFFFF', textColor: '#1F2937' },
-    skipped: { text: '', color: '#6B7280', textColor: '#FFFFFF' },
+    skipped: { text: '-', color: '#6B7280', textColor: '#FFFFFF' },
     unknown: { text: '?', color: '#6B7280', textColor: '#FFFFFF' }
   };
 
@@ -403,6 +411,23 @@ function updateBadge(tabId, state) {
 }
 
 // --- Helpers ---
+function isSkippedUrl(url) {
+  if (!url || (!url.startsWith('http://') && !url.startsWith('https://'))) {
+    return true;
+  }
+  try {
+    const urlObj = new URL(url);
+    const domain = urlObj.hostname.toLowerCase();
+    const isIp = /^(?:\d{1,3}\.){3}\d{1,3}$/.test(domain) || domain.startsWith('[');
+    if (domain === 'localhost' || isIp) {
+      return true;
+    }
+  } catch (e) {
+    return true;
+  }
+  return false;
+}
+
 async function getConfig() {
   const stored = await chrome.storage.sync.get('config');
   return { ...DEFAULT_CONFIG, ...stored.config };

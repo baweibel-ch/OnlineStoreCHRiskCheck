@@ -26,7 +26,7 @@
   "statusWhitelisted": {"message": "Whitelisted"},
   "statusWhitelistedDetail": {"message": "Domain is whitelisted."},
   "statusSkipped": {"message": "Skipped"},
-  "statusSkippedDetail": {"message": "Internal page — not analyzed."},
+  "statusSkippedDetail": {"message": "No web address / localhost / IP — not analyzed."},
   "statusReady": {"message": "Ready"},
   "statusReadyDetailWhitelist": {"message": "Click \"Scan\" to analyze (Whitelisted)."},
   "statusReadyDetail": {"message": "Click \"Scan\" to analyze this page."},
@@ -76,7 +76,7 @@
   "bgComplaintsRek": {"message": "Found $1 complaint(s) on reklamation.ch."},
   "bgComplaintsKtipp": {"message": "$1 waning(s) found on Ktipp/Saldo-Warnliste."},
   "bgComplaintsNotFoundTrustedShops": {"message": "$1 Not found on trustedshops.ch."},
-  "bgInternalPage": {"message": "Internal browser page — skipped."},
+  "bgSkippedPage": {"message": "No web address / localhost / IP — skipped."},
   "bgWhitelistedMsg": {"message": "Domain \"$1\" is whitelisted."},
   "bgErrorMsg": {"message": "Analysis failed: $1"},
   "bgDetailRek": {"message": "Found $1 complaints for \"$2\"."},
@@ -120,5 +120,6 @@
   "threatDescUidMissing": { "message": "No active UID found on uid.admin.ch for $1" },
   "threatDescError": { "message": "Error getting $1" },
   "safebrowsingNoThreats": { "message": "No threats found in Google Safe Browsing database." },
-  "safebrowsingFound": { "message": "Found:" }
+  "safebrowsingFound": { "message": "Found:" },
+  "notSupportedFirefoxAndroid": { "message": "Not supported for Firefox-Android" }
 }

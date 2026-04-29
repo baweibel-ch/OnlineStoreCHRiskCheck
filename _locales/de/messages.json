@@ -26,7 +26,7 @@
   "statusWhitelisted": {"message": "Auf der Whitelist"},
   "statusWhitelistedDetail": {"message": "Domain ist auf der Whitelist."},
   "statusSkipped": {"message": "Übersprungen"},
-  "statusSkippedDetail": {"message": "Interne Seite — nicht analysiert."},
+  "statusSkippedDetail": {"message": "Keine Internetadresse / localhost / IP — nicht analysiert."},
   "statusReady": {"message": "Bereit"},
   "statusReadyDetailWhitelist": {"message": "Klicken Sie auf \"Prüfen\" zur Analyse (Whitelist)."},
   "statusReadyDetail": {"message": "Klicken Sie auf \"Prüfen\", um diese Seite zu analysieren."},
@@ -72,7 +72,7 @@
   "bgComplaintsRek": {"message": "$1 Beschwerde(n) auf reklamation.ch gefunden."},
   "bgComplaintsKtipp": {"message": "$1 Warnunge(n) auf der Ktipp/Saldo-Warnliste gefunden."},
   "bgComplaintsNotFoundTrustedShops": {"message": "$1 Nicht gefunden auf trustedshops.ch."},
-  "bgInternalPage": {"message": "Interne Browser-Seite — übersprungen."},
+  "bgSkippedPage": {"message": "Keine Internetadresse / localhost / IP — übersprungen."},
   "bgWhitelistedMsg": {"message": "Domain \"$1\" ist auf der Whitelist."},
   "bgErrorMsg": {"message": "Analyse fehlgeschlagen: $1"},
   "bgDetailRek": {"message": "$1 Beschwerden für \"$2\" gefunden."},
@@ -120,5 +120,6 @@
   "threatDescUidMissing": { "message": "Keine aktive UID auf uid.admin.ch gefunden für $1" },
   "threatDescError": { "message": "Fehler beim Abrufen von $1" },
   "safebrowsingNoThreats": { "message": "Keine Bedrohungen in der Google Safe Browsing-Datenbank gefunden." },
-  "safebrowsingFound": { "message": "Gefunden:" }
+  "safebrowsingFound": { "message": "Gefunden:" },
+  "notSupportedFirefoxAndroid": { "message": "Nicht unterstützt für Firefox-Android" }
 }

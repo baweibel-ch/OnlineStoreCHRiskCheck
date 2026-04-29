@@ -4,6 +4,8 @@ Shop safely on the Internet – Your protection against fake shops and fraud
 
 It compares the current URL with the Swiss warning list from K-Tipp/Saldo (ktipp.ch/service/warnlisten/detail/warnliste/internetshops), reklamation.ch and uid.admin.ch. Optional Google-Safe-Browsing or heuristic checks.
 
+Only internet addresses (https:// or http://) are analyzed, neither localhost nor IP (http://127.0.0.1 etc.).
+
 The check can be set to automatic or manual.
 
 Automatic or manuel verification via:
@@ -13,7 +15,13 @@ Automatic or manuel verification via:
 - www.trustedshops.ch
 - Google Safe Browsing (safebrowsing.googleapis.com)
 
-Since I am not an official developer of the Ktipp/Saldo warning list or Reklamation.ch, and no API is found, the check is done via web requests. If the websites change, the functionality may be restricted afterwards.
+Reduced activity:
+- Each domain is checked only once, regardless of whether you click further on the page in the same tab or have the same domain open in other tab.
+- If Google Safe Browsing is enabled, however, every new URL is checked again for security risks.
+- - E.g. https://testsafebrowsing.appspot.com/ ok. https://testsafebrowsing.appspot.com/s/phishing.html - Warning.
+- In manual mode, once the check is triggered, for every further page of the same domain, the warnings for the domain are displayed without further checking and the URL is tested via Google Safe Browsing (if enabled).
+
+Since I am not an official developer of any of the web services, the functionality may be restricted if the services change.
 
 After installation: 'Pin to toolbar' - otherwise it makes little sense. This cannot be automated, however.
 
@@ -23,11 +31,21 @@ Main features:
 - 🛡️ **reklamation.ch Comparison:** Searches for existing consumer complaints before you shop.
 - ✅ **Trusted Shops Certification:** Automatically checks whether the shop has a valid Trusted Shops seal of approval.
 - 🏛️ **Admin.ch UID Check:** Compares the domain with the official federal business register. Shops without a valid Swiss UID (Business Identification Number) are displayed as a warning.
+- - (Not supported for Firefox-Android)
 - 🔒 **Google Safe Browsing (Optional):** Integration of the Safe Browsing API to detect phishing and malware.
 - - For this functionality, you need to provide an API key in the settings. A link to instructions on how to create one is displayed there.
 - ⚙️ **Heuristic Checks:** Local detection of suspicious TLDs, unencrypted HTTP connections, and URL obfuscation - entirely without an API key.
 - 🚦 **Visible Warnings:** A color system in the icon (badge) and direct warnings on dangerous sites inform you immediately.
-- 🛡️ **Privacy First:** No user tracking, no storing of browsing history on our servers.
+- - Icon badges in the browser toolbar show the current status at a glance:
+- - – Security threat detected (red, „❗“).
+- - – Warning / complaints found (orange, „❗“).
+- - – No issues found (green, „✅“).
+- - – Domain on whitelist (white, „✔“).
+- - – No check performed yet (white, „?“).
+- - – Check skipped, e.g. localhost/IP/non-Http(s) (grey, „-“).
+- 🛡️ **Privacy First:**
+- - No user tracking, no storing of browsing history on our servers.
+- - 'OnlineStoreCHRiskCheck' is sent as 'Referer' (HTTP header indicating the website a request comes from / the previous page that referred the user to the current page) to the check pages.
 
 
 How it works:

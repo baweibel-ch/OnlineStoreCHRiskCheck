@@ -4,6 +4,8 @@ Sicher einkaufen im Internet – Ihr Schutz vor Fake-Shops und Betrug
 
 Es vergleicht die aktuelle URL mit der Schweizer Warnliste von K-Tipp/Saldo (ktipp.ch/service/warnlisten/detail/warnliste/internetshops), reklamation.ch und uid.admin.ch. Optional werden Google Safe Browsing oder heuristische Prüfungen durchgeführt.
 
+Es werden nur Internet-Adressen (https:// oder http://) analysiert, localhost oder IP (http://127.0.0.1 etc.) auch nicht.
+
 Die Prüfung kann automatisch oder manuell eingestellt werden.
 
 Automatische oder manuelle Überprüfung via:
@@ -13,7 +15,13 @@ Automatische oder manuelle Überprüfung via:
 - www.trustedshops.ch
 - Google Safe Browsing (safebrowsing.googleapis.com)
 
-Da ich kein offizieller Entwickler von Ktipp-/Saldo-Warnliste und Reklamation.ch bin, und kein API gefunden werde, wird die Prüfung dort via Web-Aufruf gemacht. Falls sich die Websiten ändern, kann die Funktionalität eingeschränkt sein danach.
+Reduzierte Aktivität:
+- Jede Domain wird nur 1x geprüft, egal ob Sie im gleichen Tab auf der Seite weiterklicken oder dieselbe Domain in anderen Tabs geöffnet haben.
+- Wenn Google-Safe-Browsing aktiviert ist, wird jedoch jede neue URL erneut auf Sicherheitsrisiken geprüft.
+- - Bsp. https://testsafebrowsing.appspot.com/ ok. https://testsafebrowsing.appspot.com/s/phishing.html - Warnung.
+- Im manuellen Modus, wenn die Prüfung ausgelöst wurde, werden für jede weitere Seite derselben Domain die Warnungen für die Domain ohne weitere Prüfung angezeigt und die URL via Google-Safe-Browsing getestet (falls aktiviert).
+
+Da ich kein offizieller Entwickler einer der Web-Services bin, kann die Funktionalität eingeschränkt sein wenn sich die Services ändern.
 
 Nach der Installation: 'An Symbolleiste anpinnen/anheften' - ansonsten macht es wenig Sinn. Dies kann jedoch nicht automatisiert werden.
 
@@ -23,12 +31,21 @@ Hauptfunktionen:
 - 🛡️ **reklamation.ch Abgleich:** Sucht nach bestehenden Konsumentenbeschwerden, bevor Sie einkaufen.
 - ✅ **Trusted Shops Zertifizierung:** Prüft automatisch, ob der Shop ein gültiges Trusted Shops Gütesiegel besitzt.
 - 🏛️ **Admin.ch UID Prüfung:** Gleicht die Domain mit dem offiziellen Unternehmensregister des Bundes ab. Shops ohne gültige Schweizer UID (Unternehmens-Identifikationsnummer) werden als Warnung angezeigt.
+- - (Nicht unterstützt für Firefox-Android)
 - 🔒 **Google Safe Browsing (Optional):** Integration der Safe Browsing API zur Erkennung von Phishing und Malware.
 - - Für diese Funktionalität müssen Sie einen API-Key in den Einstellungen hinterlegen. Ein Anleitungs-Link zum erstellen einer solchen ist dort angezeigt
 - ⚙️ **Heuristische Prüfungen:** Lokale Erkennung von verdächtigen TLDs, unverschlüsselten HTTP-Verbindungen und URL-Verschleierung – ganz ohne API-Key.
 - 🚦 **Sichtbare Warnungen:** Ein Farbsystem im Icon (Badge) und direkte Warnungen auf gefährlichen Seiten informieren Sie sofort.
-- 🛡️ **Datenschutz an erster Stelle:** Keine Nutzerverfolgung (Tracking), keine Speicherung von Browserverläufen auf unseren Servern.
-
+- - Icon-Badges in der Symbolleiste des Browsers zeigen den aktuellen Status auf einen Blick:
+- - – Sicherheitsbedrohung erkannt (rot, „❗“).
+- - – Warnung / Beschwerden gefunden (orange, „❗“).
+- - – Keine Auffälligkeiten gefunden (grün, „✅“).
+- - – Domain auf Whitelist (weiss, „✔“).
+- - – Noch keine Prüfung durchgeführt (weiss, „?“).
+- - – Prüfung übersprungen, z. B. localhost/IP/nicht-Http(s) (grau, „-“).
+- 🛡️ **Datenschutz an erster Stelle:**
+- - Keine Nutzerverfolgung (Tracking), keine Speicherung von Browserverläufen auf unseren Servern.
+- - 'OnlineStoreCHRiskCheck' wird den Prüf-Seiten als 'Referer' angegeben (HTTP-Header, der angibt, von welcher Webseite eine Anfrage kommt / die vorherige Seite, die den Nutzer zur aktuellen Seite weitergeleitet hat) wird
 
 So funktioniert's:
 - Wählen Sie zwischen automatischem Scannen beim Surfen oder manuellem Scannen auf Knopfdruck. Fügen Sie vertrauenswürdige Seiten bei Bedarf einer Whitelist hinzu.

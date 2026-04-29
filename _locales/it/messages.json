@@ -26,7 +26,7 @@
   "statusWhitelisted": {"message": "Nella whitelist"},
   "statusWhitelistedDetail": {"message": "Il dominio è nella whitelist."},
   "statusSkipped": {"message": "Saltato"},
-  "statusSkippedDetail": {"message": "Pagina interna — non analizzata."},
+  "statusSkippedDetail": {"message": "Nessun indirizzo Internet / localhost / IP — non analizzata."},
   "statusReady": {"message": "Pronto"},
   "statusReadyDetailWhitelist": {"message": "Clicca su \"Analizza\" (Lista bianca)."},
   "statusReadyDetail": {"message": "Clicca su \"Analizza\" per verificare."},
@@ -72,7 +72,7 @@
   "bgComplaintsRek": {"message": "$1 reclamo(i) trovato(i) su reklamation.ch."},
   "bgComplaintsKtipp": {"message": "$1 trovato nella Ktipp/Saldo-Warnliste."},
   "bgComplaintsNotFoundTrustedShops": {"message": "$1 non trovato nella trustedshops.ch."},
-  "bgInternalPage": {"message": "Pagina interna — ignorata."},
+  "bgSkippedPage": {"message": "Nessun indirizzo Internet / localhost / IP — ignorata."},
   "bgWhitelistedMsg": {"message": "Il dominio \"$1\" è nella whitelist."},
   "bgErrorMsg": {"message": "Analisi fallita: $1"},
   "bgDetailRek": {"message": "Trovati $1 reclami per \"$2\"."},
@@ -120,5 +120,6 @@
   "threatDescUidMissing": { "message": "Nessun UID attivo trovato su uid.admin.ch per $1" },
   "threatDescError": { "message": "Errore durante il recupero di $1" },
   "safebrowsingNoThreats": { "message": "Nessuna minaccia trovata nel database di Google Safe Browsing." },
-  "safebrowsingFound": { "message": "Trovato:" }
+  "safebrowsingFound": { "message": "Trovato:" },
+  "notSupportedFirefoxAndroid": { "message": "Non supportato per Firefox-Android" }
 }

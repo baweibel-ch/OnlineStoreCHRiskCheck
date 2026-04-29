@@ -4,6 +4,8 @@ Achetez en toute sécurité sur Internet – Votre protection contre les fausses
 
 Il compare l'URL actuelle à la liste d'alerte suisse de K-Tipp/Saldo (ktipp.ch/service/warnlisten/detail/warnliste/internetshops), de reklamation.ch et de uid.admin.ch. Vérifications facultatives via Google Safe Browsing ou par analyse heuristique.
 
+Seules les adresses internet (https:// ou http://) sont analysées, ni localhost ni IP (http://127.0.0.1 etc.).
+
 La vérification peut être réglée sur automatique ou manuelle.
 
 Vérification automatique ou manuel via :
@@ -13,7 +15,13 @@ Vérification automatique ou manuel via :
 - www.trustedshops.ch
 - Google Safe Browsing (safebrowsing.googleapis.com)
 
-Étant donné que je ne suis pas un développeur officiel de la liste d'avertissement K-Tipp/Saldo ou de Reklamation.ch et qu'aucune API n'a été trouvée, la vérification s'effectue via des requêtes Web. Si les sites Web changent, la fonctionnalité pourrait être restreinte par la suite.
+Activité réduite :
+- Chaque domaine n'est vérifié qu'une fois, que vous continuiez à cliquer sur la page dans le même onglet ou que le même domaine soit ouvert dans d'autres onglets.
+- Si Google Safe Browsing est activé, chaque nouvelle URL est à nouveau vérifiée pour détecter les risques de sécurité.
+- - Ex. https://testsafebrowsing.appspot.com/ ok. https://testsafebrowsing.appspot.com/s/phishing.html - Avertissement.
+- En mode manuel, une fois la vérification déclenchée, pour chaque page suivante du même domaine, les avertissements pour le domaine sont affichés sans vérification supplémentaire et l'URL est testée via Google Safe Browsing (si activé).
+
+Étant donné que je ne suis pas un développeur officiel de l'un des services Web, la fonctionnalité peut être restreinte si les services changent.
 
 Après l'installation : 'Épingler à la barre d'outils' - sinon, cela n'a pas beaucoup de sens. Cela ne peut cependant pas être automatisé.
 
@@ -23,11 +31,21 @@ Fonctionnalités principales :
 - 🛡️ **Comparaison reklamation.ch :** Recherche les plaintes de consommateurs existantes avant vos achats.
 - ✅ **Certification Trusted Shops :** Vérifie automatiquement si la boutique possède un label de qualité Trusted Shops valide.
 - 🏛️ **Vérification UID Admin.ch :** Compare le domaine avec le registre fédéral officiel des entreprises. Les boutiques sans UID (numéro d'identification des entreprises) suisse valide sont affichées comme un avertissement.
+- - (Non pris en charge pour Firefox-Android)
 - 🔒 **Google Safe Browsing (Optionnel) :** Intégration de l'API Safe Browsing pour détecter l'hameçonnage et les logiciels malveillants.
 - - Pour cette fonctionnalité, vous devez fournir une clé API dans les paramètres. Un lien vers les instructions de création s'y affiche.
 - ⚙️ **Vérifications heuristiques :** Détection locale de TLD suspects, de connexions HTTP non chiffrées et d'obfuscation d'URL – sans aucune clé API.
 - 🚦 **Avertissements visibles :** Un système de couleurs dans l'icône (badge) et des avertissements directs sur les sites dangereux vous informent immédiatement.
-- 🛡️ **La confidentialité avant tout :** Aucun suivi des utilisateurs (tracking), aucune conservation des historiques de navigation sur nos serveurs.
+- - Les badges d'icône dans la barre d'outils du navigateur indiquent l'état actuel en un coup d'œil :
+- - – Menace de sécurité détectée (rouge, « ❗ »).
+- - – Avertissement / plaintes trouvées (orange, « ❗ »).
+- - – Aucune anomalie détectée (vert, « ✅ »).
+- - – Domaine sur la liste blanche (blanc, « ✔ »).
+- - – Aucune vérification effectuée pour le moment (blanc, « ? »).
+- - – Vérification ignorée, par ex. localhost/IP/non-Http(s) (gris, « - »).
+- 🛡️ **La confidentialité avant tout :**
+- - Aucun suivi des utilisateurs (tracking), aucune conservation des historiques de navigation sur nos serveurs.
+- - 'OnlineStoreCHRiskCheck' est indiqué comme 'Referer' (en-tête HTTP indiquant le site Web d'où provient une requête / la page précédente ayant redirigé l'utilisateur vers la page actuelle) aux pages de vérification.
 
 
 Comment ça marche :
