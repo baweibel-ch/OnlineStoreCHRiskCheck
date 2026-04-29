@@ -48,7 +48,14 @@ async function loadSettings() {
       const hintEl = adminchUidCheckbox.closest('.toggle-group').querySelector('.setting-hint');
       if (hintEl) {
         const notSupportedMsg = chrome.i18n.getMessage('notSupportedFirefoxAndroid') || 'Not supported for Firefox-Android';
-        hintEl.innerHTML += `<br><span style="color: #ffaa00; font-size: 0.9em; margin-top: 4px; display: inline-block;">${notSupportedMsg}</span>`;
+        hintEl.appendChild(document.createElement('br'));
+        const noteSpan = document.createElement('span');
+        noteSpan.style.color = '#ffaa00';
+        noteSpan.style.fontSize = '0.9em';
+        noteSpan.style.marginTop = '4px';
+        noteSpan.style.display = 'inline-block';
+        noteSpan.textContent = notSupportedMsg;
+        hintEl.appendChild(noteSpan);
       }
     }
   }
