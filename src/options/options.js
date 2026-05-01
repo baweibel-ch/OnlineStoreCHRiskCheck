@@ -36,6 +36,7 @@ async function loadSettings() {
   if (document.getElementById('enableReklamation')) document.getElementById('enableReklamation').checked = config.enableReklamation !== false;
   if (document.getElementById('enableKtipp')) document.getElementById('enableKtipp').checked = config.enableKtipp !== false;
   if (document.getElementById('enableTrustedshops')) document.getElementById('enableTrustedshops').checked = config.enableTrustedshops !== false;
+  if (document.getElementById('enableTrustpilot')) document.getElementById('enableTrustpilot').checked = config.enableTrustpilot !== false;
   if (document.getElementById('enableAdminchUid')) document.getElementById('enableAdminchUid').checked = config.enableAdminchUid !== false;
 
   // Disable enableAdminchUid for Firefox Android
@@ -98,6 +99,7 @@ async function saveSettings() {
     enableReklamation: document.getElementById('enableReklamation')?.checked ?? true,
     enableKtipp: document.getElementById('enableKtipp')?.checked ?? true,
     enableTrustedshops: document.getElementById('enableTrustedshops')?.checked ?? true,
+    enableTrustpilot: document.getElementById('enableTrustpilot')?.checked ?? true,
     enableAdminchUid: document.getElementById('enableAdminchUid')?.checked ?? true,
     theme: document.querySelector('input[name="theme"]:checked')?.value || 'dark',
     whitelist: (document.getElementById('whitelist')?.value || '').split('\n')

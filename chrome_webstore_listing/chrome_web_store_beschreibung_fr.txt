@@ -13,6 +13,7 @@ Vérification automatique ou manuel via :
 - www.reklamation.ch
 - www.uid.admin.ch
 - www.trustedshops.ch
+- ch.trustpilot.com
 - Google Safe Browsing (safebrowsing.googleapis.com)
 
 Activité réduite :
@@ -30,6 +31,7 @@ Fonctionnalités principales :
 - - Si une entrée est trouvée, elle sera affichée. Le lien ouvre la page de la liste d'avertissement, mais le domaine doit ensuite être saisi manuellement.
 - 🛡️ **Comparaison reklamation.ch :** Recherche les plaintes de consommateurs existantes avant vos achats.
 - ✅ **Certification Trusted Shops :** Vérifie automatiquement si la boutique possède un label de qualité Trusted Shops valide.
+- 🌟 **Avis Trustpilot :** Vérifie automatiquement les évaluations et le TrustScore sur Trustpilot.
 - 🏛️ **Vérification UID Admin.ch :** Compare le domaine avec le registre fédéral officiel des entreprises. Les boutiques sans UID (numéro d'identification des entreprises) suisse valide sont affichées comme un avertissement.
 - - (Non pris en charge pour Firefox-Android)
 - 🔒 **Google Safe Browsing (Optionnel) :** Intégration de l'API Safe Browsing pour détecter l'hameçonnage et les logiciels malveillants.
