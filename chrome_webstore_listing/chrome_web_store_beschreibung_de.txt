@@ -2,7 +2,7 @@ Sicher einkaufen im Internet – Ihr Schutz vor Fake-Shops und Betrug
 
 "CH Warnlisten & Shop Risk-Check" ist eine Browser-Erweiterung, die Webseiten und Online-Shops automatisch oder manuell auf Sicherheitsrisiken analysiert.
 
-Es vergleicht die aktuelle URL mit der Schweizer Warnliste von K-Tipp/Saldo (ktipp.ch/service/warnlisten/detail/warnliste/internetshops), reklamation.ch und uid.admin.ch. Optional werden Google Safe Browsing oder heuristische Prüfungen durchgeführt.
+Es prüft ob Domain der aktuelle nURL auf der Schweizer Warnliste von K-Tipp/Saldo oder Reklamation gelistet ist und und ob sie im UID-Register@BFS enthalten ist. Es wird ebenfalls auf Trustedshops und Trustpilot nach Bewertungen gesucht. Optional werden Google Safe Browsing oder heuristische Prüfungen durchgeführt.
 
 Es werden nur Internet-Adressen (https:// oder http://) analysiert, localhost oder IP (http://127.0.0.1 etc.) auch nicht.
 
@@ -19,7 +19,6 @@ Automatische oder manuelle Überprüfung via:
 Reduzierte Aktivität:
 - Jede Domain wird nur 1x geprüft, egal ob Sie im gleichen Tab auf der Seite weiterklicken oder dieselbe Domain in anderen Tabs geöffnet haben.
 - Wenn Google-Safe-Browsing aktiviert ist, wird jedoch jede neue URL erneut auf Sicherheitsrisiken geprüft.
-- - Bsp. https://testsafebrowsing.appspot.com/ ok. https://testsafebrowsing.appspot.com/s/phishing.html - Warnung.
 - Im manuellen Modus, wenn die Prüfung ausgelöst wurde, werden für jede weitere Seite derselben Domain die Warnungen für die Domain ohne weitere Prüfung angezeigt und die URL via Google-Safe-Browsing getestet (falls aktiviert).
 
 Da ich kein offizieller Entwickler einer der Web-Services bin, kann die Funktionalität eingeschränkt sein wenn sich die Services ändern.
