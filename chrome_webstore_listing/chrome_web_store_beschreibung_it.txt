@@ -2,7 +2,7 @@ Acquista in sicurezza su Internet – La tua protezione contro i falsi negozi e 
 
 "CH Warnlisten & Shop Risk-Check" è un'estensione per browser che analizza automaticamente siti web e negozi online alla ricerca di rischi per la sicurezza.
 
-Verifica se il dominio dell'URL corrente è presente nella lista di allerta svizzera di K-Tipp/Saldo o Reklamation e se è registrato nel registro UID dell'Ufficio federale di statistica (BFS). Vengono inoltre cercate recensioni su TrustedShops e Trustpilot. Facoltativamente, vengono eseguiti controlli tramite Google Safe Browsing o verifiche euristiche per gli url.
+Verifica se il dominio dell'URL corrente è presente nella lista di allerta svizzera di K-Tipp/Saldo o Reklamation e se è registrato nel registro UID dell'Ufficio federale di statistica (BFS). Vengono inoltre cercate recensioni su TrustedShops. Facoltativamente, vengono eseguiti controlli tramite Google Safe Browsing o verifiche euristiche per gli url.
 
 Vengono analizzati solo indirizzi internet (https:// o http://), né localhost né IP (http://127.0.0.1 ecc.).
 
@@ -12,8 +12,8 @@ Verifica automatica o manuale tramite:
 - www.ktipp.ch/service/warnlisten/detail/warnliste/internetshops
 - www.reklamation.ch
 - www.uid.admin.ch
+- - (Non supportato per Firefox-Android)
 - www.trustedshops.ch
-- ch.trustpilot.com
 - Google Safe Browsing (safebrowsing.googleapis.com)
 
 Attività ridotta:
@@ -30,7 +30,6 @@ Caratteristiche principali:
 - - Se viene trovata una voce, verrà visualizzata. Il link apre la pagina della lista di avvisi, ma il dominio deve poi essere inserito manualmente.
 - 🛡️ **Confronto reklamation.ch:** Cerca reclami dei consumatori esistenti prima di fare acquisti.
 - ✅ **Certificazione Trusted Shops:** Verifica automaticamente se il negozio ha un marchio di qualità Trusted Shops valido.
-- 🌟 **Recensioni Trustpilot:** Controlla automaticamente le valutazioni e il TrustScore su Trustpilot.
 - 🏛️ **Controllo UID Admin.ch:** Confronta il dominio con il registro federale ufficiale delle imprese. I negozi senza un UID (numero di identificazione delle imprese) svizzero valido vengono visualizzati come un avviso.
 - - (Non supportato per Firefox-Android)
 - 🔒 **Google Safe Browsing (Opzionale):** Integrazione dell'API Safe Browsing per rilevare phishing e malware.
