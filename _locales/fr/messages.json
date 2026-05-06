@@ -115,6 +115,7 @@
   "threatTrustedShopsMissing": { "message": "Non trouvé sur Trusted-Shops.ch" },
   "threatTrustpilotMissing": { "message": "Non trouvé sur Trustpilot" },
   "bgComplaintsNotFoundTrustpilot": {"message": "Non trouvé sur Trustpilot."},
+  "bgComplaintsUidMissing": { "message": "Aucun enregistrement UID actif trouvé sur admin.ch." },
   "threatAdminchUidMissing": { "message": "Aucun UID trouvé sur www.uid.admin.ch" },
   "threatReklamationCh": { "message": "Entrées Reklamation.ch trouvées" },
   "threatKtippWarnliste": { "message": "Trouvé sur la liste d'avertissement K-Tipp/Saldo" },
@@ -129,5 +130,8 @@
   "threatDescError": { "message": "Erreur lors de la récupération de $1" },
   "safebrowsingNoThreats": { "message": "Aucune menace trouvée dans la base de données Google Safe Browsing." },
   "safebrowsingFound": { "message": "Trouvé :" },
-  "notSupportedFirefoxAndroid": { "message": "Non pris en charge pour Firefox-Android" }
+  "notSupportedFirefoxAndroid": { "message": "Non pris en charge pour Firefox-Android" },
+  "settingFetchTimeout": { "message": "Délai d'attente des requêtes (ms)" },
+  "settingFetchTimeoutHint": { "message": "Temps en millisecondes avant qu'une requête ne soit annulée (défaut : 30000)." },
+  "fetchTimeoutError": { "message": "Délai d'attente dépassé lors de la requête sur $1" }
 }

@@ -1,16 +1,20 @@
 /**
  * Check for warnings on ktipp.ch
  */
-export async function checkKtipp(urlString) {
+export async function checkKtipp(urlString, timeout = 30000) {
   console.log("checkKtipp - urlString: ", urlString);
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), timeout);
+
   try {
     const url = new URL(urlString);
     const domain = url.hostname.replace(/^www\./i, '');
     const internetshopsUrl = 'https://www.ktipp.ch/service/warnlisten/detail/warnliste/internetshops';
 
     // Step 1: Fetch the internetshops page to get the form with its action URL and hidden fields
-    const initialResponse = await fetch(internetshopsUrl);
+    const initialResponse = await fetch(internetshopsUrl, { signal: controller.signal });
     if (!initialResponse.ok) {
+      clearTimeout(id);
       return { threats: [], details: '' };
     }
 
@@ -20,12 +24,14 @@ export async function checkKtipp(urlString) {
     const formTagRegex = /<form[^>]+id="frmWarnlisteFilter"[^>]*>/i;
     const formTagMatch = html.match(formTagRegex);
     if (!formTagMatch) {
+      clearTimeout(id);
       return { threats: [], details: '' };
     }
 
     // Extract the action URL from the form tag
     const actionMatch = formTagMatch[0].match(/action="([^"]+)"/i);
     if (!actionMatch) {
+      clearTimeout(id);
       return { threats: [], details: '' };
     }
 
@@ -72,15 +78,19 @@ export async function checkKtipp(urlString) {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
         'Origin': 'https://www.ktipp.ch'
-      }
+      },
+      signal: controller.signal
     });
 
 
     if (!response.ok) {
+      clearTimeout(id);
       return { threats: [], details: '' };
     }
 
     const text = await response.text();
+
+    clearTimeout(id);
 
     if (text.includes('Keine Einträge gefunden')) {
       return {
@@ -111,7 +121,17 @@ export async function checkKtipp(urlString) {
       details: `✅ ` + (chrome.i18n.getMessage('bgDetailKtipp', [domain]) || `[Ktipp/Saldo-Warnliste] No warnings found for "${domain}".`)
     };
   } catch (e) {
+    clearTimeout(id);
     console.error('checkKtipp error:', e);
+    if (e.name === 'AbortError') {
+      return {
+        threats: [{
+          type: 'SERVICE_ERROR',
+          description: chrome.i18n.getMessage('fetchTimeoutError', ['K-Tipp/Saldo']) || 'Timeout during query on K-Tipp/Saldo'
+        }],
+        details: ''
+      };
+    }
     return {
       threats: [{
         type: 'SERVICE_ERROR',

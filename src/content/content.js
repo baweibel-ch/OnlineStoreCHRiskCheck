@@ -128,5 +128,5 @@ function showStatusBadge(state) {
         statusBadge = null;
       }, 300);
     }
-  }, 10000);
+  }, 30000);
 }

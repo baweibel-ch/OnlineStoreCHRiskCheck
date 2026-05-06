@@ -14,21 +14,42 @@ export async function callWarningApi(url, config) {
 
   const body = buildRequestBody(url, config);
 
-  const response = await fetch(apiEndpoint, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      ...(config.apiUrl.includes('safebrowsing.googleapis.com') ? {} : { 'Authorization': `Bearer ${config.apiKey}` })
-    },
-    body: JSON.stringify(body)
-  });
+  const controller = new AbortController();
+  const timeout = config.fetchTimeout || 30000;
+  const id = setTimeout(() => controller.abort(), timeout);
 
-  if (!response.ok) {
-    throw new Error(`API returned ${response.status}: ${response.statusText}`);
+  try {
+    const response = await fetch(apiEndpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(config.apiUrl.includes('safebrowsing.googleapis.com') ? {} : { 'Authorization': `Bearer ${config.apiKey}` })
+      },
+      body: JSON.stringify(body),
+      signal: controller.signal
+    });
+
+    clearTimeout(id);
+
+    if (!response.ok) {
+      throw new Error(`API returned ${response.status}: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return parseApiResponse(data, config);
+  } catch (e) {
+    clearTimeout(id);
+    if (e.name === 'AbortError') {
+      return {
+        threats: [{
+          type: 'SERVICE_ERROR',
+          description: chrome.i18n.getMessage('fetchTimeoutError', ['Google Safe Browsing']) || 'Timeout during query on Google Safe Browsing'
+        }],
+        details: ''
+      };
+    }
+    throw e;
   }
-
-  const data = await response.json();
-  return parseApiResponse(data, config);
 }
 
 export function buildRequestBody(url, config) {

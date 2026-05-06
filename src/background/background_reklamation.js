@@ -1,14 +1,20 @@
 /**
  * Check for complaints on reklamation.ch
  */
-export async function checkReklamation(urlString) {
+export async function checkReklamation(urlString, timeout = 30000) {
   console.log("checkReklamation - urlString: ", urlString);
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), timeout);
+
   try {
     const url = new URL(urlString);
     const domain = url.hostname.replace(/^www\./i, '');
     const searchUrl = `https://www.reklamation.ch/complaint.php?search=true&keyword=${encodeURIComponent(domain)}`;
 
-    const response = await fetch(searchUrl);
+    const response = await fetch(searchUrl, { signal: controller.signal });
+
+    clearTimeout(id);
+
     if (!response.ok) {
       return {threats: [], details: ''};
     }
@@ -52,7 +58,16 @@ export async function checkReklamation(urlString) {
       details: `✅ ` + (chrome.i18n.getMessage('bgDetailRekOkNotFound', [domain]) || `[reklamation.ch] No complaints found for "${domain}".`)
     };
   } catch (e) {
-    console.error('checkReklamation error:', e);
+    clearTimeout(id);
+    if (e.name === 'AbortError') {
+      return {
+        threats: [{
+          type: 'SERVICE_ERROR',
+          description: chrome.i18n.getMessage('fetchTimeoutError', ['reklamation.ch']) || 'Timeout during query on reklamation.ch'
+        }],
+        details: ''
+      };
+    }
     return {
       threats: [{
         type: 'SERVICE_ERROR',

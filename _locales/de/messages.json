@@ -115,6 +115,7 @@
   "threatTrustedShopsMissing": { "message": "Nicht gefunden in Trusted-Shops.ch" },
   "threatTrustpilotMissing": { "message": "Nicht gefunden auf Trustpilot" },
   "bgComplaintsNotFoundTrustpilot": {"message": "Nicht gefunden auf Trustpilot."},
+  "bgComplaintsUidMissing": { "message": "Keine aktive UID auf admin.ch gefunden." },
   "threatAdminchUidMissing": { "message": "Keine UID gefunden in www.uid.admin.ch" },
   "threatReklamationCh": { "message": "Reklamation.ch Einträge gefunden" },
   "threatKtippWarnliste": { "message": "Auf K-Tipp/Saldo Internetshop - Warnliste gefunden" },
@@ -129,5 +130,8 @@
   "threatDescError": { "message": "Fehler beim Abrufen von $1" },
   "safebrowsingNoThreats": { "message": "Keine Bedrohungen in der Google Safe Browsing-Datenbank gefunden." },
   "safebrowsingFound": { "message": "Gefunden:" },
-  "notSupportedFirefoxAndroid": { "message": "Nicht unterstützt für Firefox-Android" }
+  "notSupportedFirefoxAndroid": { "message": "Nicht unterstützt für Firefox-Android" },
+  "settingFetchTimeout": { "message": "Timeout für Abfragen (ms)" },
+  "settingFetchTimeoutHint": { "message": "Zeit in Millisekunden, bevor eine Abfrage abgebrochen wird (Standard: 30000)." },
+  "fetchTimeoutError": { "message": "Zeitüberschreitung bei Abfrage auf $1" }
 }

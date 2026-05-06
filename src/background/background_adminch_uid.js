@@ -1,8 +1,11 @@
 /**
  * Check for UID on uid.admin.ch
  */
-export async function checkUid(urlString) {
+export async function checkUid(urlString, timeout = 30000) {
   console.log("checkUid - urlString: ", urlString);
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), timeout);
+
   try {
     const url = new URL(urlString);
     const domain = url.hostname.replace(/^www\./i, '');
@@ -28,8 +31,11 @@ export async function checkUid(urlString) {
         'SOAPAction': '"http://www.uid.admin.ch/xmlns/uid-wse/IPublicServices/Search"',
         'Referer': 'OnlineStoreCHRiskCheck'
       },
-      body: soapEnvelope
+      body: soapEnvelope,
+      signal: controller.signal
     });
+
+    clearTimeout(id);
 
     if (!response.ok) {
       console.error(`HTTP Fehler: ${response.status}`);
@@ -84,7 +90,17 @@ export async function checkUid(urlString) {
                `` + (chrome.i18n.getMessage('bgDetailMoreInfo') || 'More info:') + ` ${link}`
     };
   } catch (e) {
+    clearTimeout(id);
     console.error('checkUid error:', e);
+    if (e.name === 'AbortError') {
+      return {
+        threats: [{
+          type: 'SERVICE_ERROR',
+          description: chrome.i18n.getMessage('fetchTimeoutError', ['uid.admin.ch']) || 'Timeout during query on uid.admin.ch'
+        }],
+        details: ''
+      };
+    }
     return {
       threats: [{
         type: 'SERVICE_ERROR',

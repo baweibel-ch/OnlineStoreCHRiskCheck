@@ -74,6 +74,16 @@
         </div>
       </section>
 
+      <!-- Behavior / Settings -->
+      <section class="settings-section">
+        <h2 class="section-title" data-i18n="behaviorTitle">⚙️ Behavior</h2>
+        <div class="setting-group">
+          <label for="fetchTimeout" class="setting-label" data-i18n="settingFetchTimeout">Fetch Timeout (ms)</label>
+          <input type="number" id="fetchTimeout" class="setting-input" min="100" max="60000" step="100">
+          <p class="setting-hint" data-i18n="settingFetchTimeoutHint">Time in milliseconds before a fetch is aborted (default: 30000).</p>
+        </div>
+      </section>
+
       <!-- Services Configuration -->
       <section class="settings-section">
         <h2 class="section-title" data-i18n="analysisServicesTitle">🛡️ Analysis Services</h2>

@@ -448,7 +448,7 @@ function formatThreatType(type) {
     return chrome.i18n.getMessage('threatKtippWarnliste') || 'Auf K-Tipp/Saldo Internetshop - Warnliste gefunden';
   }
   if (type === 'SERVICE_ERROR') {
-    return chrome.i18n.getMessage('statusError') || 'Error';
+    return chrome.i18n.getMessage('statusWarning') || 'Warning!';
   }
 
   return type
