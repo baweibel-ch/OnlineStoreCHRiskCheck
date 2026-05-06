@@ -61,6 +61,7 @@ async function loadSettings() {
   }
 
   if (document.getElementById('whitelist')) document.getElementById('whitelist').value = (config.whitelist || []).join('\n');
+  if (document.getElementById('fetchTimeout')) document.getElementById('fetchTimeout').value = config.fetchTimeout || 30000;
 
   // Save handler
   document.getElementById('btnSave').addEventListener('click', saveSettings);
@@ -100,6 +101,7 @@ async function saveSettings() {
     enableTrustedshops: document.getElementById('enableTrustedshops')?.checked ?? true,
     enableAdminchUid: document.getElementById('enableAdminchUid')?.checked ?? true,
     theme: document.querySelector('input[name="theme"]:checked')?.value || 'dark',
+    fetchTimeout: parseInt(document.getElementById('fetchTimeout')?.value || '30000', 10),
     whitelist: (document.getElementById('whitelist')?.value || '').split('\n')
       .map(line => line.trim())
       .filter(line => line.length > 0)

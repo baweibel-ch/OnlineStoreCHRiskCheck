@@ -37,6 +37,7 @@ const DEFAULT_CONFIG = {
   enableTrustedshops: true,
   enableTrustpilot: false,
   enableAdminchUid: true,
+  fetchTimeout: 30000,
   theme: 'light',
   whitelist: ['reklamation.ch', 'ktipp.ch', 'saldo.ch', 'startpage.com']
 };
@@ -316,10 +317,10 @@ async function analyzeUrl(tabId, url, force = false, cachedStateDomain, cachedSt
     const isFirefoxAndroid = navigator.userAgent.toLowerCase().includes('android') && navigator.userAgent.toLowerCase().includes('firefox');
     const [apiResult, reklamationResult, ktippResult, trustedshopsResult, uidResult] = await Promise.all([
       config.enableSafeBrowsing && !cachedStateUrl ? callWarningApi(url, config) : Promise.resolve({ threats: cachedStateUrl && cachedStateUrl.threats ? cachedStateUrl.threats.filter(s => s.type !== 'REKLAMATION_CH' && s.type !== 'KTIPP_WARNLISTE' && s.type !== 'TRUSTED_SHOPS_MISSING' && s.type !== 'ADMINCH_UID') : [], details: cachedStateUrl && cachedStateUrl.detailsContentApi ? cachedStateUrl.detailsContentApi : '' }),
-      config.enableReklamation && !cachedStateDomain ? checkReklamation(url) : Promise.resolve({ threats: cachedStateDomain && cachedStateDomain.threats ? cachedStateDomain.threats.filter(s => s.type === 'REKLAMATION_CH') : [], details: cachedStateDomain && cachedStateDomain.detailsReklamation ? cachedStateDomain.detailsReklamation: '' }),
-      config.enableKtipp && !cachedStateDomain ? checkKtipp(url) : Promise.resolve({ threats: cachedStateDomain && cachedStateDomain.threats ? cachedStateDomain.threats.filter(s => s.type === 'KTIPP_WARNLISTE') : [], details: cachedStateDomain && cachedStateDomain.detailsKtipp ? cachedStateDomain.detailsKtipp : '' }),
-      config.enableTrustedshops && !cachedStateDomain ? checkTrustedshops(url) : Promise.resolve({ threats: cachedStateDomain && cachedStateDomain.threats ? cachedStateDomain.threats.filter(s => s.type === 'TRUSTED_SHOPS_MISSING') : [], details: cachedStateDomain && cachedStateDomain.detailsTrustedshops ? cachedStateDomain.detailsTrustedshops : '' }),
-      config.enableAdminchUid && ! isFirefoxAndroid && !cachedStateDomain ? checkUid(url) : Promise.resolve({ threats: cachedStateDomain && cachedStateDomain.threats ? cachedStateDomain.threats.filter(s => s.type === 'ADMINCH_UID') : [], details: cachedStateDomain && cachedStateDomain.detailsAdminchUid ? cachedStateDomain.detailsAdminchUid : '' })
+      config.enableReklamation && !cachedStateDomain ? checkReklamation(url, config.fetchTimeout) : Promise.resolve({ threats: cachedStateDomain && cachedStateDomain.threats ? cachedStateDomain.threats.filter(s => s.type === 'REKLAMATION_CH') : [], details: cachedStateDomain && cachedStateDomain.detailsReklamation ? cachedStateDomain.detailsReklamation: '' }),
+      config.enableKtipp && !cachedStateDomain ? checkKtipp(url, config.fetchTimeout) : Promise.resolve({ threats: cachedStateDomain && cachedStateDomain.threats ? cachedStateDomain.threats.filter(s => s.type === 'KTIPP_WARNLISTE') : [], details: cachedStateDomain && cachedStateDomain.detailsKtipp ? cachedStateDomain.detailsKtipp : '' }),
+      config.enableTrustedshops && !cachedStateDomain ? checkTrustedshops(url, config.fetchTimeout) : Promise.resolve({ threats: cachedStateDomain && cachedStateDomain.threats ? cachedStateDomain.threats.filter(s => s.type === 'TRUSTED_SHOPS_MISSING') : [], details: cachedStateDomain && cachedStateDomain.detailsTrustedshops ? cachedStateDomain.detailsTrustedshops : '' }),
+      config.enableAdminchUid && ! isFirefoxAndroid && !cachedStateDomain ? checkUid(url, config.fetchTimeout) : Promise.resolve({ threats: cachedStateDomain && cachedStateDomain.threats ? cachedStateDomain.threats.filter(s => s.type === 'ADMINCH_UID') : [], details: cachedStateDomain && cachedStateDomain.detailsAdminchUid ? cachedStateDomain.detailsAdminchUid : '' })
     ]);
     const hasSecurityThreats = apiResult && apiResult.threats && apiResult.threats.length > 0;
     const hasReklamation = reklamationResult && reklamationResult.threats && reklamationResult.threats.length > 0;
@@ -335,35 +336,37 @@ async function analyzeUrl(tabId, url, force = false, cachedStateDomain, cachedSt
     if (hasSecurityThreats) {
       status = 'danger';
       statusNotSafe = true;
-      message = '⚠️ ' + (chrome.i18n.getMessage('bgThreatsReport', [apiResult.threats.length.toString()]) || `${apiResult.threats.length} security threat(s) detected!`);
+      const isServiceError = apiResult.threats.some(t => t.type === 'SERVICE_ERROR');
+      const msg = isServiceError ? apiResult.threats[0].description : (chrome.i18n.getMessage('bgThreatsReport', [apiResult.threats.length.toString()]) || `${apiResult.threats.length} security threat(s) detected!`);
+      message = '⚠️ ' + msg;
     }
     if (hasReklamation) {
-      status = statusNotSafe?status:'warning';
+      status = statusNotSafe ? status : 'warning';
       statusNotSafe = true;
-      const count = reklamationResult.threats.length || 0;
-      message = (message ? message + '\n\n' : '') + '🔍 ' + (chrome.i18n.getMessage('bgComplaintsRek', [count.toString()]) || `${count} consumer complaint(s) found on reklamation.ch.`);
+      const isServiceError = reklamationResult.threats.some(t => t.type === 'SERVICE_ERROR');
+      const msg = isServiceError ? reklamationResult.threats[0].description : (chrome.i18n.getMessage('bgComplaintsRek', [reklamationResult.threats.length.toString()]) || `${reklamationResult.threats.length} consumer complaint(s) found on reklamation.ch.`);
+      message = (message ? message + '\n\n' : '') + '🔍 ' + msg;
     }
     if (hasKtipp) {
-      status = statusNotSafe?status:'warning';
+      status = statusNotSafe ? status : 'warning';
       statusNotSafe = true;
-      const count = ktippResult.threats.length || 0;
-      message = (message ? message + '\n\n' : '') + '🔍 ' + (chrome.i18n.getMessage('bgComplaintsKtipp', [count.toString()]) || `${count} Found on Ktipp-Warnliste.`);
+      const isServiceError = ktippResult.threats.some(t => t.type === 'SERVICE_ERROR');
+      const msg = isServiceError ? ktippResult.threats[0].description : (chrome.i18n.getMessage('bgComplaintsKtipp', [ktippResult.threats.length.toString()]) || `${ktippResult.threats.length} Found on Ktipp-Warnliste.`);
+      message = (message ? message + '\n\n' : '') + '🔍 ' + msg;
     }
     if (hasTrustedShops) {
-      status = statusNotSafe?status:'warning';
+      status = statusNotSafe ? status : 'warning';
       statusNotSafe = true;
-      const count = trustedshopsResult.threats.length || 0;
-      message = (message ? message + '\n\n' : '') + '🔍 ' + (chrome.i18n.getMessage('bgComplaintsNotFoundTrustedShops', [count.toString()]) || `Not found on Trustedshops.ch.`);
+      const isServiceError = trustedshopsResult.threats.some(t => t.type === 'SERVICE_ERROR');
+      const msg = isServiceError ? trustedshopsResult.threats[0].description : (chrome.i18n.getMessage('bgComplaintsNotFoundTrustedShops', [trustedshopsResult.threats.length.toString()]) || `Not found on Trustedshops.ch.`);
+      message = (message ? message + '\n\n' : '') + '🔍 ' + msg;
     }
-    /*if (hasTrustpilot) {
-      status = statusNotSafe?status:'warning';
-      statusNotSafe = true;
-      message = (message ? message + '\n\n' : '') + '🔍 ' + (chrome.i18n.getMessage('bgComplaintsNotFoundTrustpilot') || `Not found on Trustpilot.`);
-    }*/
     if (hasUidMissing) {
-      status = statusNotSafe?status:'warning';
+      status = statusNotSafe ? status : 'warning';
       statusNotSafe = true;
-      message = (message ? message + '\n\n' : '') + '🔍 ' + (chrome.i18n.getMessage('bgComplaintsUidMissing') || `Missing active UID on admin.ch.`);
+      const isServiceError = uidResult.threats.some(t => t.type === 'SERVICE_ERROR');
+      const msg = isServiceError ? uidResult.threats[0].description : (chrome.i18n.getMessage('bgComplaintsUidMissing') || `Missing active UID on admin.ch.`);
+      message = (message ? message + '\n\n' : '') + '🔍 ' + msg;
     }
 
     const state = {

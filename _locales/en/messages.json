@@ -115,6 +115,7 @@
   "threatTrustedShopsMissing": { "message": "Not found on Trusted-Shops.ch" },
   "threatTrustpilotMissing": { "message": "Not found on Trustpilot" },
   "bgComplaintsNotFoundTrustpilot": {"message": "Not found on Trustpilot."},
+  "bgComplaintsUidMissing": { "message": "No active UID record found on admin.ch." },
   "threatAdminchUidMissing": { "message": "No UID found on www.uid.admin.ch" },
   "threatReklamationCh": { "message": "Reklamation.ch entries found" },
   "threatKtippWarnliste": { "message": "Found on K-Tipp/Saldo Warnliste" },
@@ -129,5 +130,8 @@
   "threatDescError": { "message": "Error getting $1" },
   "safebrowsingNoThreats": { "message": "No threats found in Google Safe Browsing database." },
   "safebrowsingFound": { "message": "Found:" },
-  "notSupportedFirefoxAndroid": { "message": "Not supported for Firefox-Android" }
+  "notSupportedFirefoxAndroid": { "message": "Not supported for Firefox-Android" },
+  "settingFetchTimeout": { "message": "Fetch Timeout (ms)" },
+  "settingFetchTimeoutHint": { "message": "Time in milliseconds before a fetch is aborted (default: 30000)." },
+  "fetchTimeoutError": { "message": "Timeout during query on $1" }
 }
