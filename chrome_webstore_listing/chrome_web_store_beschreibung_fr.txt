@@ -14,7 +14,7 @@ Vérification automatique ou manuel via :
 - www.uid.admin.ch
 - - (Non pris en charge pour Firefox-Android)
 - www.trustedshops.ch
-- Google Safe Browsing (safebrowsing.googleapis.com)
+- Google Safe Browsing
 
 Activité réduite :
 - Chaque domaine n'est vérifié qu'une fois, que vous continuiez à cliquer sur la page dans le même onglet ou que le même domaine soit ouvert dans d'autres onglets.
