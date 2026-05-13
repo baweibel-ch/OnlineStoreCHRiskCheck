@@ -1,15 +1,36 @@
 /**
  * Check if the domain is on Trustpilot
  */
-export async function checkTrustpilot(urlString) {
+export async function checkTrustpilot(urlString, timeout = 30000) {
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), timeout);
+
   try {
     console.log("checkTrustpilot - urlString: " + urlString);
     const url = new URL(urlString);
     const domain = url.hostname.replace(/^www\./i, '');
     const searchUrl = `https://ch.trustpilot.com/search?query=${encodeURIComponent(domain)}`;
 
-    const response = await fetch(searchUrl);
+    const response = await fetch(searchUrl, { signal: controller.signal });
+    
+    if (response.status === 403) {
+      clearTimeout(id);
+      return {
+        threats: [{
+          type: 'SERVICE_ERROR',
+          description: chrome.i18n.getMessage('tp403Error') || 'Access denied (403) on Trustpilot'
+        }],
+        details: '⚠️ ' + (chrome.i18n.getMessage('tp403Detail') || 'Trustpilot access denied (403). Possible rate limiting or blocking.')
+      };
+    }
+
+    if (!response.ok) {
+      clearTimeout(id);
+      return { threats: [], details: '' };
+    }
+
     const text = await response.text();
+    clearTimeout(id);
     
     const isReviewPage = response.url.includes('/review/');
     const reviewLinkMatch = text.match(new RegExp(`href="/review/${domain.replace(/\./g, '\\.')}"`, 'i'));
@@ -52,6 +73,17 @@ export async function checkTrustpilot(urlString) {
 
         const shopUrl = `https://ch.trustpilot.com/review/${domain}`;
         
+        if (parsedScore < 2.0 && !isNaN(parsedScore)) {
+          return {
+            threats: [{
+              type: 'TRUSTPILOT_LOW_RATING',
+              description: chrome.i18n.getMessage('tpLowRatingDesc', [score]) || `Low Trustpilot rating: ${score}`,
+              score: parsedScore
+            }],
+            details: `⚠️ ` + (chrome.i18n.getMessage('bgDetailTPLow', [domain, score, count]) || `[Trustpilot] "${domain}" has a low score of ${score} (${count} reviews).`) + `\n` + (chrome.i18n.getMessage('bgDetailMoreInfo') || 'More info:') + shopUrl
+          };
+        }
+
         return {
           threats: [],
           details: `✅ ` + (chrome.i18n.getMessage('bgDetailTP', [domain, score, count]) || `[Trustpilot] "${domain}": Score ${score}, ${count} reviews.`) + `\n` + (chrome.i18n.getMessage('bgDetailMoreInfo') || 'More info:') + shopUrl
@@ -62,7 +94,17 @@ export async function checkTrustpilot(urlString) {
       details: `⚠️ ` + (chrome.i18n.getMessage('bgDetailTPMissing', [domain]) || `[Trustpilot] Domain "${domain}" is not rated.`)
     };
   } catch (e) {
+    clearTimeout(id);
     console.error('checkTrustpilot error:', e);
+    if (e.name === 'AbortError') {
+      return {
+        threats: [{
+          type: 'SERVICE_ERROR',
+          description: chrome.i18n.getMessage('fetchTimeoutError', ['Trustpilot']) || 'Timeout during query on Trustpilot'
+        }],
+        details: ''
+      };
+    }
     return {
       threats: [{
         type: 'SERVICE_ERROR',

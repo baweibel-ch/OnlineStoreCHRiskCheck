@@ -200,10 +200,10 @@ function renderState(state) {
       const isKtipp = state.threats?.some(t => t.type === 'KTIPP_WARNLISTE');
       const isReklamation = state.threats?.some(t => t.type === 'REKLAMATION_CH');
       const isTsMissing = state.threats?.some(t => t.type === 'TRUSTED_SHOPS_MISSING');
-      const isTpMissing = state.threats?.some(t => t.type === 'TRUSTPILOT_MISSING');
+      const hasTpIssue = state.threats?.some(t => t.type === 'TRUSTPILOT_MISSING' || t.type === 'TRUSTPILOT_LOW_RATING');
       const isUidMissing = state.threats?.some(t => t.type === 'ADMINCH_UID');
       
-      const activeWarnings = [isKtipp, isReklamation, isTsMissing, isTpMissing, isUidMissing].filter(Boolean).length;
+      const activeWarnings = [isKtipp, isReklamation, isTsMissing, hasTpIssue, isUidMissing].filter(Boolean).length;
 
       if (activeWarnings > 1) {
         label.textContent = chrome.i18n.getMessage('statusWarning') || 'Warning!';
@@ -213,7 +213,7 @@ function renderState(state) {
         label.textContent = chrome.i18n.getMessage('reklamationLabel') || 'Reklamation';
       } else if (isTsMissing) {
         label.textContent = chrome.i18n.getMessage('tsLabel') || 'Trusted Shops';
-      } else if (isTpMissing) {
+      } else if (hasTpIssue) {
         label.textContent = chrome.i18n.getMessage('tpLabel') || 'Trustpilot';
       } else if (isUidMissing) {
         label.textContent = chrome.i18n.getMessage('uidAdminChLabel') || 'Admin.ch UID';
@@ -437,6 +437,9 @@ function formatThreatType(type) {
   }
   if (type === 'TRUSTPILOT_MISSING') {
     return chrome.i18n.getMessage('threatTrustpilotMissing') || 'Not found on Trustpilot';
+  }
+  if (type === 'TRUSTPILOT_LOW_RATING') {
+    return chrome.i18n.getMessage('threatTrustpilotLowRating') || 'Low Trustpilot Rating';
   }
   if (type === 'ADMINCH_UID') {
     return chrome.i18n.getMessage('threatAdminchUidMissing') || 'Keine UID gefunden in www.uid.admin.ch';

@@ -24,6 +24,7 @@ import { checkKtipp } from './background_ktipp.js';
 import { checkTrustedshops } from './background_trustedshops.js';
 import { callWarningApi } from './background_google_safebrowsing.js';
 import { checkUid } from './background_adminch_uid.js';
+import { checkTrustpilot } from './background_trustpilot.js';
 
 // --- Configuration Defaults ---
 const DEFAULT_CONFIG = {
@@ -35,7 +36,7 @@ const DEFAULT_CONFIG = {
   enableReklamation: true,
   enableKtipp: true,
   enableTrustedshops: true,
-  enableTrustpilot: false,
+  enableTrustpilot: true,
   enableAdminchUid: true,
   fetchTimeout: 30000,
   theme: 'light',
@@ -315,20 +316,29 @@ async function analyzeUrl(tabId, url, force = false, cachedStateDomain, cachedSt
   updateBadge(tabId, loadingState);
   try {
     const isFirefoxAndroid = navigator.userAgent.toLowerCase().includes('android') && navigator.userAgent.toLowerCase().includes('firefox');
-    const [apiResult, reklamationResult, ktippResult, trustedshopsResult, uidResult] = await Promise.all([
-      config.enableSafeBrowsing && !cachedStateUrl ? callWarningApi(url, config) : Promise.resolve({ threats: cachedStateUrl && cachedStateUrl.threats ? cachedStateUrl.threats.filter(s => s.type !== 'REKLAMATION_CH' && s.type !== 'KTIPP_WARNLISTE' && s.type !== 'TRUSTED_SHOPS_MISSING' && s.type !== 'ADMINCH_UID') : [], details: cachedStateUrl && cachedStateUrl.detailsContentApi ? cachedStateUrl.detailsContentApi : '' }),
+    const results = await Promise.all([
+      config.enableSafeBrowsing && !cachedStateUrl ? callWarningApi(url, config) : Promise.resolve({ threats: cachedStateUrl && cachedStateUrl.threats ? cachedStateUrl.threats.filter(s => s.type !== 'REKLAMATION_CH' && s.type !== 'KTIPP_WARNLISTE' && s.type !== 'TRUSTED_SHOPS_MISSING' && s.type !== 'ADMINCH_UID' && s.type !== 'TRUSTPILOT_MISSING') : [], details: cachedStateUrl && cachedStateUrl.detailsContentApi ? cachedStateUrl.detailsContentApi : '' }),
       config.enableReklamation && !cachedStateDomain ? checkReklamation(url, config.fetchTimeout) : Promise.resolve({ threats: cachedStateDomain && cachedStateDomain.threats ? cachedStateDomain.threats.filter(s => s.type === 'REKLAMATION_CH') : [], details: cachedStateDomain && cachedStateDomain.detailsReklamation ? cachedStateDomain.detailsReklamation: '' }),
       config.enableKtipp && !cachedStateDomain ? checkKtipp(url, config.fetchTimeout) : Promise.resolve({ threats: cachedStateDomain && cachedStateDomain.threats ? cachedStateDomain.threats.filter(s => s.type === 'KTIPP_WARNLISTE') : [], details: cachedStateDomain && cachedStateDomain.detailsKtipp ? cachedStateDomain.detailsKtipp : '' }),
       config.enableTrustedshops && !cachedStateDomain ? checkTrustedshops(url, config.fetchTimeout) : Promise.resolve({ threats: cachedStateDomain && cachedStateDomain.threats ? cachedStateDomain.threats.filter(s => s.type === 'TRUSTED_SHOPS_MISSING') : [], details: cachedStateDomain && cachedStateDomain.detailsTrustedshops ? cachedStateDomain.detailsTrustedshops : '' }),
-      config.enableAdminchUid && ! isFirefoxAndroid && !cachedStateDomain ? checkUid(url, config.fetchTimeout) : Promise.resolve({ threats: cachedStateDomain && cachedStateDomain.threats ? cachedStateDomain.threats.filter(s => s.type === 'ADMINCH_UID') : [], details: cachedStateDomain && cachedStateDomain.detailsAdminchUid ? cachedStateDomain.detailsAdminchUid : '' })
+      config.enableAdminchUid && ! isFirefoxAndroid && !cachedStateDomain ? checkUid(url, config.fetchTimeout) : Promise.resolve({ threats: cachedStateDomain && cachedStateDomain.threats ? cachedStateDomain.threats.filter(s => s.type === 'ADMINCH_UID') : [], details: cachedStateDomain && cachedStateDomain.detailsAdminchUid ? cachedStateDomain.detailsAdminchUid : '' }),
+      config.enableTrustpilot && !cachedStateDomain ? checkTrustpilot(url, config.fetchTimeout) : Promise.resolve({ threats: cachedStateDomain && cachedStateDomain.threats ? cachedStateDomain.threats.filter(s => s.type === 'TRUSTPILOT_MISSING') : [], details: cachedStateDomain && cachedStateDomain.detailsTrustpilot ? cachedStateDomain.detailsTrustpilot : '' })
     ]);
+    const apiResult = results[0];
+    const reklamationResult = results[1];
+    const ktippResult = results[2];
+    const trustedshopsResult = results[3];
+    const uidResult = results[4];
+    const trustpilotResult = results[5];
+
     const hasSecurityThreats = apiResult && apiResult.threats && apiResult.threats.length > 0;
     const hasReklamation = reklamationResult && reklamationResult.threats && reklamationResult.threats.length > 0;
     const hasKtipp = ktippResult && ktippResult.threats && ktippResult.threats.length > 0;
     const hasTrustedShops = trustedshopsResult && trustedshopsResult.threats && trustedshopsResult.threats.length > 0;
     const hasUidMissing = uidResult && uidResult.threats && uidResult.threats.length > 0;
+    const hasTrustpilotIssue = trustpilotResult && trustpilotResult.threats && trustpilotResult.threats.length > 0;
 
-    const combinedThreats = [...apiResult.threats, ...reklamationResult.threats, ...ktippResult.threats, ...trustedshopsResult.threats, ...uidResult.threats];
+    const combinedThreats = [...apiResult.threats, ...reklamationResult.threats, ...ktippResult.threats, ...trustedshopsResult.threats, ...uidResult.threats, ...trustpilotResult.threats];
 
     let status = 'safe';
     let message = null;
@@ -368,6 +378,16 @@ async function analyzeUrl(tabId, url, force = false, cachedStateDomain, cachedSt
       const msg = isServiceError ? uidResult.threats[0].description : (chrome.i18n.getMessage('bgComplaintsUidMissing') || `Missing active UID on admin.ch.`);
       message = (message ? message + '\n\n' : '') + '🔍 ' + msg;
     }
+    if (hasTrustpilotIssue) {
+      status = statusNotSafe ? status : 'warning';
+      statusNotSafe = true;
+      const isServiceError = trustpilotResult.threats.some(t => t.type === 'SERVICE_ERROR');
+      const lowRatingThreat = trustpilotResult.threats.find(t => t.type === 'TRUSTPILOT_LOW_RATING');
+      const msg = isServiceError ? trustpilotResult.threats[0].description : 
+                  (lowRatingThreat ? (chrome.i18n.getMessage('bgComplaintsLowTrustpilot', [lowRatingThreat.score.toString()]) || `Low Trustpilot rating (${lowRatingThreat.score})`) :
+                  (chrome.i18n.getMessage('bgComplaintsNotFoundTrustpilot') || `Not found on Trustpilot.`));
+      message = (message ? message + '\n\n' : '') + '🔍 ' + msg;
+    }
 
     const state = {
       status: status,
@@ -377,7 +397,7 @@ async function analyzeUrl(tabId, url, force = false, cachedStateDomain, cachedSt
       detailsReklamation: reklamationResult.details,
       detailsKtipp: ktippResult.details,
       detailsTrustedshops: trustedshopsResult.details,
-      //detailsTrustpilot: trustpilotResult.details,
+      detailsTrustpilot: trustpilotResult.details,
       detailsAdminchUid: uidResult.details,
       checkedAt: new Date().toISOString(),
       message: message
